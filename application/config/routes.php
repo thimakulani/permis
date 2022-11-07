@@ -51,6 +51,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'Auth';
 $route['performance'] = 'performance/index';
+$route['employees/(:any)'] = 'employees/$1';
+$route['employees'] = 'employees/index';
 $route['dashboard'] = 'dashboard/index';
 $route['(:any)'] = 'pages/view/$1';
 $route['404_override'] = '';

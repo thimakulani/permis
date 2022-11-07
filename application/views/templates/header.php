@@ -107,6 +107,15 @@
 						</a>
 					</li>
 					<li class="nav-item">
+						<a href="<?php echo base_url(); ?>employees" class="nav-link">
+							<i class="nav-icon fas fa-th"></i>
+							<p>
+								EMPLOYEES
+								<span class="right badge badge-danger"></span>
+							</p>
+						</a>
+					</li>
+					<li class="nav-item">
 						<a href="<?php echo base_url(); ?>settings" class="nav-link">
 							<i class="nav-icon fas fa-th"></i>
 							<p>
