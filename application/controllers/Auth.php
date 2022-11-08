@@ -17,5 +17,9 @@ public function __construct()
     {
         redirect("dashboard");
     }
+	public function forgot_password()
+    {
+		$this->load->view('pages/forgot_password');
+    }
     
 }

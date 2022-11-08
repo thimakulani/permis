@@ -7,12 +7,11 @@
 		<div class="card-body">
 
 			<span class="text-danger">
-						<?php //echo $error; ?>
-					</span>
+				<?php //echo $error; ?>
+			</span>
 			<div class="row">
 
 				<div class="col-md-6">
-
 
 					<div class="form-group">
 						<label >NAME</label>
