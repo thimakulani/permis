@@ -21,4 +21,11 @@ class Employees extends CI_Controller
 		$this->load->view('employees/create');
 		$this->load->view('templates/footer');
 	}
+	public function details()
+	{
+		$data['tittle'] = "UPDATE EMPLOYEES";
+		$this->load->view('templates/header', $data);
+		$this->load->view('employees/details');
+		$this->load->view('templates/footer');
+	}
 }

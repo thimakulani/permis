@@ -1,0 +1,17 @@
+<?php
+
+class Settings extends CI_Controller
+{
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->helper(array('form','url'));
+	}
+	public function index()
+	{
+		$data['tittle'] = "SETTINGS";
+		$this->load->view('templates/header', $data);
+		$this->load->view('settings/index');
+		$this->load->view('templates/footer');
+	}
+}

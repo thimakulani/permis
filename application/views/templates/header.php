@@ -88,7 +88,7 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a href="<?php echo base_url(); ?>transaction" class="nav-link">
+						<a href="<?php echo base_url(); ?>leaves" class="nav-link">
 							<i class="nav-icon fas fa-th"></i>
 							<p>
 								LEAVE APPLICATION
@@ -98,7 +98,7 @@
 					</li>
 
 					<li class="nav-item">
-						<a href="<?php echo base_url(); ?>employees" class="nav-link">
+						<a href="<?php echo base_url(); ?>contracts" class="nav-link">
 							<i class="nav-icon fas fa-th"></i>
 							<p>
 								CONTRACTS
@@ -124,12 +124,11 @@
 							</p>
 						</a>
 					</li>
-
 					<li class="nav-item">
-						<a href="<?php echo base_url(); ?>account" class="nav-link">
+						<a href="<?php echo base_url(); ?>settings" class="nav-link">
 							<i class="nav-icon fas fa-th"></i>
 							<p>
-								PROFILE
+								TRAINING MANUAL
 								<span class="right badge badge-danger"></span>
 							</p>
 						</a>
