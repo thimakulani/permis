@@ -81,5 +81,21 @@ public function aud_submitted_performance()
 
 }
 
+public function org_performance_capture()
+{
+    $this->load->view("templates/header");
+    $this->load->view("performance/org_performance_capture");
+    $this->load->view("templates/footer");
+
+}
+
+public function org_submitted_performance()
+{
+    $this->load->view("templates/header");
+    $this->load->view("performance/org_submitted_performance");
+    $this->load->view("templates/footer");
+
+}
+
 
 }
