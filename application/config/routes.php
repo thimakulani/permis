@@ -51,7 +51,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'Auth';
 $route['performance'] = 'performance/index';
+$route['performance/(:any)'] = 'performance/$1';
+
+$route['manual'] = 'manual/index';
+$route['manual/(:any)'] = 'manual/$1';
+
+$route['role'] = 'role/index';
+$route['role/(:any)'] = 'role/$1';
+
+$route['districts'] = 'districts/index';
+$route['districts/(:any)'] = 'districts/$1';
+
+$route['leaves/(:any)'] = 'leaves/$1';
+$route['leaves'] = 'leaves/index';
+
 $route['settings'] = 'settings/index';
+$route['contracts'] = 'contracts/index';
+$route['contracts/(:any)'] = 'contracts/$1';
 $route['settings/(:any)'] = 'settings/$1';
 $route['employees/(:any)'] = 'employees/$1';
 $route['reports/(:any)'] = 'reports/$1';

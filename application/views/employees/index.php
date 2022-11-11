@@ -29,14 +29,37 @@
 						</th>
 
 						<th>
-							ROLE
+							JOB TITLE
+						</th>
+						<th>
+							BUSINESS LINE
+						</th>
+						<th>
+							REPORT TO
 						</th>
 						<th>
 							STATUS
 						</th>
+						<th>
+
+						</th>
 					</tr>
 					</thead>
 					<tbody>
+						<tr>
+							<td>
+								1234
+							</td>
+							<td>Thima</td>
+							<td>Sigauque</td>
+							<td>Email</td>
+							<td>Phone</td>
+							<td>JR DEV</td>
+							<td>IT</td>
+							<td>MR BLUE</td>
+							<td>ACTIVE</td>
+							<td><a href="<?php echo base_url()?>employees/details" class="btn-sm btn-info">Detail</a></td>
+						</tr>
 
 					<?php
 					function status($s){

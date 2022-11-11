@@ -2,7 +2,7 @@
 	<div class="card-header">
 		<p>
 			<a class="btn-sm btn-danger" href="<?php echo base_url()?>settings">Back</a>
-			<a class="btn-sm btn-info" href="<?php echo base_url()?>role/create">Create New</a>
+			<a class="btn-sm btn-info" href="<?php echo base_url()?>leaves/create_leave">Create New</a>
 		</p>
 	</div>
 	<div div="card-body">
@@ -16,6 +16,9 @@
 					<th>
 						Name
 					</th>
+					<th>
+						Days
+					</th>
 					<th></th>
 				</tr>
 				</thead>
@@ -27,11 +30,14 @@
 					</td>
 
 					<td>
-						JOB TITLE
+						SICK LEAVE
 					</td>
 					<td>
-						<a class="btn-sm btn-primary" href="<?php base_url() ?>role/edit">Edit</a> |
-						<a class="btn-sm btn-info" href="<?php base_url() ?>role/detail" >Details</a>
+						7
+					</td>
+					<td>
+						<a class="btn-sm btn-primary" href="<?php base_url() ?>leaves/edit">Edit</a> |
+						<a class="btn-sm btn-info" href="<?php base_url() ?>leaves/detail" >Details</a>
 					</td>
 				</tr>
 				<?php

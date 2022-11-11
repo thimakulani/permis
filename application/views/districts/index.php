@@ -2,7 +2,7 @@
 	<div class="card-header">
 		<p>
 			<a class="btn-sm btn-danger" href="<?php echo base_url()?>settings">Back</a>
-			<a class="btn-sm btn-info" href="<?php echo base_url()?>role/create">Create New</a>
+			<a class="btn-sm btn-info" href="<?php echo base_url()?>districts/create">Create New</a>
 		</p>
 	</div>
 	<div div="card-body">
@@ -27,11 +27,11 @@
 					</td>
 
 					<td>
-						JOB TITLE
+						CAPRICORN
 					</td>
 					<td>
-						<a class="btn-sm btn-primary" href="<?php base_url() ?>role/edit">Edit</a> |
-						<a class="btn-sm btn-info" href="<?php base_url() ?>role/detail" >Details</a>
+						<a class="btn-sm btn-primary" href="<?php base_url() ?>districts/edit">Edit</a> |
+						<a class="btn-sm btn-info" href="<?php base_url() ?>districts/detail" >Details</a>
 					</td>
 				</tr>
 				<?php

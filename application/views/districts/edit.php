@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-4">
-		<form method="post" action="<?php echo base_url()?>role/update_role">
+		<form method="post" action="<?php echo base_url()?>districts/update_district">
 			<div class="text-danger"></div>
 			<input type="hidden" name="id" value="<?php //echo $id?>" />
 			<div class="form-group">
