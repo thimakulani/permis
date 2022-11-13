@@ -3,7 +3,7 @@
 
 	<!------------------------------------------------------------------------------------------->
 	<br>
-	<h3>ORGANIZATIONAL PERFORMANCE CAPTURE</h3>
+	<h3>AUDITOR PERFORMANCE CAPTURE</h3>
 	<!-- Default box -->
 	<div class="card">
 		<div class="card-header">
