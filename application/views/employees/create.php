@@ -7,7 +7,7 @@
 	<hr />
 	<div class="card">
 		<div class="card-body">
-			<form method="post" enctype="multipart/form-data" action="<?php echo base_url()?>employees">
+			<form method="post" enctype="multipart/form-data" action="<?php echo base_url()?>employees/create_user">
 				<div>
 					<div class="row">
 						<div class="text-danger">

@@ -18,6 +18,7 @@ public function index()
 }
 public function performance_capture()
 {
+	$p_data['performance'] = '';
     $this->load->view("templates/header");
     $this->load->view("performance/performance_capture");
     $this->load->view("templates/footer");

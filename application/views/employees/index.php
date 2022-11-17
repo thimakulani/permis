@@ -46,31 +46,32 @@
 					</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>
-								1234
-							</td>
-							<td>Thima</td>
-							<td>Sigauque</td>
-							<td>Email</td>
-							<td>Phone</td>
-							<td>JR DEV</td>
-							<td>IT</td>
-							<td>MR BLUE</td>
-							<td>ACTIVE</td>
-							<td><a href="<?php echo base_url()?>employees/details" class="btn-sm btn-info">Detail</a></td>
-						</tr>
+
 
 					<?php
-					function status($s){
-						if ($s == 'Active')
+						foreach ($all_users as $user)
 						{
-							return 'class="bg-info"';
+							echo
+								'
+								<tr>
+									<td>
+										'.$user['Id'].'
+									</td>
+									<td>'.$user['Name'].'</td>
+									<td>'.$user['LastName'].'</td>
+									<td>'.$user['Email'].'</td>
+									<td>'.$user['Persal'].'</td>
+									<td>'.$user['DateHired'].'</td>
+									<td>'.$user['DateContracted'].'</td>
+									<td>'.$user['SupervisorId'].'</td>
+									<td>'.$user['Position'].'</td>
+									<td><a href="'.base_url().'employees/details/'.$user['Id'].'" class="btn-sm btn-info">Detail</a></td>
+								</tr>
+								
+								
+								
+								';
 						}
-						else{
-							return 'class="bg-danger"';
-						}
-					}
 					?>
 
 					</tbody>

@@ -12,10 +12,10 @@
 						</div>
 						<ul class="list-group list-group-unbordered mb-3">
 							<li class="list-group-item">
-								<b>First Name</b> <a class="float-right">Thima</a>
+								<b>First Name</b> <a class="float-right"><?php echo $user->Name; ?></a>
 							</li>
 							<li class="list-group-item">
-								<b>Last Name</b> <a class="float-right">Sigauque</a>
+								<b>Last Name</b> <a class="float-right"><?php echo $user->LastName; ?></a>
 							</li>
 							<li class="list-group-item">
 								<b>Phone Number</b> <a class="float-right">011111111</a>

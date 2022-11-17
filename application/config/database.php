@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'permis_db',
-	'username' => '',
+	'hostname' => 'localhost',
+	'username' => 'root',
 	'password' => '',
-	'database' => '',
+	'database' => 'permis_db',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
