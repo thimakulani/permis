@@ -59,58 +59,38 @@
 				</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-					</tr>
-					<tr>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-					</tr>
-					<tr>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-					</tr>
-					<tr>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-					</tr>
-					<tr>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-						<td><input class="form-control" type="text" /></td>
-					</tr>
+
+
+				<form method="post" action="<?php echo base_url()?>performance/push_performance">
+						<?php
+						foreach ($performance as $perf)
+						{
+							echo '
+									<td><input class="form-control" type="text" name="keyResponsibility" value="<?php echo set_value("keyResponsibility")?>"/></td>
+									<td><input class="form-control" type="text" name="gafs" value="<?php echo set_value("gafs")?>"/></td>
+									<td><input class="form-control" type="text" name="outcome" value="<?php echo set_value("outcome")?>" /></td>
+									<td><input class="form-control" type="text" name="weight" value="<?php echo set_value("weight")?>" /></td>
+									<td><input class="form-control" type="text"  name="measurement" value="<?php echo set_value("measurement")?>"/></td>
+									<td><input class="form-control" type="text" name="timeframes" value="<?php echo set_value("timeframes")?>"/></td>
+									<td><input class="form-control" type="text" name="resources" value="<?php echo set_value("resources")?>"/></td>
+									<td><a class="btn-sm btn-danger">Remove</a></td>
+								
+								
+								';
+						}
+						?>
+						<div class="card-footer">
+			            <input type="submit" class="btn-sm btn-success" />
+		                </div>
+					</form>
+
+
+				
 				</tbody>
 
 			</table>
 
 		</div>
-		<div class="card-footer">
-			<input type="submit" class="btn-sm btn-success" />
-		</div>
+		
 	</div>
 </section>
