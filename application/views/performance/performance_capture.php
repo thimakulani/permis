@@ -1,6 +1,4 @@
-<section class="content">
-	<h3>PERFORMANCE</h3>
-	<!-- Default box -->
+<div class="containr">
 	<div class="card">
 		<div class="card-header">
 
@@ -23,12 +21,11 @@
 
 
 		<div class="card-body p-0 table-responsive-sm">
-			<div></div>
 			<table class="table table-striped projects">
 				<thead>
 				<tr>
 					<th>
-						KEY RESPONSIBILITY
+						KEY RESULTS
 
 					</th>
 					<th>
@@ -51,49 +48,52 @@
 						PERFORMANCE MEASUREMENT
 					</th>
 					<th>
-						Timeframes
+						TIME FRAMES
 					</th>
 					<th>
-						Resources
+						RESOURCES
 					</th>
 				</tr>
 				</thead>
 				<tbody>
-					<form method="post" action="<?php echo base_url()?>performance/performance_capture">
+
 						<?php
 						foreach ($performance as $perf)
 						{
 							echo '
-									<td><input class="form-control" type="text" /></td>
-									<td><input class="form-control" type="text" /></td>
-									<td><input class="form-control" type="text" /></td>
-									<td><input class="form-control" type="text" /></td>
-									<td><input class="form-control" type="text" /></td>
-									<td><input class="form-control" type="text" /></td>
-									<td><input class="form-control" type="text" /></td>
-									<td><a class="btn-sm btn-danger">Remove</a></td>
-								
-								
+								<tr>
+									<td><input class="form-control-sm" disabled  type="text" value="'.$perf['Responsibility'].'" /></td>
+									<td><input class="form-control" disabled  type="text" value="'.$perf['GAFS'].'" /></td>
+									<td><input class="form-control" disabled  type="text" value="'.$perf['PerformanceOutcome'].'" /></td>
+									<td><input class="form-control" disabled  type="text" value="'.$perf['OutcomeWeight'].'" /></td>
+									<td><input class="form-control" disabled  type="text" value="'.$perf['PerformanceMeasurement'].'" /></td>
+									<td>
+										<input class="form-control" disabled  type="text"  value="'.$perf['Timeframes'].'" />
+									</td>
+									<td><input class="form-control" disabled type="text" value="'.$perf['Resources'].'" /></td>
+									<td><a class="btn-sm btn-danger" href="'.base_url().'performance/remove/'.$perf['PerformancePlanId'].'">Remove</a></td>
+								</tr>
 								';
 						}
+
 						echo '
-							<td><input class="form-control" type="text" /></td>
-							<td><input class="form-control" type="text" /></td>
-							<td><input class="form-control" type="text" /></td>
-							<td><input class="form-control" type="text" /></td>
-							<td><input class="form-control" type="text" /></td>
-							<td><input class="form-control" type="text" /></td>
-							<td><input class="form-control" type="text" /></td>
-							<td><a class="btn-sm btn-primary">Add</a></td>
-						
-						
+							<form method="post" action="'.base_url().'performance/add_performance">
+								<tr>
+									<td><input class="form-control" name="key_responsibility" required value="'.set_value('key_responsibility').'" type="text" /></td>
+									<td><input class="form-control" name="gafs" type="text" required value="'.set_value('gafs').'" /></td>
+									<td><input class="form-control" name="performance_outcome" required value="'.set_value('performance_outcome').'" type="text" /></td>
+									<td><input class="form-control" name="weight" type="text" required value="'.set_value('weight').'" /></td>
+									<td><input class="form-control" name="performance_measure" required value="'.set_value('performance_measure').'" type="text" /></td>
+									<td>
+									<input type="date" name="timeframe" class="form-control" required value="'.set_value('timeframe').'" />
+									</td>
+									<td><input class="form-control" name="resources" type="text" required value="'.set_value('resources').'" /></td>
+									<td><input class="btn-sm btn-info" type="submit" value="add"/></td>
+								</tr>
+							</form>				
 						';
-
-
-
-
 						?>
-					</form>
+
 
 				</tbody>
 
@@ -104,4 +104,4 @@
 			<input type="submit" class="btn-sm btn-success" />
 		</div>
 	</div>
-</section>
+</div>

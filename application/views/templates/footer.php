@@ -12,11 +12,7 @@
 <!-- /.control-sidebar -->
 
 <!-- Main Footer -->
-<footer class="main-footer">
-    <strong>Copyright &copy; COGSTA PERMIS</strong>
-    All rights reserved.
 
-</footer>
 </div>
 <!-- ./wrapper -->
 
