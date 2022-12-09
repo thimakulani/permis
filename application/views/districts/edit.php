@@ -2,10 +2,10 @@
 	<div class="col-md-4">
 		<form method="post" action="<?php echo base_url()?>districts/update_district">
 			<div class="text-danger"></div>
-			<input type="hidden" name="id" value="<?php //echo $id?>" />
+			<input type="hidden" name="id" value="<?php echo $id?>" />
 			<div class="form-group">
 				<label  class="control-label">Name</label>
-				<input name="name" class="form-control" value="<?php //echo $name;?>"/>
+				<input name="name" class="form-control" value="<?php echo $name;?>"/>
 				<span class="text-danger"><?php echo form_error('name') ?></span>
 			</div>
 			<div class="form-group">
@@ -16,5 +16,5 @@
 </div>
 
 <div>
-	<a href="<?php echo base_url()?>role">Back to List</a>
+	<a href="<?php echo base_url()?>districts">Back to List</a>
 </div>

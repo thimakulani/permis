@@ -11,7 +11,7 @@
 		<!-- /.info-box -->
 	</div>
 	<div class="col-md-3 col-sm-6 col-12">
-		<a href="<?php echo base_url()?>role" class="info-box bg-info">
+		<a href="<?php echo base_url()?>position" class="info-box bg-info">
 			<span class="info-box-icon"><i class="far fa-bookmark"></i></span>
 
 			<div class="info-box-content">

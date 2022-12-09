@@ -85,10 +85,10 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label  class="control-label">SUPERVISOR</label>
-								<select name="supervisor" class="form-control">
+								<select name="supervisor" class="form-control select2">
 									<?php
 									$selectedPosition = '';
-									foreach ($supervisors as $m)
+									foreach ($all_users as $m)
 									{
 										$selected = '';
 										if($_POST['supervisor'] == $m['Id'])
@@ -96,7 +96,8 @@
 											$selected = 'selected';
 											$selectedPosition = $m['Id'];
 										}
-										echo '<option '.$selected.' value="'.$m['Id'].'">'.$m['Names'].'</option>';
+										$names = $m['Name'] .' '.$m['LastName'];
+										echo '<option '.$selected.' value="'.$m['Id'].'">'.$names.'</option>';
 									}
 									?>
 								</select>
@@ -105,10 +106,10 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label class="control-label">MANAGER</label>
-								<select name="manager" class="form-control" >
+								<select name="manager" class="form-control select2" >
 									<?php
 									$selectedPosition = '';
-									foreach ($managers as $m)
+									foreach ($all_users as $m)
 									{
 										$selected = '';
 										if($_POST['manager'] == $m['Id'])
@@ -116,7 +117,8 @@
 											$selected = 'selected';
 											$selectedPosition = $m['Id'];
 										}
-										echo '<option '.$selected.' value="'.$m['Id'].'">'.$m['Names'].'</option>';
+										$names = $m['Name'] .' '.$m['LastName'];
+										echo '<option '.$selected.' value="'.$m['Id'].'">'.$names.'</option>';
 									}
 									?>
 								</select>
@@ -148,7 +150,7 @@
 						<div class="col-md-4">
 							<div class="form-group">
 								<label class="control-label">ROLE</label>
-								<select name="role" class="form-control" >
+								<select name="role" class="form-control select2-selection" >
 									<?php
 										$selectedPosition = '';
 										foreach ($roles as $r)
@@ -197,7 +199,6 @@
 			</form>
 		</div>
 	</div>
-
-
-
 </section>
+
+

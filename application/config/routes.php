@@ -56,8 +56,8 @@ $route['performance/(:any)'] = 'performance/$1';
 $route['manual'] = 'manual/index';
 $route['manual/(:any)'] = 'manual/$1';
 
-$route['role'] = 'role/index';
-$route['role/(:any)'] = 'role/$1';
+$route['position'] = 'position/index';
+$route['position/(:any)'] = 'position/$1';
 
 $route['districts'] = 'districts/index';
 $route['districts/(:any)'] = 'districts/$1';

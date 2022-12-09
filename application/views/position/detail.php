@@ -12,6 +12,6 @@
 	</dl>
 </div>
 <div>
-	<a class="btn-sm btn-primary" href="<?php echo base_url()?>role/edit">Edit</a> |
-	<a class="btn-sm btn-primary" href="<?php echo base_url()?>role">Back to List</a>
+	<a class="btn-sm btn-primary" href="<?php echo base_url()?>position/edit">Edit</a> |
+	<a class="btn-sm btn-primary" href="<?php echo base_url()?>position">Back to List</a>
 </div>

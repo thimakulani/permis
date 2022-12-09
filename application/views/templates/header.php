@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>/assets/dist/css/adminlte.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" integrity="sha512-CbQfNVBSMAYmnzP3IC+mZZmYMP2HUnVkV4+PwuhpiMUmITtSpS7Prr3fNncV1RBOnWxzz4pYQ5EAGG4ck46Oig==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="<?php echo base_url(); ?>/assets/plugins/select2/css/select2.min.css">
+	<link rel="stylesheet" href="<?php echo base_url(); ?>/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
 <div class="wrapper">
@@ -40,7 +43,15 @@
 			</li>
 		</ul>
         <!-- Right navbar links -->
+		<?php
 
+			if(isset($_POST['logout']))
+			{
+				session_destroy();
+				redirect('/');
+			}
+
+		?>
 	
 		
 		
@@ -61,7 +72,15 @@
                 </div>
                 <div class="info">
                     <a href="<?php echo base_url(); ?>account" class="d-block">
-						
+						<?php
+							$name = $_SESSION['Names'];
+							$Id = $_SESSION['Id'];
+							if (empty($name)){
+							}else{
+								echo $name;
+							}
+
+						?>
 					</a>
                 </div>
             </div>
@@ -91,7 +110,7 @@
 						<a href="<?php echo base_url(); ?>leaves" class="nav-link">
 							<i class="nav-icon fas fa-th"></i>
 							<p>
-								LEAVE APPLICATION
+								SPECIAL REQUEST
 								<span class="right badge badge-danger"></span>
 							</p>
 						</a>

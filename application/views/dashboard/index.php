@@ -4,50 +4,7 @@
 			QUICK LINKS
 		</h3>
 	</div>
-	<div class="card-body">
-		<div class="row">
-			<div class="col-md-3 col-sm-6 col-12">
-				<a href="#" class="info-box bg-info">
-					<span class="info-box-icon"><i class="far fa-torii-gate"></i></span>
 
-					<div class="info-box-content">
-						<span class="info-box-text">USERS</span>
-					</div>
-					<!-- /.info-box-content -->
-				</a>
-				<!-- /.info-box -->
-			</div>
-			<!-- /.col -->
-			<div class="col-md-3 col-sm-6 col-12">
-				<a href="<?php echo base_url()?>laptop/laptop_check_in" class="info-box bg-primary">
-					<span class="info-box-icon"><i class="fa-thin fa-assistive-listening-systems"></i></span>
-
-					<div class="info-box-content">
-						<span class="info-box-text">ASSERTS</span>
-					</div>
-					<!-- /.info-box-content -->
-				</a>
-				<!-- /.info-box -->
-			</div>
-			<!-- /.col -->
-			<div class="col-md-3 col-sm-6 col-12">
-				<a href="<?php echo base_url()?>after_hour/after_hour_check" class="info-box bg-success">
-					<span class="info-box-icon"><i class="far fa-calendar-alt"></i></span>
-
-					<div class="info-box-content">
-						<span class="info-box-text">AFTER HOURS</span>
-
-
-					</div>
-					<!-- /.info-box-content -->
-				</a>
-				<!-- /.info-box -->
-			</div>
-
-			<!-- /.col -->
-		</div>
-	</div>
-</div>
 <div class="card">
 	<div class="card-body">
 		<div class="row">
@@ -63,7 +20,7 @@
 							<div class="progress-bar" style="width: 100%"></div>
 						</div>
 						<span class="progress-description">
-							0
+							<?php echo $emp_count ?>
                         </span>
 					</div>
 					<!-- /.info-box-content -->
@@ -114,13 +71,13 @@
 				<thead>
 				<tr>
 					<th>
+						Id#
+					</th>
+					<th>
 						PERSAL#
 					</th>
 					<th>
-						NAME
-					</th>
-					<th>
-						DESCRIPTION
+						NAMES
 					</th>
 					<th class="text-center">
 						STATUS
@@ -130,6 +87,29 @@
 				</tr>
 				</thead>
 				<tbody>
+					<?php
+						foreach ($performance as $perf)
+						{
+							echo '<tr>
+									<td>
+										'.$perf['Id'].'
+									</td>
+									<td>
+										'.$perf['Employee'].'
+									</td>
+									<td>
+										'.$perf['Employee'].'
+									</td>
+									<td>
+										'.$perf['Status'].'
+									</td>
+									<td>
+										<a class="btn-sm btn-primary" href="#" ><i class="fas fa-folder"></i>View</a> |
+									</td>
+								</tr>';
+						}
+
+					?>
 
 				</tbody>
 			</table>

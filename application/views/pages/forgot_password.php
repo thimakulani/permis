@@ -28,14 +28,14 @@
 		<div class="card-body">
 			<p class="login-box-msg text-success">You forgot your password? Here you can easily set a new password.</p>
 
-			<form action="<?php echo site_url('Auth/password_validation'); ?>" method="post">
+			<form action="<?php echo site_url('Auth/reset_password'); ?>" method="post">
 
 				<span class="text-danger">
-					<?php //echo $error ?>
+					<?php echo $error ?>
 				</span>
 				<div class="input-group mb-3">
-					<input type="email" class="form-control"
-						   placeholder="Email" name="email" value="<?php echo set_value('email') ?>" />
+					<input type="text" class="form-control"
+						   placeholder="Persal" name="persal" value="<?php echo set_value('persal') ?>" />
 
 					<div class="input-group-append">
 						<div class="input-group-text">
@@ -45,7 +45,7 @@
 
 				</div>
 				<div>
-					<span class="text-danger"> <?php echo form_error('email') ?> </span>
+					<span class="text-danger"> <?php echo form_error('persal') ?> </span>
 				</div>
 				<div class="input-group mb-3">
 					<input type="password" class="form-control"

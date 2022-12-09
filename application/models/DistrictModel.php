@@ -16,7 +16,7 @@ class DistrictModel extends CI_Model
 	}
 	public function search_district($name)
 	{
-		$this->db->where('district', $name);
+		$this->db->where('DistrictName', $name);
 		$query = $this->db->get('districts');
 		if($query->num_rows() > 0){
 			return true;
@@ -27,21 +27,21 @@ class DistrictModel extends CI_Model
 	}
 	public function get_district_name($id){
 
-		$this->db->select('district');
+		$this->db->select('DistrictName');
 		$this->db->from('districts');
-		$this->db->where('District_Id', $id);
-		return $this->db->get()->row()->District;
+		$this->db->where('DistrictId', $id);
+		return $this->db->get()->row()->DistrictName;
 
 	}
 	public function delete_district($id)
 	{
-		$this->db->where('District_Id', $id);
+		$this->db->where('DistrictId', $id);
 		$this->db->delete('districts');
 	}
 	public function update_district($id, $data)
 	{
-		$this->db->set('District', $data);
-		$this->db->where('District_Id', $id);
+		$this->db->set('DistrictName', $data);
+		$this->db->where('DistrictId', $id);
 		$this->db->update('districts');
 	}
 }

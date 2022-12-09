@@ -29,13 +29,13 @@
 
       <form action="<?php echo site_url('auth/login_user')?>" method="post">
         <span class="text-danger">
-					<?php //echo $error ?>
+					<?php echo $error ?>
 				</span>
 		  <div class="input-group mb-3">
-			  <input type="email" class="form-control"
-					 placeholder="Email"
-					 value="<?php echo set_value('email');?>"
-					 name="email" />
+			  <input type="text" class="form-control"
+					 placeholder="Persal"
+					 value="<?php echo set_value('persal');?>"
+					 name="persal" />
 
 			  <div class="input-group-append">
 				  <div class="input-group-text">
@@ -45,7 +45,7 @@
 
 		  </div>
 		  <div>
-			  <span class="text-danger"> <?php echo form_error('email') ?> </span>
+			  <span class="text-danger"> <?php echo form_error('persal') ?> </span>
 		  </div>
 		  <div class="input-group mb-3">
 			  <input type="password" class="form-control"
@@ -69,8 +69,8 @@
 			  <!-- /.col -->
 		  </div>
       </form>
-		  <p class="mb-1">
-			  <a href="<?php echo base_url() ?>Auth/forgot_password">I forgot my password</a>
+		  <p class="mt-1">
+			  <a class="btn-sm btn-info" style="margin-top: 5px;" href="<?php echo base_url() ?>Auth/forgot_password">I forgot my password</a>
 		  </p>
     </div>
     <!-- /.login-card-body -->

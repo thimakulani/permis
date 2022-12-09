@@ -1,8 +1,8 @@
 <hr />
 <div class="row">
 	<div class="col-md-4">
-		<form method="post" action="<?php echo base_url()?>role/create_role">
-			<div class="text-danger"><?php //echo $error; ?></div>
+		<form method="post" action="<?php echo base_url()?>position/create_position">
+			<div class="text-danger"><?php echo $error; ?></div>
 			<div class="form-group">
 				<label class="control-label">Name</label>
 				<input name="name" value="<?php echo set_value('name')?>" class="form-control" />
@@ -16,5 +16,5 @@
 </div>
 
 <div>
-	<a class="btn-sm btn-success" href="<?php echo base_url()?>role">Back</a>
+	<a class="btn-sm btn-success" href="<?php echo base_url()?>position">Back</a>
 </div>

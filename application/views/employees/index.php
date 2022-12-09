@@ -7,7 +7,7 @@
 			</p>
 		</div>
 		<div class="card-body">
-			<div class="table-responsive-sm">
+			<div class="table-responsive">
 				<table class="table table-bordered table-hover" id="example2">
 					<thead>
 					<tr>
@@ -27,13 +27,10 @@
 						<th>
 							PHONE#
 						</th>
-
 						<th>
 							JOB TITLE
 						</th>
-						<th>
-							BUSINESS LINE
-						</th>
+
 						<th>
 							SUPERVISOR
 						</th>
@@ -64,11 +61,10 @@
 									<td>'.$user['LastName'].'</td>
 									<td>'.$user['Email'].'</td>
 									<td>'.$user['Persal'].'</td>
-									<td>'.$user['DateHired'].'</td>
-									<td>'.$user['DateContracted'].'</td>
-									<td>'.$user['SupervisorId'].'</td>
-									<td>'.$user['ManagerId'].'</td>
-									<td>'.$user['Position'].'</td>
+									<td>'.$user['JobTitle'].'</td>
+									<td>'.$user['S_Name'].'</td>
+									<td>'.$user['M_Name'].'</td>
+									<td>'.$user['Status'].'</td>
 									<td><a href="'.base_url().'employees/details/'.$user['Id'].'" class="btn-sm btn-info">Detail</a></td>
 								</tr>
 								

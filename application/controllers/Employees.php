@@ -42,14 +42,15 @@ class Employees extends CI_Controller
 				'Persal'=> $this->input->post('persal'),
 				'DateHired'=> date('Y-m-d'),
 				'Username'=> $this->input->post('persal'),
-				'SupervisorId'=> 1,//$this->input->post('supervisor'),
+				'SupervisorId'=> $this->input->post('supervisor'),
 				'JobTitle'=> $this->input->post('position'),
 				'Role'=> $this->input->post('role'),
-				'ManagerId'=> 1,//$this->input->post('manager'),
+				'ManagerId'=> $this->input->post('manager'),
 				'DistrictId'=> $this->input->post('district'),
 				'DateContracted'=> date('Y-m-d'),
 				'DateCreated'=> date('Y-m-d'),
 				'Status'=> 'Active',
+				'Contact'=> $this->input->post('contact'),
 
 			);
 			$emp = new EmployeeModel();
@@ -72,8 +73,8 @@ class Employees extends CI_Controller
 		$pos = new PositionModel();
 		$role = new RoleModel();
 		$dis = new DistrictModel();
-		$dt['supervisors'] = $emp->get_spcific_job_title("Operational Employee");
-		$dt['managers'] = $emp->get_spcific_job_title("Supervisor");
+		$dt['all_users'] = $emp->get_all_users();
+		//$dt['managers'] = $emp->get_all_users();
 		$dt['position'] = $pos->get_positions();
 		$dt['roles'] = $role->get_roles();
 		$dt['districts'] = $dis->get_district();
@@ -88,6 +89,7 @@ class Employees extends CI_Controller
 	{
 		$emp = new EmployeeModel();
 		$user['user'] = $emp->get_user($id);
+		$user['all_users'] = $emp->get_all_users();
 		$data['tittle'] = "UPDATE EMPLOYEES";
 		$this->load->view('templates/header', $data);
 		$this->load->view('employees/details', $user);
