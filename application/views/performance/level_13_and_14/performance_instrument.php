@@ -12,42 +12,42 @@
 
 <dl class="row">
 	<dt class="col-sm-2">
-		SMS member's name
+		SMS MEMBER'S NAME
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->Name . ' ' . $emp->LastName; ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Persal number
+		PERSAL NUMBER
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->Persal ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Supervisor's name
+		SUPERVISOR'S NAME
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->S_Name ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Branch name
+		BRANCH NAME
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->b_name; ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Province (if applicable)
+		PROVINCE (IF APPLICABLE)
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo '' ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Job title
+		JOB TITLE
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->JobTitle ?>
@@ -97,7 +97,7 @@
 						OF
 						OUTCOME (in %)
 					</th>
-					<?php if($user_submission >0){ ?>
+					<?php if($user_submission !=1){ ?>
 						<th></th>
 					<?php } ?>
 
@@ -116,14 +116,106 @@
 						<td><?php echo $m['batho_pele_principles']?></td>
 						<td><?php echo $m['weight_of_outcome']; ?>
 						</td>
-						<?php if($user_submission >0){ ?>
+						<?php if($user_submission !=1){ ?>
 							<td>
 
 								<button class="btn-sm btn-danger btn-remove-individual_perf<?php echo $m['id'] ?>" >X</button>
+								<button class="btn-sm btn-info" data-toggle="modal" data-target="#btn-update-individual_perf<?php echo $m['id'] ?>" >Edit</button>
 							</td>
 						<?php } ?>
 					</tr>
 
+					<div class="modal fade" id="btn-update-individual_perf<?php echo $m['id']; ?>" tabindex="-1" role="dialog"
+						 aria-labelledby="exampleModalLabel"
+						 aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">EDIT INDIVIDUAL PERFORMANCE</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<!--KEY RESULTS AREA	BATHO PELE PRINCIPLES	WEIGHT OF OUTCOME (in %)-->
+								<form id="individual_performance_form<?php echo $m['id'] ?>" method="post"
+									  action="<?php echo base_url() ?>performance/update_performance_plan/6/<?php echo $m['id'] ?>">
+									<div class="modal-body">
+										<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+										<div class="form-group">
+											<label class="control-label">KEY RESULTS AREA</label>
+											<input class="form-control" name="key_results_area" value="<?php echo $m['key_results_area']?>" required type="text"/>
+										</div>
+
+										<div class="form-group">
+											<label class="control-label">BATHO PELE PRINCIPLES</label>
+											<?php
+											$arr = array('Consultation','Service Standards','Access','Courtesy','Information','Openness and Transparency','Redress','Value for money','Encouraging innovation and Rewarding excellence','Leadership and Strategic Director')
+
+											?>
+											<select class="form-control select" name="batho_pele_principles">
+												<?php foreach ($arr as $a){ ?>
+													<option <?php if($m['batho_pele_principles'] == $a) echo 'selected'?>  value="<?php echo $a; ?>" ><?php echo $a; ?></option>
+												<?php } ?>
+											</select>
+										</div>
+										<div class="form-group">
+											<?php
+											$data = '';
+											for ($i = 10; $i <= 100; $i = $i + 5)
+											{
+												$selected = '';
+												if($m['weight_of_outcome'] == $i){ $selected = 'selected';}
+												$data .= '<option "'.$selected.'" value="' . $i . '">' . $i . '%</option>';
+											}
+
+											?>
+											<label class="control-label">WEIGHT OF OUTCOME (in %)</label>
+											<select name="weight_of_outcome" id="weight_of_outcome_update" class="form-control select">
+												<?php echo $data ?>
+											</select>
+										</div>
+
+										<div class="modal-footer">
+											<input type="submit" value="UPDATE" class="btn btn-primary"/>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+
+
+					<script>
+						$(document).ready(function () {
+							$('#individual_performance_form<?php echo $m['id']?>').submit(function (e) {
+								e.preventDefault();
+								const selected_weight = document.getElementById("weight_of_outcome_update");
+								var tot_weight = 0;
+								tot_weight = <?php echo $counter ?> ;
+								var sub_total = tot_weight + Number(selected_weight.value);
+								if(sub_total <= 100)
+								{
+									// prevent the form from submitting normally
+									$.ajax({
+										type: 'POST',
+										url: '<?php echo base_url() ?>performance/update_individual_performance/<?php echo $m['id'] ?>',
+										data: $('#individual_performance_form<?php echo $m['id']?>').serialize(), // serialize the form data
+										success: function (response) {
+											location.reload();
+											$('#response').html(response); // display the response on the page
+										}
+									});
+								}
+								else{
+									alert('THE TOTAL WEIGHT IS GREATER THAN 100');
+								}
+							});
+						});
+
+					</script>
 
 					<script>
 						$('.btn-remove-individual_perf<?php echo $m['id'] ?>').on('click', function () {
@@ -154,7 +246,7 @@
 						<td>SUB-TOTAL</td>
 						<td></td>
 						<td><?php echo $counter ?></td>
-						<?php if($user_submission >0){ ?>
+						<?php if($user_submission !=1){ ?>
 							<td></td>
 						<?php } ?>
 					</tr>
@@ -168,8 +260,7 @@
 				?>
 				<?php if($user_submission < 1){ ?>
 					<?php if($counter !=100) { ?>
-						<form id="add_i_p" method="post"
-						>
+						<form id="add_i_p" method="post">
 						<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
 						<tr>
 							<td><input class="form-control" name="key_results_area" required type="text"/></td>
@@ -274,7 +365,7 @@
 					<th>
 						DEV REQUIRED
 					</th>
-					<?php if($user_submission >0){ ?>
+					<?php if($user_submission !=1){ ?>
 						<th></th>
 					<?php } ?>
 				</tr>
@@ -290,10 +381,10 @@
 						<td><?php echo $gmcWork['core_management_competencies'] ?></td>
 						<td><?php echo $gmcWork['process_competencies'] ?></td>
 						<td><?php echo $gmcWork['dev_required'] ?></td>
-						<?php if($user_submission >0){ ?>
+						<?php if($user_submission !=1){ ?>
 							<td>
-
 								<button class="btn-sm btn-danger btn-remove-gmc<?php echo $gmcWork['id'] ?>" >X</button>
+								<button class="btn-sm btn-info btn-update-gmc<?php echo $gmcWork['id'] ?>" >Edit</button>
 							</td>
 						<?php }?>
 
@@ -405,7 +496,7 @@
 						<th>
 							ENABLING CONDITION
 						</th>
-						<?php if($user_submission >0){ ?>
+						<?php if($user_submission !=1){ ?>
 							<th></th>
 						<?php }?>
 
@@ -440,10 +531,14 @@
 								<td><?php echo $work['indicator_target'] ?> </td>
 								<td><?php echo $work['resource_required'] ?></td>
 								<td><?php echo $work['enabling_condition'] ?> </td>
-								<?php if($user_submission >0){ ?>
-									<td><a class="btn-remove-work<?php echo $work['id'] ?> btn-sm btn-danger"
+								<?php if($user_submission !=1){ ?>
+									<td>
+										<a style="margin: 3px" class="btn-remove-work<?php echo $work['id'] ?> btn-sm btn-danger"
 										   href="<?php echo base_url() ?>performance/remove_work_plan/<?php echo $work['id'] ?>">
-											X</a></td>
+											X</a>
+										<button style="margin: 3px" class="btn-remove-work<?php echo $work['id'] ?> btn-sm btn-info" >
+											Edit</button>
+									</td>
 								<?php } ?>
 							</tr>
 
@@ -547,7 +642,7 @@
 					<th>
 						TARGET DATE
 					</th>
-					<?php if($user_submission >0){ ?>
+					<?php if($user_submission !=1){ ?>
 						<th class="text-right"></th>
 
 					<?php } ?>
@@ -563,7 +658,7 @@
 						<td><?php echo $work['developmental_areas']; ?></td>
 						<td><?php echo $work['types_of_interventions'] ?></td>
 						<td><?php echo $work['target_date'] ?></td>
-						<?php if($user_submission >0){ ?>
+						<?php if($user_submission !=1){ ?>
 							<td>
 
 								<button class="btn-sm btn-danger text-white text-decoration-none btn-remove-pdp<?php echo $work['id'] ?>"

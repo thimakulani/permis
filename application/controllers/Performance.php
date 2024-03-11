@@ -2861,7 +2861,7 @@ class Performance extends CI_Controller
 
 	public function update_work_plan($id, $type)
 	{
-		$this->form_validation->set_rules('actual_achievement', '', 'required');
+		//$this->form_validation->set_rules('actual_achievement', '', 'required');
 		$this->form_validation->set_rules('sms_rating', '', 'required');
 		$mid = new MidYearAssessment();
 		//echo $this->input->post('job_holder_rating') . $this->input->post('par_score') . $this->input->post('performance_report');
