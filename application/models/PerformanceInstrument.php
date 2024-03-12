@@ -101,7 +101,11 @@ class PerformanceInstrument extends CI_Model
 		$this->db->where('id', $id);
 		$this->db->delete('generic_management_competencies_personal_development_plan');
 	}
-
+	public function update_generic_management_competencies_personal_development_plan(array $data, $id)
+	{
+		$this->db->where('id', $id);
+		$this->db->update('generic_management_competencies_personal_development_plan', $data);
+	}
     public function add_key_responsibility(array $data)
     {
 		$this->db->insert('performance_plan', $data);
@@ -314,6 +318,7 @@ class PerformanceInstrument extends CI_Model
 		$this->db->where('id', $id);
 		$this->db->update('performance_plan', $data);
     }
+
 
 	public function edit_pdp($id, array $data)
 	{

@@ -341,6 +341,27 @@ class Performance extends CI_Controller
 
 	}
 
+	public function update_dev_plan($id)
+	{
+		$this->form_validation->set_rules('dev_areas', '', 'required');
+		$this->form_validation->set_rules('intervention_type', '', 'required');
+		$this->form_validation->set_rules('target_date', '', 'required');
+
+
+		$mou_dev = new DirectorMouDevPlanModel();
+
+		if ($this->form_validation->run() == TRUE) {
+			$year = date('Y');
+			$next_year = $year + 1;
+			$period = $year .'/'.$next_year;
+
+			$data = array('DevAreas' => $this->input->post('dev_areas'),
+				'InterventionType' => $this->input->post('intervention_type'),
+				'TargetDate' => $this->input->post('target_date'),
+			);
+			$mou_dev->update_dir_dev_plan($data);
+		}
+	}
 	public function add_dir_dev_plan($type)
 	{
 		$this->form_validation->set_rules('dev_areas', '', 'required');
@@ -1625,7 +1646,6 @@ class Performance extends CI_Controller
 	public function update_work_plans($id)
 	{
 		$this->form_validation->set_rules('key_activities', '', 'required');
-		//$this->form_validation->set_rules('outcome_weight', '', 'required');
 		$this->form_validation->set_rules('target_date', '', 'required');
 		$this->form_validation->set_rules('indicator_target', '', 'required');
 		$this->form_validation->set_rules('resource_required', '', 'required');
@@ -3149,7 +3169,7 @@ class Performance extends CI_Controller
 		}
 
 	}
-		public function update_gmc($id)
+	public function update_gmc($id)
 	{
 		$this->form_validation->set_rules('dev_required', '', 'required');
 		$this->form_validation->set_rules('process_competencies', '', 'required');

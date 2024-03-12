@@ -138,7 +138,7 @@
 								</div>
 								<!--KEY RESULTS AREA	BATHO PELE PRINCIPLES	WEIGHT OF OUTCOME (in %)-->
 								<form id="individual_performance_form<?php echo $m['id'] ?>" method="post"
-									  action="<?php echo base_url() ?>performance/update_performance_plan/6/<?php echo $m['id'] ?>">
+									  >
 									<div class="modal-body">
 										<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
 										<div class="form-group">
@@ -285,7 +285,8 @@
 							<td><input class="btn-sm btn-info" type="submit" value="ADD"/></td>
 
 						</tr>
-						</form><?php }
+						</form>
+					<?php }
 
 				}?>
 				</tbody>
@@ -384,12 +385,83 @@
 						<?php if($user_submission !=1){ ?>
 							<td>
 								<button class="btn-sm btn-danger btn-remove-gmc<?php echo $gmcWork['id'] ?>" >X</button>
-								<button class="btn-sm btn-info btn-update-gmc<?php echo $gmcWork['id'] ?>" >Edit</button>
+								<button class="btn-sm btn-info" data-toggle="modal" data-target="#btn-update-gmc<?php echo $gmcWork['id'] ?>" >Edit</button>
+
 							</td>
 						<?php }?>
 
 
 					</tr>
+
+					<div class="modal fade" id="btn-update-gmc<?php echo $gmcWork['id']; ?>" tabindex="-1" role="dialog"
+						 aria-labelledby="exampleModalLabel"
+						 aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">EDIT GENERIC MANAGEMENT COMPETENCIES: PERSONAL DEVELOPMENT PLAN</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<!--KEY RESULTS AREA	BATHO PELE PRINCIPLES	WEIGHT OF OUTCOME (in %)-->
+								<form id="gmc_form_<?php echo $gmcWork['id'] ?>" >
+									<div class="modal-body">
+										<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+										<div class="form-group">
+											<label class="control-label">CORE MANAGEMENT COMPETENCIES</label>
+											<input class="form-control" name="core_management_competencies" value="<?php echo $gmcWork['core_management_competencies']?>" required type="text"/>
+										</div>
+										<div class="form-group">
+											<label class="control-label">PROCESS COMPETENCIES</label>
+											<input class="form-control" name="process_competencies" value="<?php echo $gmcWork['process_competencies']?>" required type="text"/>
+										</div>
+										<div class="form-group">
+											<label class="control-label">DEV REQUIRED</label>
+											<select class="form-control select" name="dev_required">
+												<option <?php if($gmcWork['dev_required'] == "YES") echo 'selected'?> value="YES">YES</option>
+												<option <?php if($gmcWork['dev_required'] == "NO") echo 'selected'?> value="NO">NO</option>
+											</select>
+										</div>
+										<div class="modal-footer">
+											<input type="submit" value="UPDATE" class="btn btn-primary"/>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+
+
+					<script>
+						$(document).ready(function () {
+							$('#gmc_form_<?php echo $gmcWork['id']?>').submit(function (e) {
+								e.preventDefault();
+
+								// prevent the form from submitting normally
+								$.ajax({
+									type: 'POST',
+									url: '<?php echo base_url() ?>performance/update_gmc/<?php echo $gmcWork['id'] ?>',
+									data: $('#gmc_form_<?php echo $gmcWork['id']?>').serialize(), // serialize the form data
+									success: function (response) {
+										location.reload();
+										$('#response').html(response); // display the response on the page
+									},
+									error: function(xhr, status, error) {
+										// Handle error
+										console.error("AJAX Error: " + xhr.responseText);
+										alert("An error occurred while processing your request. Please try again later.");
+									} // <- This parenthesis was missing
+								});
+							});
+						});
+
+
+					</script>
+
 					<script>
 						$('.btn-remove-gmc<?php echo $gmcWork['id'] ?>').on('click', function () {
 							//var rowId = $(this).data('id');
@@ -536,12 +608,89 @@
 										<a style="margin: 3px" class="btn-remove-work<?php echo $work['id'] ?> btn-sm btn-danger"
 										   href="<?php echo base_url() ?>performance/remove_work_plan/<?php echo $work['id'] ?>">
 											X</a>
-										<button style="margin: 3px" class="btn-remove-work<?php echo $work['id'] ?> btn-sm btn-info" >
+										<button style="margin: 3px" data-toggle="modal" data-target="#dlg-update-work-plan<?php echo $work['id'] ?>" class="btn-sm btn-info" >
 											Edit</button>
 									</td>
 								<?php } ?>
 							</tr>
 
+
+
+							<div class="modal fade" id="dlg-update-work-plan<?php echo $work['id']; ?>" tabindex="-1" role="dialog"
+								 aria-labelledby="exampleModalLabel"
+								 aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">EDIT WORK PLAN FOR CHIEF DIRECTOR AND DIRECTOR</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<!--	TARGET DATE			-->
+										<form id="work_plan_form_<?php echo $work['id'] ?>" >
+											<div class="modal-body">
+												<h2>KEY RESULT AREAS: <?php echo $_kra['key_results_area'] ?></h2>
+												<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+
+												<div class="form-group">
+													<label class="control-label">KEY ACTIVITIES</label>
+													<input class="form-control" name="key_activities" type="text" value="<?php echo $work['key_activities']?>" required/>
+												</div>
+												<div class="form-group">
+													<label class="control-label">TARGET DATE</label>
+													<input class="form-control" name="target_date" value="<?php echo $work['target_date']?>" required type="text"/>
+												</div>
+												<div class="form-group">
+													<label class="control-label">INDICATOR/TARGET</label>
+													<input class="form-control" name="indicator_target" value="<?php echo $work['indicator_target']?>" required type="text"/>
+												</div>
+												<div class="form-group">
+													<label class="control-label">RESOURCE REQUIRED</label>
+													<input class="form-control" name="resource_required" value="<?php echo $work['resource_required']?>" required type="text"/>
+												</div>
+
+												<div class="form-group">
+													<label class="control-label">ENABLING CONDITION</label>
+													<input class="form-control" name="enabling_condition" value="<?php echo $work['enabling_condition']?>" required type="text"/>
+												</div>
+
+												<div class="modal-footer">
+													<input type="submit" value="UPDATE" class="btn btn-primary"/>
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE
+													</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+
+							<script>
+								$(document).ready(function () {
+									$('#work_plan_form_<?php echo $work['id']?>').submit(function (e) {
+										e.preventDefault();
+
+										// prevent the form from submitting normally
+										$.ajax({
+											type: 'POST',
+											url: '<?php echo base_url() ?>performance/update_work_plans/<?php echo $work['id'] ?>',
+											data: $('#work_plan_form_<?php echo $work['id']?>').serialize(), // serialize the form data
+											success: function (response) {
+												location.reload();
+												$('#response').html(response); // display the response on the page
+											},
+											error: function(xhr, status, error) {
+												// Handle error
+												console.error("AJAX Error: " + xhr.responseText);
+												alert("An error occurred while processing your request. Please try again later.");
+											} // <- This parenthesis was missing
+										});
+									});
+								});
+
+
+							</script>
 							<script>
 								$('.btn-remove-work<?php echo $work['id'] ?>').on('click', function () {
 									var rowId = $(this).data('id');
@@ -575,13 +724,7 @@
 									<td><?php echo $_kra['key_results_area']; ?></td>
 								<?php }?>
 								<td><input class="form-control" name="key_activities" type="text" required/></td>
-								<!--<td>
-								<select name="outcome_weight" class="form-control select">
-									<?php /*for ($i = 10; $i <= 100; $i = $i + 10) { */?>
-										<option value="<?php /*echo $i; */?>"><?php /*echo $i; */?>%</option>
-									<?php /*} */?>
-								</select>
-							</td>-->
+
 								<td><input class="form-control" name="target_date" required type="date"/></td>
 								<td><input class="form-control" name="indicator_target" required type="text"/></td>
 								<td><input class="form-control" name="resource_required" required type="text"/></td>
@@ -664,10 +807,82 @@
 								<button class="btn-sm btn-danger text-white text-decoration-none btn-remove-pdp<?php echo $work['id'] ?>"
 								>X
 								</button>
+								<button class="btn-sm btn-info text-white text-decoration-none" data-toggle="modal" data-target="#dlg-dev-plan<?php echo $work['id'] ?>"
+								>Edit
+								</button>
 							</td>
 						<?php } ?>
 
 					</tr>
+
+					<div class="modal fade" id="dlg-dev-plan<?php echo $work['id']; ?>" tabindex="-1" role="dialog"
+						 aria-labelledby="exampleModalLabel"
+						 aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title">EDIT PERSONAL DEVELOPMENTAL PLAN FOR CHIEF DIRECTOR AND DIRECTOR</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<!--KEY RESULTS AREA	BATHO PELE PRINCIPLES	WEIGHT OF OUTCOME (in %)-->
+								<form id="dev_plan_form<?php echo $work['id'] ?>" >
+									<div class="modal-body">
+										<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+										<div class="form-group">
+											<label class="control-label">DEVELOPMENTAL AREAS</label>
+											<input class="form-control" name="developmental_areas" value="<?php echo $work['developmental_areas']?>" required type="text"/>
+										</div>
+										<div class="form-group">
+											<label class="control-label">PROCESS COMPETENCIES</label>
+											<input class="form-control" name="types_of_interventions" value="<?php echo $work['types_of_interventions']?>" required type="text"/>
+										</div>
+										<div class="form-group">
+											<label class="control-label">TARGET DATE</label>
+											<input class="form-control" name="target_date" value="<?php echo $work['target_date']?>" required type="date"/>
+										</div>
+
+										<div class="modal-footer">
+											<input type="submit" value="UPDATE" class="btn btn-primary"/>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE
+											</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+
+
+					<script>
+						$(document).ready(function () {
+							$('#dev_plan_form<?php echo $work['id']?>').submit(function (e) {
+								e.preventDefault();
+
+								// prevent the form from submitting normally
+								$.ajax({
+									type: 'POST',
+									url: '<?php echo base_url() ?>performance/update_personal_developmental_plan/<?php echo $work['id'] ?>',
+									data: $('#dev_plan_form<?php echo $work['id']?>').serialize(), // serialize the form data
+									success: function (response) {
+										location.reload();
+										$('#response').html(response); // display the response on the page
+									},
+									error: function(xhr, status, error) {
+										// Handle error
+										console.error("AJAX Error: " + xhr.responseText);
+										alert("An error occurred while processing your request. Please try again later.");
+									} // <- This parenthesis was missing
+								});
+							});
+						});
+
+
+					</script>
+
+
 					<script>
 						$('.btn-remove-pdp<?php echo $work['id'] ?>').on('click', function () {
 							//var rowId = $(this).data('id');
@@ -728,7 +943,6 @@
 </div>
 <br>
 <div>
-
 	<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization/6">
 		<input type="hidden" value="PART 1" name="description">
 		<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
