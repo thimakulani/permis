@@ -26,6 +26,15 @@ class Employees extends CI_Controller
 		//$this->upload->initialize($config);
 		$this->load->library('upload', $config);
 	}
+	public function switch_user($id)
+	{
+		$emp = new EmployeeModel();
+		$user = $emp->get_single_user($id);
+		$this->session->set_userdata('Id', $user->Id);
+		$this->session->set_userdata('Names', $user->Name. ' '. $user->LastName);
+		$this->session->set_userdata('Role', $user->Role);
+		redirect("dashboard");
+	}
 	public  function create_user()
 	{
 		$this->form_validation->set_rules('name', 'Name', 'required');

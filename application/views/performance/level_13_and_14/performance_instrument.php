@@ -15,28 +15,36 @@
 		SMS MEMBER'S NAME
 	</dt>
 	<dd class="col-sm-10">
-		<?php echo $emp->Name . ' ' . $emp->LastName; ?>
+		<?php if (isset($emp)) {
+			echo $emp->Name . ' ' . $emp->LastName;
+		} ?>
 	</dd>
 
 	<dt class="col-sm-2">
 		PERSAL NUMBER
 	</dt>
 	<dd class="col-sm-10">
-		<?php echo $emp->Persal ?>
+		<?php if (isset($emp)) {
+			echo $emp->Persal;
+		} ?>
 	</dd>
 
 	<dt class="col-sm-2">
 		SUPERVISOR'S NAME
 	</dt>
 	<dd class="col-sm-10">
-		<?php echo $emp->S_Name ?>
+		<?php if (isset($emp)) {
+			echo $emp->S_Name;
+		} ?>
 	</dd>
 
 	<dt class="col-sm-2">
 		BRANCH NAME
 	</dt>
 	<dd class="col-sm-10">
-		<?php echo $emp->b_name; ?>
+		<?php if (isset($emp)) {
+			echo $emp->b_name;
+		} ?>
 	</dd>
 
 	<dt class="col-sm-2">
@@ -50,7 +58,9 @@
 		JOB TITLE
 	</dt>
 	<dd class="col-sm-10">
-		<?php echo $emp->JobTitle ?>
+		<?php if (isset($emp)) {
+			echo $emp->JobTitle;
+		} ?>
 	</dd>
 </dl>
 <br/>

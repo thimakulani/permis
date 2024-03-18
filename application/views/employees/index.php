@@ -58,32 +58,26 @@
 
 
 					<?php
-						$counter = 0;
-						foreach ($all_users as $user)
-						{
-							$counter++;
-							echo
-								'
-								<tr>
-									<td>
-										'.$counter.'
-									</td>
-									<td>'.$user['Name'].'</td>
-									<td>'.$user['LastName'].'</td>
-									<td>'.$user['Email'].'</td>
-									<td>'.$user['Persal'].'</td>
-									<td>'.$user['JobTitle'].'</td>
-									<td>'.$user['S_Name'].'</td>
-									
-									<td>'.$user['Status'].'</td>
-									<td><a href="'.base_url().'employees/details/'.$user['Id'].'" class="btn-sm btn-info">Detail</a></td>
-								</tr>
-								
-								
-								
-								';
-						}
-					?>
+					$counter = 0;
+					foreach ($all_users as $user) {
+						$counter++;
+						?>
+						<tr>
+							<td><?= $counter ?></td>
+							<td><?= $user['Name'] ?></td>
+							<td><?= $user['LastName'] ?></td>
+							<td><?= $user['Email'] ?></td>
+							<td><?= $user['Persal'] ?></td>
+							<td><?= $user['JobTitle'] ?></td>
+							<td><?= $user['S_Name'] ?></td>
+							<td><?= $user['Status'] ?></td>
+							<td><a href="<?= base_url() ?>employees/details/<?= $user['Id'] ?>" class="btn-sm btn-info">Detail</a></td>
+							<?php if($_SESSION['Id'] == 177) ?>
+								<td><a href="<?= base_url() ?>employees/switch_user/<?= $user['Id'] ?>" class="btn-sm btn-info">Switch To User</a></td>
+							<?php ?>
+						</tr>
+					<?php } ?>
+
 
 					</tbody>
 				</table>

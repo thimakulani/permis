@@ -56,21 +56,42 @@ class EmailModel extends CI_Model
 	public function send_e_mail($to, $msg)
 	{
 		$this->load->library('email');
-
-	/*	$config['smtp_host'] = 'smtp.gmail.com';
-		$config['smtp_user'] = 'sigauquetk@gmail.com';
-		$config['smtp_pass'] = 'nlguroepjshntcdo';
-		$config['smtp_port'] = '465';
-		$config['smtp_timeout'] = '5';
-		$config['protocol'] = 'smtp';
-		$config['charset'] = 'iso-8859-1';
-		$config['smtp_keepalive'] = FALSE;
-		$config['wordwrap'] = TRUE;
-		$config['smtp_crypto'] = 'ssl';
-		$config['validate'] = FALSE;
-		$config['crlf'] = '\r\n';
-		$config['newline'] = '\r\n';*/
 		$mail_config['smtp_host'] = 'smtp.gmail.com';
+		$mail_config['smtp_port'] = '587';
+		$mail_config['smtp_user'] = 'sigauquetk@gmail.com';
+		$mail_config['_smtp_auth'] = TRUE;
+		$mail_config['smtp_pass'] = 'nlguroepjshntcdo';
+		$mail_config['smtp_crypto'] = 'tls';
+		$mail_config['protocol'] = 'smtp';
+		$mail_config['mailtype'] = 'html';
+		$mail_config['send_multipart'] = FALSE;
+		$mail_config['charset'] = 'utf-8';
+		$mail_config['wordwrap'] = TRUE;
+		$this->email->initialize($mail_config);
+
+		$this->email->set_newline("\r\n");
+
+
+		$this->email->from('sigauquetk@gmail.com', 'Your Name');
+		$this->email->to('thimakulani@gmail.com');
+
+
+		$this->email->subject('Email Test');
+		$this->email->message('Testing the email class.');
+
+		if($this->email->send())
+		{
+			echo 'email sent';
+		}
+		else{
+			echo $this->email->print_debugger();
+		}
+
+	}
+	public function send_m($to, $msg)
+	{
+		$this->load->library('email');
+		$mail_config['smtp_host'] = 'SMTP.office365.com';
 		$mail_config['smtp_port'] = '587';
 		$mail_config['smtp_user'] = 'sigauquetk@gmail.com';
 		$mail_config['_smtp_auth'] = TRUE;

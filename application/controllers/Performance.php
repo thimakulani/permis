@@ -31,7 +31,13 @@ class Performance extends CI_Controller
 	public function template($type)
 	{
 		//$mou = new OperationalMemoModel();
-		$id = $_SESSION['Id'];
+
+		if (!empty($_SESSION['Id'])) {
+			$id = $_SESSION['Id'];
+		}
+		else{
+			redirect('/');
+		}
 
 
 		$year = date('Y');
@@ -459,7 +465,7 @@ class Performance extends CI_Controller
 		}
 		$user = new EmployeeModel();
 		$emp = $user->get_user($_SESSION['Id']);
-
+		$data['emp'] = $emp;
 		$data['semester'] = $current_semester;
 		$data['level'] = $emp->SalaryLevel;
 
@@ -1651,12 +1657,13 @@ class Performance extends CI_Controller
 		$this->form_validation->set_rules('resource_required', '', 'required');
 		$this->form_validation->set_rules('enabling_condition', '', 'required');
 
-		print_r($_POST);
+		//print_r($_POST);
 
 		if ($this->form_validation->run())
 		{
 			$data = array(
 				'key_activities' => $this->input->post('key_activities'),
+				'weight' => $this->input->post('weight'),
 				'target_date' => $this->input->post('target_date'),
 				'indicator_target' => $this->input->post('indicator_target'),
 				'resource_required' => $this->input->post('resource_required'),
@@ -2098,7 +2105,7 @@ class Performance extends CI_Controller
 			$toaster = new Toastr();
 			$toaster->warning("YOU ALREADY SUBMITTED YOUR PERFORMANCE FOR THIS FINANCIAL YEAR");
 			$this->load->view('flush');
-			$this->load->view('flush');
+			//$this->load->view('flush');
 			$this->template($type);
 			return;
 		}
@@ -2415,7 +2422,7 @@ class Performance extends CI_Controller
 			$period = $year .'/'.$next_year;
 			$data = array(//'key_result_areas' => $this->input->post('key_result_areas'),
 				'key_activities' => $this->input->post('key_activities'),
-				//'weight' => $this->input->post('outcome_weight'),
+				'weight' => $this->input->post('weight'),
 				'target_date' => $this->input->post('target_date'),
 				'indicator_target' => $this->input->post('indicator_target'),
 				'resource_required' => $this->input->post('resource_required'),
@@ -3182,6 +3189,24 @@ class Performance extends CI_Controller
 			);
 			$this->db->where('id',$id);
 			$this->db->update('generic_management_competencies_personal_development_plan', $data);
+		}
+		else{
+			echo "<script>alert('Something went wrong')</script>";
+		}
+	}
+	public function update_generic_management_competencies($id)
+	{
+		$this->form_validation->set_rules('dev_required', '', 'required');
+		$this->form_validation->set_rules('process_competencies', '', 'required');
+		$this->form_validation->set_rules('core_management', '', 'required');
+		if($this->form_validation->run()) {
+			$data = array(
+				'dev_required'=>$this->input->post('dev_required'),
+				'core_management'=>$this->input->post('core_management'),
+				'process_competencies'=>$this->input->post('process_competencies'),
+			);
+			$this->db->where('id',$id);
+			$this->db->update('generic_management_competencies', $data);
 		}
 		else{
 			echo "<script>alert('Something went wrong')</script>";

@@ -54,11 +54,11 @@ class EmployeeModel extends CI_Model
 		$this->db->select("Employees.Id, Employees.branch AS br, Employees.Name, Employees.LastName, Employees.Email, Employees.Gender, Employees.IdNumber, Employees.Persal, Employees.Disability,
 							Employees.DateCreated, Employees.JobTitle AS JT , Employees.DateContracted, Concat(supervisor.Name, ' ' , supervisor.LastName) as S_Name,Concat(pmd.Name, ' ' , pmd.LastName) as Pmd_Name ,supervisor.Id as S_Id, Employees.Role, Employees.Race, Districts.DistrictName, Employees.Status, Employees.Contact,
 							Positions.PositionName as JobTitle, Employees.SalaryLevel, Employees.directorate, Employees.sub_directorate");
-		$this->db->select("Employees.SalaryLevelEntryDate, Employees.AppointmentDate");
-		$this->db->join('Employees supervisor', 'Employees.SupervisorId = supervisor.Id');
-		$this->db->join('Employees pmd', 'Employees.pmd = pmd.Id');
-		$this->db->join('Positions', 'Employees.JobTitle = Positions.PositionId');
-		$this->db->join('Districts', 'Employees.DistrictId = Districts.DistrictId');
+		$this->db->select("Employees.SalaryLevelEntryDate, Employees.AppointmentDate",'left');
+		$this->db->join('Employees supervisor', 'Employees.SupervisorId = supervisor.Id','left');
+		$this->db->join('Employees pmd', 'Employees.pmd = pmd.Id','left');
+		$this->db->join('Positions', 'Employees.JobTitle = Positions.PositionId','left');
+		$this->db->join('Districts', 'Employees.DistrictId = Districts.DistrictId','left');
 		$this->db->where('Employees.Id', $id);
 		$results = $this->db->get('employees');
 		return $results->row();
@@ -139,11 +139,11 @@ class EmployeeModel extends CI_Model
 		$this->db->select("Employees.SalaryLevelEntryDate, Employees.AppointmentDate");
 		$this->db->select("Roles.RoleName");
 		$this->db->select("b.name AS b_name");
-		$this->db->join('Employees supervisor', 'Employees.SupervisorId = supervisor.Id');
-		$this->db->join('Positions', 'Employees.JobTitle = Positions.PositionId');
-		$this->db->join('Districts', 'Employees.DistrictId = Districts.DistrictId');
-		$this->db->join('Roles', 'Roles.RoleId = Employees.Role');
-		$this->db->join('branch b', 'Employees.branch = b.id');
+		$this->db->join('Employees supervisor', 'Employees.SupervisorId = supervisor.Id', 'left');
+		$this->db->join('Positions', 'Employees.JobTitle = Positions.PositionId', 'left');
+		$this->db->join('Districts', 'Employees.DistrictId = Districts.DistrictId', 'left');
+		$this->db->join('Roles', 'Roles.RoleId = Employees.Role', 'left');
+		$this->db->join('branch b', 'Employees.branch = b.id', 'left');
 		$this->db->where('Employees.Id', $id);
 
 		$results = $this->db->get('employees');
@@ -157,7 +157,6 @@ class EmployeeModel extends CI_Model
 		$this->db->from('employees');
 		$this->db->join('Positions', 'Employees.JobTitle = Positions.PositionId');
 		$this->db->join('districts Dist', 'Employees.DistrictId = Dist.DistrictId');
-
 		$this->db->join('business_unit bu','bu.id = Employees.business_unit');
 		$this->db->join('performance_assessment Sub','Sub.employee = Employees.Id');
 		$this->db->where('employees.id IN (SELECT employee FROM performance_assessment)');

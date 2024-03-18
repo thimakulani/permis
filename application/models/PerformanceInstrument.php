@@ -106,6 +106,11 @@ class PerformanceInstrument extends CI_Model
 		$this->db->where('id', $id);
 		$this->db->update('generic_management_competencies_personal_development_plan', $data);
 	}
+	public function update_generic_management_competencies(array $data, $id)
+	{
+		$this->db->where('id', $id);
+		$this->db->update('generic_management_competencies', $data);
+	}
     public function add_key_responsibility(array $data)
     {
 		$this->db->insert('performance_plan', $data);

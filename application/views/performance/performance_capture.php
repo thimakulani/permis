@@ -68,7 +68,29 @@
 
 					}
 				}
-				else if($level == 15)
+				/*work in progress level 15*/
+				else if ($level == 15)
+				{
+					if(isset($semester))
+					{
+						if ($semester->semester_name == 'SEMESTER ONE')
+						{
+							echo '<a class="btn-lg btn-info text-decoration-none" style="margin: 5px" href="' . base_url() . 'performance/template/200">PERFORMANCE AGREEMENT</a>';
+							if(isset($employee_submission))
+							{
+								if($employee_submission->status == 'APPROVED') {
+									echo '<a class="btn-lg btn-info text-decoration-none" style="margin: 5px" href="' . base_url() . 'performance/template/10">MID YEAR PERFORMANCE ASSESSMENT</a>';
+								}
+							}
+						}
+						else if ($semester->semester_name == 'SEMESTER TWO')
+						{
+							echo '<a class="btn-lg btn-info text-decoration-none" style="margin: 5px" href="'.base_url().'performance/template/300">ANNUAL ASSESSMENT</a>';
+						}
+
+					}
+				}
+				/*else if($level == 15)
 				{
 					if(isset($semester))
 					{
@@ -84,7 +106,7 @@
 
 					}
 
-				}
+				}*/
 				else if($level == 16)
 				{
 					if(isset($semester))

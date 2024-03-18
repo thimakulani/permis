@@ -197,7 +197,7 @@ class PerformanceModel extends CI_Model
 	{
 		$this->db->select('performance_assessment.id, performance_assessment.status, performance_assessment.status_final , performance_assessment.date_captured, performance_assessment.period, performance_assessment.template_name');
 		$this->db->select("Concat(emp.Name, ' ' , emp.LastName) as S_Name");
-		$this->db->join('employees as emp', 'performance_assessment.supervisor = emp.Id');
+		$this->db->join('employees as emp', 'performance_assessment.supervisor = emp.Id','left');
 		$this->db->where('employee', $id);
 		return $this->db->get('performance_assessment')->result_array();
 	}

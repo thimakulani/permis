@@ -1,3 +1,4 @@
+<?php $counter = 0; ?>
 <div>
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/performance_capture">BACK</a>
 </div>
@@ -78,19 +79,114 @@
 		</thead>
 		<tbody>
 		<?php
-		foreach ($bp as $b) { ?>
+		foreach ($bp as $ip) {
+			$counter = $counter + $ip['weight_of_outcome'];
+			?>
 			<tr>
-				<td><?php echo $b['key_results_area'] ?></td>
-				<td><?php echo $b['batho_pele_principles'] ?></td>
-				<td><?php echo $b['weight_of_outcome'] ?></td>
+				<td><?php echo $ip['key_results_area'] ?></td>
+				<td><?php echo $ip['batho_pele_principles'] ?></td>
+				<td><?php echo $ip['weight_of_outcome'] ?></td>
 				<?php if($user_submission != 1){ ?>
-				<td><button class="btn-sm btn-danger btn-remove-bp<?php echo $b['id'] ?>"
+				<td><button class="btn-sm btn-danger btn-remove-bp<?php echo $ip['id'] ?>"
 					   >X</button>
+					<button class="btn-sm btn-info" data-toggle="modal"
+							data-target="#btn-update-individual_perf<?php echo $ip['id'] ?>">Edit
+					</button>
 				</td>
 				<?php }?>
 			</tr>
 
+			<div class="modal fade" id="btn-update-individual_perf<?php echo $ip['id']; ?>" tabindex="-1" role="dialog"
+				 aria-labelledby="exampleModalLabel"
+				 aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title">EDIT INDIVIDUAL PERFORMANCE</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<!--KEY RESULTS AREA	BATHO PELE PRINCIPLES	WEIGHT OF OUTCOME (in %)-->
+						<form id="individual_performance_form<?php echo $ip['id'] ?>" method="post"
+						>
+							<div class="modal-body">
+								<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+								<div class="form-group">
+									<label class="control-label">KEY RESULTS AREA</label>
+									<input class="form-control" name="key_results_area"
+										   value="<?php echo $ip['key_results_area'] ?>" required type="text"/>
+								</div>
 
+								<div class="form-group">
+									<label class="control-label">BATHO PELE PRINCIPLES</label>
+									<?php
+									$arr = array('Consultation', 'Service Standards', 'Access', 'Courtesy', 'Information', 'Openness and Transparency', 'Redress', 'Value for money', 'Encouraging innovation and Rewarding excellence', 'Leadership and Strategic Director')
+
+									?>
+									<select class="form-control select" name="batho_pele_principles">
+										<?php foreach ($arr as $a) { ?>
+											<option <?php if ($ip['batho_pele_principles'] == $a) echo 'selected' ?>
+												value="<?php echo $a; ?>"><?php echo $a; ?></option>
+										<?php } ?>
+									</select>
+								</div>
+								<div class="form-group">
+									<?php
+									$data = '';
+									for ($i = 10; $i <= 100; $i = $i + 5) {
+										$selected = '';
+										if ($ip['weight_of_outcome'] == $i) {
+											$selected = 'selected';
+										}
+										$data .= '<option "' . $selected . '" value="' . $i . '">' . $i . '%</option>';
+									}
+
+									?>
+									<label class="control-label">WEIGHT OF OUTCOME (in %)</label>
+									<select name="weight_of_outcome" id="weight_of_outcome_update"
+											class="form-control select">
+										<?php echo $data ?>
+									</select>
+								</div>
+
+								<div class="modal-footer">
+									<input type="submit" value="UPDATE" class="btn btn-primary"/>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+
+			<script>
+				$(document).ready(function () {
+					$('#individual_performance_form<?php echo $ip['id']?>').submit(function (e) {
+						e.preventDefault();
+						const selected_weight = document.getElementById("weight_of_outcome_update");
+						var tot_weight = 0;
+						tot_weight = <?php echo $counter ?> ;
+						var sub_total = tot_weight + Number(selected_weight.value);
+						if (sub_total <= 100) {
+							$.ajax({
+								type: 'POST',
+								url: '<?php echo base_url() ?>performance/update_individual_performance/<?php echo $ip['id'] ?>',
+								data: $('#individual_performance_form<?php echo $ip['id']?>').serialize(), // serialize the form data
+								success: function (response) {
+									location.reload();
+									$('#response').html(response); // display the response on the page
+								}
+							});
+						} else {
+							alert('THE TOTAL WEIGHT IS GREATER THAN 100');
+						}
+					});
+				});
+
+			</script>
 
 			<script>
 				$('.btn-remove-bp<?php echo $b['id'] ?>').on('click', function () {
@@ -113,6 +209,22 @@
 
 
 		<?php } ?>
+
+		<?php if ($counter > 0) { ?>
+
+			<tr>
+				<td>SUB-TOTAL</td>
+				<td></td>
+				<td><?php echo $counter ?></td>
+				<?php if ($user_submission != 1) { ?>
+					<td></td>
+				<?php } ?>
+			</tr>
+
+		<?php } ?>
+
+
+
 		<?php if($user_submission != 1){ ?>
 		<form id="individual_performance" method="post" action="<?php echo base_url() ?>performance/add_individual_performance/500">
 			<input name="template_name" value="PERFORMANCE INSTRUMENT" type="hidden"/>
@@ -305,10 +417,108 @@
 							<?php if($user_submission != 1){ ?>
 								<td>
 									<button class="btn-sm btn-danger btn-remove-wp<?php echo $work['id'] ?>" >X</button>
+									<button style="margin: 3px" data-toggle="modal" data-target="#dlg-update-work-plan<?php echo $work['id'] ?>" class="btn-sm btn-info" >
+										Edit</button>
 								</td>
 
+							</tr>
 
-								<script>
+
+
+
+							<div class="modal fade" id="dlg-update-work-plan<?php echo $work['id']; ?>" tabindex="-1" role="dialog"
+								 aria-labelledby="exampleModalLabel"
+								 aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">EDIT WORK PLAN</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<!--	TARGET DATE			-->
+										<form id="work_plan_form_<?php echo $work['id'] ?>" >
+											<div class="modal-body">
+												<h2>KEY RESULT AREAS: <?php echo $_kra['key_results_area'] ?></h2>
+												<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+
+												<div class="form-group">
+													<label class="control-label">KEY ACTIVITIES</label>
+													<input class="form-control" name="key_activities" type="text" value="<?php echo $work['key_activities']?>" required/>
+												</div>
+												<div class="form-group">
+													<label class="control-label">WEIGHT</label>
+
+													<select name="weight" class="form-control select">
+														<?php for ($i = 10; $i <= 100; $i = $i + 10) { ?>
+															<option <?php if($work['weight'] == $i) echo 'selected'?> value="<?php echo $i; ?>"><?php echo $i; ?>%</option>
+														<?php } ?>
+													</select>
+
+
+												</div>
+
+												<div class="form-group">
+													<label class="control-label">TARGET DATE</label>
+													<input class="form-control" name="target_date" value="<?php echo $work['target_date']?>" required type="date"/>
+												</div>
+												<div class="form-group">
+													<label class="control-label">INDICATOR/TARGET</label>
+													<input class="form-control" name="indicator_target" value="<?php echo $work['indicator_target']?>" required type="text"/>
+												</div>
+												<div class="form-group">
+													<label class="control-label">RESOURCE REQUIRED</label>
+													<input class="form-control" name="resource_required" value="<?php echo $work['resource_required']?>" required type="text"/>
+												</div>
+
+												<div class="form-group">
+													<label class="control-label">ENABLING CONDITION</label>
+													<input class="form-control" name="enabling_condition" value="<?php echo $work['enabling_condition']?>" required type="text"/>
+												</div>
+
+												<div class="modal-footer">
+													<input type="submit" value="UPDATE" class="btn btn-primary"/>
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE
+													</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+
+							<script>
+								$(document).ready(function () {
+									$('#work_plan_form_<?php echo $work['id']?>').submit(function (e) {
+										e.preventDefault();
+
+										// prevent the form from submitting normally
+										$.ajax({
+											type: 'POST',
+											url: '<?php echo base_url() ?>performance/update_work_plans/<?php echo $work['id'] ?>',
+											data: $('#work_plan_form_<?php echo $work['id']?>').serialize(), // serialize the form data
+											success: function (response) {
+												location.reload();
+												$('#response').html(response); // display the response on the page
+											},
+											error: function(xhr, status, error) {
+												// Handle error
+												console.error("AJAX Error: " + xhr.responseText);
+												alert("An error occurred while processing your request. Please try again later.");
+											} // <- This parenthesis was missing
+										});
+									});
+								});
+
+
+							</script>
+
+
+
+
+
+							<script>
 									$('.btn-remove-wp<?php echo $work['id'] ?>').on('click', function () {
 										//var rowId = $(this).data('id');
 										$.ajax({
@@ -320,13 +530,14 @@
 											},
 											error: function (xhr, status, error) {
 												console.log(error);
+
 											}
 										});
 									});
 								</script>
 							<?php }?>
 
-							</tr>
+
 						<?php
 							$row_counter++;
 						}
@@ -353,46 +564,51 @@
 
 					<?php if($user_submission != 1){ ?>
 
-					<form id="work_plan" method="post" action="<?php echo base_url() ?>performance/add_work_plan/500">
-						<input name="template_name" value="PERFORMANCE INSTRUMENT" type="hidden"/>
-						<input name="kra_id" value="<?php echo $_kra['id'] ?>" type="hidden"/>
-						<tr>
-							<?php if($row_counter==0){ ?>
-								<td><?php echo $_kra['key_results_area']; ?></td>
-							<?php }?>
-							<td><input class="form-control" name="key_activities" type="text" required/></td>
-							<td>
-								<select name="outcome_weight" class="form-control select">
-									<?php for ($i = 10; $i <= 100; $i = $i + 10) { ?>
-										<option value="<?php echo $i; ?>"><?php echo $i; ?>%</option>
+						<form id="add_wp<?php echo $_kra['id'] ?>" method="post">
+							<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
+							<input type="hidden" name="kra_id" value="<?php echo $_kra['id']; ?>"/>
+							<?php if ($user_submission != 1) { ?>
+								<tr>
+									<?php if ($row_counter == 0) { ?>
+										<td><?php echo $_kra['key_results_area']; ?></td>
 									<?php } ?>
-								</select>
-							</td>
-							<td><input class="form-control" name="target_date" required type="date"/></td>
-							<td><input class="form-control" name="indicator_target" required type="text"/></td>
-							<td><input class="form-control" name="resource_required" required type="text"/></td>
-							<td><input class="form-control" name="enabling_condition" type="text" required/></td>
-							<td><input class="btn-sm btn-info" type="submit" value="add"/></td>
-						</tr>
-					</form>
+									<td><input class="form-control" name="key_activities" type="text" required/></td>
+									<td>
+										<select name="weight" class="form-control select">
+											<?php for ($i = 10; $i <= 100; $i = $i + 10) { ?>
+												<option value="<?php echo $i; ?>"><?php echo $i; ?>%</option>
+											<?php } ?>
+										</select>
+									</td>
+									<td><input class="form-control" name="target_date" required type="date"/></td>
+									<td><input class="form-control" name="indicator_target" required type="text"/></td>
+									<td><input class="form-control" name="resource_required" required type="text"/></td>
+									<td><input class="form-control" name="enabling_condition" type="text" required/></td>
 
-					<script>
-						$(document).ready(function () {
-							$('#work_plan').submit(function (e) {
-								e.preventDefault(); // prevent the form from submitting normally
-								$.ajax({
-									type: 'POST',
-									url: '<?php echo base_url();?>performance/add_work_plan/500',
-									data: $('#work_plan').serialize(), // serialize the form data
-									success: function (response) {
-										location.reload();
-										$('#response').html(response); // display the response on the page
-									}
+									<td><input class="btn-sm btn-info" type="submit" value="ADD"/></td>
+
+								</tr>
+							<?php } ?>
+						</form>
+
+						<script>
+							$(document).ready(function () {
+								$('#add_wp<?php echo $_kra['id']?>').submit(function (e) {
+									e.preventDefault(); // prevent the form from submitting normally
+									$.ajax({
+										type: 'POST',
+										url: '<?php echo base_url();?>performance/add_work_plan',
+										data: $('#add_wp<?php echo $_kra['id']?>').serialize(), // serialize the form data
+										success: function (response)
+										{
+											location.reload();
+											$('#response').html(response); // display the response on the page
+										}
+									});
 								});
 							});
-						});
 
-					</script>
+						</script>
 					<?php } ?>
 					</tbody>
 
@@ -443,7 +659,79 @@
 						<?php if($user_submission != 1){ ?>
 						<td>
 							<button class="btn-sm btn-danger btn-remove-pdp<?php echo $work['id'] ?>">x</button>
+							<button class="btn-sm btn-info text-white text-decoration-none" data-toggle="modal" data-target="#dlg-dev-plan<?php echo $work['id'] ?>"
+							>Edit
+							</button>
 						</td>
+
+
+							<div class="modal fade" id="dlg-dev-plan<?php echo $work['id']; ?>" tabindex="-1" role="dialog"
+								 aria-labelledby="exampleModalLabel"
+								 aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">EDIT PERSONAL DEVELOPMENTAL PLAN FOR CHIEF DIRECTOR AND DIRECTOR</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<!--KEY RESULTS AREA	BATHO PELE PRINCIPLES	WEIGHT OF OUTCOME (in %)-->
+										<form id="dev_plan_form<?php echo $work['id'] ?>" >
+											<div class="modal-body">
+												<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+												<div class="form-group">
+													<label class="control-label">DEVELOPMENTAL AREAS</label>
+													<input class="form-control" name="developmental_areas" value="<?php echo $work['developmental_areas']?>" required type="text"/>
+												</div>
+												<div class="form-group">
+													<label class="control-label">PROCESS COMPETENCIES</label>
+													<input class="form-control" name="types_of_interventions" value="<?php echo $work['types_of_interventions']?>" required type="text"/>
+												</div>
+												<div class="form-group">
+													<label class="control-label">TARGET DATE</label>
+													<input class="form-control" name="target_date" value="<?php echo $work['target_date']?>" required type="date"/>
+												</div>
+
+												<div class="modal-footer">
+													<input type="submit" value="UPDATE" class="btn btn-primary"/>
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE
+													</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+
+
+
+							<script>
+								$(document).ready(function () {
+									$('#dev_plan_form<?php echo $work['id']?>').submit(function (e) {
+										e.preventDefault();
+
+										// prevent the form from submitting normally
+										$.ajax({
+											type: 'POST',
+											url: '<?php echo base_url() ?>performance/update_personal_developmental_plan/<?php echo $work['id'] ?>',
+											data: $('#dev_plan_form<?php echo $work['id']?>').serialize(), // serialize the form data
+											success: function (response) {
+												location.reload();
+												$('#response').html(response); // display the response on the page
+											},
+											error: function(xhr, status, error) {
+												// Handle error
+												console.error("AJAX Error: " + xhr.responseText);
+												alert("An error occurred while processing your request. Please try again later.");
+											} // <- This parenthesis was missing
+										});
+									});
+								});
+
+
+							</script>
+
 
 						<script>
 							$('.btn-remove-pdp<?php echo $work['id'] ?>').on('click', function () {
