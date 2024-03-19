@@ -10,7 +10,9 @@
 	<h4>MID YEAR ASSESSMENT FOR DEPUTY DIRECTOR-GENERAL</h4>
 
 </div>
+<?php if($user_submission < 1){ ?>
 
+<?php }?>
 
 <dl class="row">
 	<dt class="col-sm-2">
@@ -86,7 +88,9 @@
 					<th>SMS RATING</th>
 					<th>SUPERVISOR RATING</th>
 					<th>AGREED RATING</th>
-					<th></th>
+					<?php if($user_submission < 1){ ?>
+						<th></th>
+					<?php } ?>
 				</tr>
 				</thead>
 				<tbody>
@@ -110,7 +114,9 @@
 								<td><input type="number" min="1" max="4" name="sms_rating" value="<?php echo $work['sms_rating'] ?>" class="form-control"></td>
 								<td><input type="number" name="supervisor_rating" disabled value="<?php echo $work['supervisor_rating'] ?>" class="form-control"></td>
 								<td><input type="number" name="agreed_rating" disabled value="<?php echo $work['agreed_rating'] ?>" class="form-control"></td>
-								<td><input type="submit" value="update" class="btn-sm btn-info" /></td>
+								<?php if($user_submission < 1){ ?>
+									<td><input type="submit" value="update" class="btn-sm btn-info" /></td>
+								<?php } ?>
 							</tr>
 						</form>
 
@@ -243,7 +249,7 @@
 				<label>
 					Comment by the SMS member  on his/her performance
 				</label>
-				<textarea class="form-control" name="emp_comment" ></textarea>
+				<textarea <?php if($user_submission >= 1) echo 'disabled'?> class="form-control" name="emp_comment" ></textarea>
 
 			</div>
 			<br />
@@ -258,10 +264,12 @@
 			<br />
 		</div>
 		<input value="MID YEAR ASSESSMENT" type="hidden" name="template_name"/>
+		<?php if($user_submission <1)
+		{?>
 		<div class="card-footer">
 			<input type="submit" <?php if($is_valid !== true){ echo 'disabled'; } ?> class="btn btn-info" value="SUBMIT TO SUPERVISOR"/>
 		</div>
-
+		<?php }  ?>
 	</div>
 </form>
 <br>

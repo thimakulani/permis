@@ -759,6 +759,10 @@
 								success: function (response) {
 									location.reload();
 									$('#response').html(response); // display the response on the page
+								},
+								error: function (xhr, status, error) {
+									console.error(xhr.responseText); // Log the error response to the console
+									alert('error: ' +  error)
 								}
 							});
 						});

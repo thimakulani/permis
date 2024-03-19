@@ -82,6 +82,7 @@
 </script>
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script type="text/javascript" src="<?php echo base_url()?>assets/js/popper.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>assets/js/bootstrap-4.3.1.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url()?>assets/js/flatpickr.min.js"></script>

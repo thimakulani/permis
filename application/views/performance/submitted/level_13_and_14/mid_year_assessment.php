@@ -92,10 +92,6 @@ foreach ($kra as $_kra){
 								<td><input class="form-control-sm" disabled  type="text" value="' . $p_dev['process_competencies'] . '" /></td>
 								<td><input class="form-control-sm" disabled  type="text" value="' . $p_dev['dev_required_cmcs'] . '" /></td>
 								<td><input class="form-control-sm" disabled  type="text" value="' . $p_dev['dev_required_pcs'] . '" /></td>
-
-
-						
-
 							</tr>
 							';
 			}

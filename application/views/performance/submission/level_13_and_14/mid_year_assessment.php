@@ -6,7 +6,7 @@
 	<h4>MID YEAR ASSESSMENT FOR DEPUTY DIRECTOR-GENERAL </h4>
 
 </div>
-
+<?php $is_valid = false; ?>
 
 <dl class="row">
 	<dt class="col-sm-2">
@@ -80,7 +80,14 @@
 				<?php
 
 				foreach ($work_plan as $work){ ?>
-					<?php if($work['kra_id'] == $_kra['id']) {?>
+					<?php if($work['kra_id'] == $_kra['id'])
+					{
+						if(!isset($work['supervisor_rating']))
+						{
+							$is_valid = false;
+						}
+						?>
+
 						<form id="update_wp<?php echo $work['id'] ?>" enctype="multipart/form-data" action="<?php echo base_url();?>performance/sup_update_work_plan/<?php echo $work['id'];?>/<?php echo $data->id;?>/<?php echo $data->emp_id;?>" method="post">
 							<input type="hidden" name="template_name" value="MID YEAR ASSESSMENT" />
 							<tr>
@@ -88,8 +95,8 @@
 								<td><?php echo $work['target_date'] ?></td>
 								<td><input type="text" name="actual_achievement" disabled value="<?php echo $work['actual_achievement'] ?>" class="form-control"></td>
 								<td><input type="number" min="1" max="4" name="sms_rating" disabled value="<?php echo $work['sms_rating'] ?>" class="form-control"></td>
-								<td><input type="number" name="supervisor_rating" value="<?php echo $work['supervisor_rating'] ?>" class="form-control"></td>
-								<td><input type="number" name="agreed_rating" value="<?php echo $work['agreed_rating'] ?>" class="form-control"></td>
+								<td><input type="number" min="1" max="4" name="supervisor_rating" required value="<?php echo $work['supervisor_rating'] ?>" class="form-control"></td>
+								<td><input type="number" min="1" max="4" name="agreed_rating" required value="<?php echo $work['agreed_rating'] ?>" class="form-control"></td>
 								<td><input type="submit" value="update" class="btn-sm btn-info" /></td>
 							</tr>
 						</form>
@@ -106,8 +113,16 @@
 										//$id, $s_id, $emp_id
 										data: $('#update_wp<?php echo $work['id'] ?>').serialize(), // serialize the form data
 										success: function (response) {
-											location.reload();
+
 											//$('#response').html(response); // display the response on the page
+											Swal.fire({
+												icon: 'success',
+												title: 'Success',
+												text: 'Successfully Updated',
+												onClose: () => {
+													location.reload();
+												}
+											});
 
 										}
 									});
@@ -180,7 +195,7 @@
 			}
 
 
-			echo '
+/*			echo '
 							
 							<form id="add_gmc" method="post" action="' . base_url() . 'performance/add_generic_management_competencies/10">
 								<input type="hidden" name="template_name" value="MID YEAR ASSESSMENT" />
@@ -203,6 +218,7 @@
 								</tr>
 							</form>				
 						';
+			*/
 			?>
 			<script>
 				$(document).ready(function () {
@@ -294,7 +310,7 @@
 				</select>
 				<br />
 				<input type="text" placeholder="REASON..." style="display: none;" id="comment" name="comment" class="form-control w-100">
-				<input type="submit" class="btn-sm btn-primary m-2" />
+				<input type="submit" <?php if(!$is_valid) echo 'disable'?> class="btn-sm btn-primary m-2" />
 
 			</form>
 		</div>

@@ -2415,14 +2415,14 @@ class Performance extends CI_Controller
 		//	id	employee	key_result_areas	key_activities	weight
 		//target_date	indicator_target	resource_required	enabling_condition
 		//template_name	period
-		if ($this->form_validation->run())
-		{
+		if ($this->form_validation->run()) {
 			$year = date('Y');
 			$next_year = $year + 1;
-			$period = $year .'/'.$next_year;
-			$data = array(//'key_result_areas' => $this->input->post('key_result_areas'),
+			$period = $year . '/' . $next_year;
+
+			// Initialize the data array with common fields
+			$data = array(
 				'key_activities' => $this->input->post('key_activities'),
-				'weight' => $this->input->post('weight'),
 				'target_date' => $this->input->post('target_date'),
 				'indicator_target' => $this->input->post('indicator_target'),
 				'resource_required' => $this->input->post('resource_required'),
@@ -2432,9 +2432,17 @@ class Performance extends CI_Controller
 				'period' => $period,
 				'kra_id' => $this->input->post('kra_id'),
 			);
-			$p_i->add_work_plan($data);
 
+			// Check if the "weight" field is set
+			if (isset($_POST['weight'])) {
+				// Add the "weight" field to the data array
+				$data['weight'] = $this->input->post('weight');
+			}
+
+			// Call the add_work_plan method with the data array
+			$p_i->add_work_plan($data);
 		}
+
 	}
 	public function delete_kra($type, $id)
 	{

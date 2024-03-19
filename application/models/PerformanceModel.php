@@ -566,12 +566,15 @@ class PerformanceModel extends CI_Model
 
 	public function get_employee_submission($Id, $period, $template)
 	{
+
+
 		$this->db->where('employee', $Id);
 		$this->db->group_start();
 		$this->db->like('period', $period,'both');
 		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
 		$this->db->group_end();
 		$this->db->where('template_name', $template);
+
 		return $this->db->get('performance_assessment')->row();
 	}
 

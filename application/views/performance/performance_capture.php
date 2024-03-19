@@ -15,7 +15,9 @@
 			<h4>OPEN FOR PERIOD: <span style="color: #2e0b0b"> <?php echo date_format(date_create($semester->start_date), 'd-F-Y') . ' to ' . date_format(date_create($semester->end_date), 'd-F-Y');  ?> </span> </h4>
 		<?php
 			$_SESSION['period'] = $semester->start_date . ' TO ' . $semester->end_date;
+
 		}?>
+
 
 	</div>
 	<div class="card-body">

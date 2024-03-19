@@ -82,16 +82,16 @@ foreach ($kra as $_kra){
 			<tbody>
 
 			<?php
-			foreach ($gmc_personal_development_plan as $g) {
-			echo '
+			foreach ($gmc_personal_development_plan as $g) {?>
+
 					<tr>
-						<td><input class="form-control-sm" disabled  type="text" value="' . $g['core_management_competencies'] . '" /></td>
-						<td><input class="form-control-sm" disabled  type="text" value="' . $g['process_competencies'] . '" /></td>
-						<td><input class="form-control-sm" disabled  type="text" value="' . $g['dev_required'] . '" /></td>
+						<td><input class="form-control-sm" disabled  type="text" value="<?php echo $g['core_management_competencies'];?>" /></td>
+						<td><input class="form-control-sm" disabled  type="text" value="<?php echo $g['process_competencies'];?>" /></td>
+						<td><input class="form-control-sm" disabled  type="text" value="<?php echo $g['dev_required'];?>" /></td>
 						
 					</tr>
-			';
-			}
+
+			<?php }
 			?>
 
 
