@@ -273,6 +273,4 @@
 	</div>
 </form>
 <br>
-<script>
 
-</script>

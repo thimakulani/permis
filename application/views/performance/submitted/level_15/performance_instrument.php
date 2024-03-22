@@ -1,7 +1,7 @@
 <div>
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance">BACK</a>
 </div>
-<div style="text-align: center;">PERFORMANCE AGREEMENT FOR DEPUTY DIRECTOR-GENERAL</div>
+<h2 style="text-align: center;">PERFORMANCE AGREEMENT FOR DEPUTY DIRECTOR-GENERAL</h2>
 <br/>
 <!--<div>
 	Please identify dates for half-yearly and annual performance assessments
@@ -43,42 +43,42 @@
 <div style="text-align: center;">PERFORMANCE AGREEMENT FOR DEPUTY DIRECTOR-GENERAL</div>
 <dl class="row">
 	<dt class="col-sm-2">
-		SMS member's name
+		SMS MEMBER'S NAME
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->Name . ' ' . $emp->LastName; ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Persal number
+		PERSAL NUMBER
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->Persal ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Supervisor's name
+		SUPERVISOR'S NAME
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->S_Name ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Branch name
+		BRANCH NAME
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo '' ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Province (if applicable)
+		PROVINCE (IF APPLICABLE)
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo '' ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Job title
+		JOB TITLE
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->JobTitle ?>
@@ -110,12 +110,12 @@
 
 <div>
 	<h4>
-		Dispute resolution mechanism
+		DISPUTE RESOLUTION MECHANISM
 	</h4>
 	<p>
-		Disputes on the signing of PAs will be dealt with in terms of Regulation 72(4)(5)&(6) of the Public Service
-		Regulations, 2016. Any disputes about the assessment, shall be mediated by a person agreed to by the SMS member
-		and the Supervisor.
+		DISPUTES ON THE SIGNING OF PAS WILL BE DEALT WITH IN TERMS OF REGULATION 72(4)(5)&(6) OF THE PUBLIC SERVICE
+		REGULATIONS, 2016. ANY DISPUTES ABOUT THE ASSESSMENT, SHALL BE MEDIATED BY A PERSON AGREED TO BY THE SMS MEMBER
+		AND THE SUPERVISOR.
 	</p>
 </div>
 
@@ -151,7 +151,14 @@
 						//data: {id: rowId},
 						success: function (response) {
 							// remove the row from the table
-							location.reload();
+							Swal.fire({
+								icon: 'success',
+								title: 'Success',
+								text: 'Successfully Deleted',
+								onClose: () => {
+									location.reload();
+								}
+							});
 						},
 						error: function (xhr, status, error) {
 							console.log(error);
@@ -180,8 +187,14 @@
 						url: '<?php echo base_url();?>performance/add_individual_performance/200',
 						data: $('#add_ip').serialize(), // serialize the form data
 						success: function (response) {
-							location.reload();
-							$('#response').html(response); // display the response on the page
+							Swal.fire({
+								icon: 'success',
+								title: 'Success',
+								text: 'Successfully Added',
+								onClose: () => {
+									location.reload();
+								}
+							});
 						}
 					});
 				});
@@ -245,7 +258,14 @@
 								//data: {id: rowId},
 								success: function (response) {
 									// remove the row from the table
-									location.reload();
+									Swal.fire({
+										icon: 'success',
+										title: 'Success',
+										text: 'Successfully Removed',
+										onClose: () => {
+											location.reload();
+										}
+									});
 								},
 								error: function (xhr, status, error) {
 									console.log(error);
@@ -265,8 +285,14 @@
 								url: '<?php echo base_url();?>performance/add_generic_management_competencies/200',
 								data: $('#add_gmc').serialize(), // serialize the form data
 								success: function (response) {
-									location.reload();
-									$('#response').html(response); // display the response on the page
+									Swal.fire({
+										icon: 'success',
+										title: 'Success',
+										text: 'Successfully Added',
+										onClose: () => {
+											location.reload();
+										}
+									});
 								}
 							});
 						});
@@ -362,7 +388,14 @@
 										//data: {id: rowId},
 										success: function (response) {
 											// remove the row from the table
-											location.reload();
+											Swal.fire({
+												icon: 'success',
+												title: 'Success',
+												text: 'Successfully Removed',
+												onClose: () => {
+													location.reload();
+												}
+											});
 										},
 										error: function (xhr, status, error) {
 											console.log(error);
@@ -391,8 +424,14 @@
 								url: '<?php echo base_url();?>performance/add_work_plan',
 								data: $('#add_wp<?php echo $_kra['id']?>').serialize(), // serialize the form data
 								success: function (response) {
-									location.reload();
-									$('#response').html(response); // display the response on the page
+									Swal.fire({
+										icon: 'success',
+										title: 'Success',
+										text: 'Successfully Added',
+										onClose: () => {
+											location.reload();
+										}
+									});
 								}
 							});
 						});
@@ -457,8 +496,14 @@
 									type: 'DELETE',
 									//data: {id: rowId},
 									success: function (response) {
-										// remove the row from the table
-										location.reload();
+										Swal.fire({
+											icon: 'success',
+											title: 'Success',
+											text: 'Successfully Removed',
+											onClose: () => {
+												location.reload();
+											}
+										});
 									},
 									error: function (xhr, status, error) {
 										console.log(error);
@@ -479,8 +524,14 @@
 								url: '<?php echo base_url();?>performance/add_personal_developmental_plan/200',
 								data: $('#add_pdp').serialize(), // serialize the form data
 								success: function (response) {
-									location.reload();
-									$('#response').html(response); // display the response on the page
+									Swal.fire({
+										icon: 'success',
+										title: 'Success',
+										text: 'Successfully Added',
+										onClose: () => {
+											location.reload();
+										}
+									});
 								}
 							});
 						});
@@ -517,8 +568,14 @@
 					url: '<?php echo base_url() ?>performance/initialization',
 					data: $('#initialize_part_1').serialize(), // serialize the form data
 					success: function (response) {
-						location.reload();
-						$('#response').html(response); // display the response on the page
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: 'Successfully Initialized',
+							onClose: () => {
+								location.reload();
+							}
+						});
 					}
 				});
 			});
@@ -567,8 +624,14 @@
 				url: '<?php echo base_url();?>performance/add_kra_name/200',
 				data: $('#add_kra').serialize(), // serialize the form data
 				success: function (response) {
-					location.reload();
-					$('#response').html(response); // display the response on the page
+					Swal.fire({
+						icon: 'success',
+						title: 'Success',
+						text: 'Successfully Added',
+						onClose: () => {
+							location.reload();
+						}
+					});
 				}
 			});
 		});

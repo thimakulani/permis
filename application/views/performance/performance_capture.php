@@ -20,7 +20,33 @@
 
 
 	</div>
+
 	<div class="card-body">
+		<div>
+			<label>
+				FINANCIAL YEAR
+				<?php $years = range(2023, strftime("%Y", time())); ?>
+				<select class="select form-control-sm form-control" name="financial_year" id="financial_year" onchange="SelectedYear()">
+					<option disabled selected value="-1">--SELECT A FINANCIAL YEAR--</option>
+					<?php foreach ($years as $year)
+					{
+						$selected_year = '';
+						if(isset($_POST['financial_year']))
+						{
+							if($_POST['financial_year'] == $year)
+							{
+								$selected_year = 'selected';
+							}
+						}
+						?>
+						<option
+							<?php echo $selected_year; ?> value="<?php $next_year = $year + 1;
+						echo $year . '/' . $next_year; ?> "> <?php echo $year . '/' . $next_year; ?>
+						</option>
+					<?php } ?>
+				</select>
+			</label>
+		</div>
 		<div class="row">
 
 			<?php
@@ -136,7 +162,6 @@
 
 	</div>
 </div>
-</div>
 <script>
 	if ( window.history.replaceState ) {
 		window.history.replaceState( null, null, window.location.href );
@@ -157,24 +182,3 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
-	if ( window.history.replaceState ) {
-		window.history.replaceState( null, null, window.location.href );
-	}
-</script>
