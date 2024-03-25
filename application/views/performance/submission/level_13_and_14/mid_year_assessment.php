@@ -277,9 +277,9 @@
 
 	</div>
 </form>-->
-<br>
+<br />
 <div class="card">
-	<?php if($data->status == 'PENDING' || $data->status == 'APPROVED'){ ?>
+	<?php if($data->status == 'PENDING'){ ?>
 
 		<div class="card-body">
 			<form  method="post" action="<?php echo base_url()?>performance/sup_update_status/<?php echo $submission_id ?>">

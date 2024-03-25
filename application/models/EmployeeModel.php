@@ -18,7 +18,7 @@ class EmployeeModel extends CI_Model
 		$this->db->where('Id', $id);
 		$this->db->update('employees', $data);
 	}
-		public function get_emp_list()
+	public function get_emp_list()
 	{
 		$this->db->select("Employees.Id, Employees.Persal, Employees.Name , Employees.LastName");
 		$this->db->select("Employees.Email, Positions.PositionName as JobTitle, Concat(supervisor.Name, ' ' , supervisor.LastName) as S_Name, Employees.Status");
@@ -111,6 +111,57 @@ class EmployeeModel extends CI_Model
 		$results =  $this->db->get();
 		return $results->result_array();
 	}
+	public function get_compliant($contract_type, $year, $directorate, $branch, $sub_directorate, $status, $salary_level)
+	{
+
+		$this->db->distinct();
+		$this->db->select("Employees.Id, Sub.employee, Employees.Persal, Employees.Name, Employees.LastName, Positions.PositionName as JobTitle, br.name as br_name");
+		$this->db->from('employees');
+		$this->db->join('Positions', 'Employees.JobTitle = Positions.PositionId');
+		$this->db->join('branch br', 'Employees.branch = br.id');
+		$this->db->join('performance_assessment Sub', 'Sub.employee = Employees.Id', 'left');
+		$this->db->where('employees.Id <>', 1); // Avoiding magic numbers, replace 1 with actual ID
+		$this->db->where('Sub.employee IS NOT NULL'); // Equivalent to 'employees.id IN (SELECT employee FROM performance_assessment )'
+
+		if ($status == 'A') {
+			$this->db->where('Sub.status', 'APPROVED');
+			$this->db->where('Sub.status_final', 'PENDING');
+		} elseif ($status == 'B') {
+			$this->db->where('Sub.status_final', 'PENDING');
+		} elseif ($status == 'C') {
+			$this->db->where('Sub.status_final', 'APPROVED');
+		}
+
+		if ($contract_type !== null) {
+			$this->db->where('Sub.template_name', $contract_type);
+		}
+
+		if ($year !== null) {
+			$this->db->where('Sub.period', $year);
+		}
+
+		if ($directorate !== null) {
+			$this->db->where('Employees.Directorate', $directorate);
+		}
+
+		if ($branch !== null) {
+			$this->db->where('br.id', $branch);
+		}
+
+		if ($sub_directorate !== null) {
+			$this->db->where('Employees.Sub_Directorate', $sub_directorate);
+		}
+
+		if ($salary_level == 'A') {
+			$this->db->where("Employees.SalaryLevel BETWEEN 1 AND 12");
+		} elseif ($salary_level == 'B') {
+			$this->db->where("Employees.SalaryLevel BETWEEN 13 AND 16");
+		}
+
+		$results = $this->db->get();
+		return $results->result_array();
+
+	}
 	public function get_complient_users($contract_type, $year)
 	{
 		$this->db->distinct();
@@ -185,7 +236,7 @@ class EmployeeModel extends CI_Model
 
 
 
-
+/*
 	public function get_compliant($contract_type, $year, $directorate, $branch, $sub_directorate, $status, $salary_level)
 	{
 		$this->db->distinct();
@@ -238,35 +289,31 @@ class EmployeeModel extends CI_Model
 
 		$results =  $this->db->get();
 		return $results->result_array();
-	}
+	}*/
+
 	public function get_none_compliant($contract_type, $year, $directorate, $branch, $sub_directorate)
 	{
-		$this->db->select("Employees.Id,Employees.Persal,Employees.Name,Employees.LastName,Positions.PositionName as JobTitle,br.name as br_name");
+		$this->db->select("Employees.Id, Employees.Persal, Employees.Name, Employees.LastName, Positions.PositionName as JobTitle, br.name as br_name");
 		$this->db->from('employees');
 		$this->db->join('Positions', 'Employees.JobTitle = Positions.PositionId');
 		$this->db->join('branch br', 'Employees.branch = br.id');
-		$this->db->where("employees.Id NOT IN (SELECT employee FROM performance_assessment)");
-		$this->db->or_where("employees.Id IN (SELECT employee FROM performance_assessment where status = 'NULL')");
+		$this->db->join('performance_assessment', 'Employees.Id = performance_assessment.employee', 'left');
+		$this->db->where('performance_assessment.employee IS NULL');
+		//$this->db->where('performance_assessment.period', '2023/2024');
 
-
-		if($contract_type !== null)
-		{
-			$this->db->where('template_name', $contract_type);
+		if ($year !== null) {
+			$this->db->where('performance_assessment.period', $year);
 		}
-		if($year !== null)
-		{
-			$this->db->where('period',$year);
+		if ($contract_type !== null) {
+			$this->db->where('performance_assessment.template_name', $contract_type);
 		}
-		if($directorate !== null)
-		{
+		if ($directorate !== null) {
 			$this->db->where('Employees.Directorate', $directorate);
 		}
-		if($branch !== null)
-		{
-			$this->db->where('br.id',$branch);
+		if ($branch !== null) {
+			$this->db->where('br.id', $branch);
 		}
-		if($sub_directorate !== null)
-		{
+		if ($sub_directorate !== null) {
 			$this->db->where('Employees.Sub_Directorate', $sub_directorate);
 		}
 		$results =  $this->db->get();

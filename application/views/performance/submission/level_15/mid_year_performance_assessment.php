@@ -1,96 +1,68 @@
+<?php
+	$is_valid = true;
+?>
 <div>
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/submitted_performance" >BACK</a>
 </div>
 <div style="text-align: center;">
 	<h2>DDG’s MID-YEAR PERFORMANCE ASSESSMENT TEMPLATE</h2>
 </div>
-<div class="table-responsive">
-	<table class="table table-sm">
-		<thead style="background-color: #fbd4b4">
-		<tr>
-			<th>
-				Name of the SMS member
-			</th>
-			<th>
-				<input type="text" class="form-control-sm"/>
-			</th>
-			<th>
-				Job title
-			</th>
-			<th>
-				<input type="text" class="form-control-sm"/>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Persal Number
-			</th>
-			<th>
-				<input type="text" class="form-control-sm"/>
-			</th>
-			<th>
-				Performance cycle
-			</th>
-			<th>
-				<input type="text" class="form-control-sm"/>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Name of the Supervisor
-			</th>
-			<th>
-				<input type="text" class="form-control-sm"/>
-			</th>
-			<th>
-				Period under review
-			</th>
-			<th>
-				<input type="text" class="form-control-sm"/>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Name of Department
-			</th>
-			<th>
-				<input type="text" class="form-control-sm"/>
-			</th>
-			<th>
+<div>
+	<dl class="row">
+		<dt class="col-sm-2">
+			SMS MEMBER'S NAME
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->Name . ' ' . $emp->LastName; ?>
+		</dd>
 
-			</th>
-			<th>
+		<dt class="col-sm-2">
+			PERSAL NUMBER
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->Persal ?>
+		</dd>
 
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Province (if applicable)
-			</th>
-			<th>
-				<input type="text" class="form-control-sm"/>
-			</th>
-			<th>
+		<dt class="col-sm-2">
+			SUPERVISOR'S NAME
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->S_Name ?>
+		</dd>
 
-			</th>
-			<th>
+		<dt class="col-sm-2">
+			BRANCH NAME
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->b_name ?>
+		</dd>
 
-			</th>
-		</tr>
-		</thead>
-	</table>
+		<dt class="col-sm-2">
+			PROVINCE (IF APPLICABLE)
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo '' ?>
+		</dd>
+
+		<dt class="col-sm-2">
+			JOB TITLE
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->JobTitle ?>
+		</dd>
+	</dl>
 </div>
 
 
-<!-- COPY FROM HERE -->
+<!-- COPY FROM HERE-->
 
 <h4>EMPLOYEE PERFORMANCE: KEY RESULT AREAS (KRAs)</h4>
 <?php
 $kra_counter = 1;
-foreach ($kra as $_kra) { ?>
+foreach ($individual_performance as $_kra) { ?>
 	<div class="card">
 		<h4 class="card-header">
-			KRA NO <?php echo $kra_counter; ?> : <?php echo $_kra['name']?>
+			KRA NO <?php echo $kra_counter; ?> : <?php echo $_kra['key_results_area']?>
 		</h4>
 		<div class="table table-responsive table-sm">
 			<table class="table table-striped projects">
@@ -103,7 +75,6 @@ foreach ($kra as $_kra) { ?>
 					<th>SUPERVISOR RATING</th>
 					<th>AGREED RATING</th>
 					<th></th>
-					<th></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -112,21 +83,60 @@ foreach ($kra as $_kra) { ?>
 				$kra_counter++;
 				foreach ($work_plan as $work)
 				{
-					if($_kra['id'] === $work['kra_id']) {?>
-						<form enctype="multipart/form-data"
-							  action="<?php echo base_url(); ?>performance/update_sup_work_plan/<?php echo $work['id']; ?>/<?php echo $data->id; ?>/<?php echo $data->emp_id; ?>" method="post">
+
+					if($_kra['id'] === $work['kra_id'])
+					{
+						if(empty($work['supervisor_rating']))
+						{
+							$is_valid = false;
+						}
+
+						?>
+
+						<form id="update_wp<?php echo $work['id'] ?>" enctype="multipart/form-data"
+							   method="post">
 							<tr>
-								<th> <input class="form-control" type="text" disabled value="<?php echo $work['key_activities'] ?>" /> </th>
-								<th> <input class="form-control" type="text" disabled value="<?php echo $work['indicator_target'] ?>" /></th>
-								<th> <input class="form-control" type="text" disabled name="actual_achievement" value="<?php echo $work['actual_achievement'] ?>" /></th>
-								<th> <input class="form-control" type="number" disabled name="sms_rating" min="1" max="4" value="<?php echo $work['sms_rating'] ?>" /></th>
-								<th> <input class="form-control" type="number" min="1" max="4" name="supervisor_rating"   value="<?php echo $work['supervisor_rating'] ?>" /></th>
-								<th> <input class="form-control" type="number" min="1" max="4" name="agreed_rating"  value="<?php echo $work['agreed_rating'] ?>" /></th>
+								<th> <?php echo $work['key_activities'] ?> </th>
+								<th> <?php echo $work['indicator_target'] ?></th>
+								<th> <?php echo $work['actual_achievement'] ?></th>
+								<th> <?php echo $work['sms_rating'] ?></th>
+								<th> <input class="form-control" required type="number" min="1" max="4" name="supervisor_rating"   value="<?php echo $work['supervisor_rating'] ?>" /></th>
+								<th> <input class="form-control" required type="number" min="1" max="4" name="agreed_rating"  value="<?php echo $work['agreed_rating'] ?>" /></th>
 								<th> <input type="submit" class="btn-sm btn-info" /> </th>
 							</tr>
 						</form>
 
-					<?php } ?>
+
+
+						<script>
+							$(document).ready(function () {
+								$('#update_wp<?php echo $work['id'] ?>').submit(function (e) {
+
+									e.preventDefault(); // prevent the form from submitting normally
+									$.ajax({
+										type: 'POST',
+										url: '<?php echo base_url(); ?>performance/update_sup_work_plan/<?php echo $work['id']; ?>/<?php echo $data->id; ?>/<?php echo $data->emp_id; ?>',
+										data: $('#update_wp<?php echo $work['id'] ?>').serialize(), // serialize the form data
+										success: function (response) {
+											//$('#response').html(response); // display the response on the page
+											Swal.fire({
+												icon: 'success',
+												title: 'Success',
+												text: 'Successfully Updated',
+												onClose: () => {
+													location.reload();
+												}
+											});
+
+										}
+									});
+								});
+							});
+
+						</script>
+
+					<?php
+					} ?>
 				<?php } ?>
 
 				</tbody>
@@ -207,30 +217,75 @@ foreach ($kra as $_kra) { ?>
 					<th><input type="text" value="<?php echo $perf['process_competencies'] ?>" class="form-control"></th>
 					<th><input type="text" value="<?php echo $perf['other_developmental_areas_identified'] ?>" class="form-control"></th>
 				</tr>
-
 			<?php } ?>
-
-
 			</tbody>
 		</table>
 	</div>
 </div>
-<div>
 
 
-	<div class="form-group">
-		<label for="exampleFormControlTextarea1">Comment by the SMS member on his/her performance</label>
-		<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-	</div>
-	<div class="form-group">
-		<label for="exampleFormControlTextarea1">Comment by the Supervisor</label>
-		<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-	</div>
-</div>
+
 <br />
 <div class="card">
+	<?php if($data->status == 'PENDING'){ ?>
+
+		<div class="card-body">
+			<form  method="post" action="<?php echo base_url()?>performance/sup_update_status/<?php echo $submission_id ?>">
+
+				<div class="form-group">
+					<label>
+						Comment by the SMS member  on his/her performance <?php //print_r($data) ?>
+					</label>
+					<textarea class="form-control" disabled >
+					<?php if (!empty($data)) {
+						echo $data->emp_comment;
+					} ?> </textarea>
+
+				</div>
+				<br />
+
+				<div class="form-group">
+					<label>
+						Comment by the Supervisor
+					</label>
+					<textarea class="form-control" name="supervisor_comment" ></textarea>
+
+				</div>
+
+				<select name="action_option" id="action" onchange="optionChange()" class="form-control">
+					<option class="form-control select" value="APPROVED" >APPROVE</option>
+					<option value="REJECTED" >REJECT</option>
+				</select>
+				<br />
+				<input type="text" placeholder="REASON..." style="display: none;" id="comment" name="comment" class="form-control w-100">
+				<input type="submit" <?php if(!$is_valid) echo 'disable'?> class="btn-sm btn-primary m-2" />
+
+			</form>
+		</div>
+	<?php }?>
+</div>
+
+<script>
+	const e = document.getElementById("action");
+	function optionChange() {
+		if(e.value === 'APPROVED')
+		{
+			document.getElementById("comment").style = "display:none";
+		}
+		if(e.value === 'REJECTED')
+		{
+			document.getElementById("comment").style = "display:block";
+		}
+	}
+</script>
+
+
+
+
+<!--<br />
+<div class="card">
 	<div class="card-body">
-		<form class="form-inline"  method="post" action="<?php echo base_url()?>performance/sup_update_status/<?php echo $submission_id; ?>">
+		<form class="form-inline"  method="post" action="<?php /*echo base_url()*/?>performance/sup_update_status/<?php /*echo $submission_id; */?>">
 			<select name="action_option" id="action" onchange="optionChange()" class="form-control">
 				<option class="form-control select" value="APPROVED" >APPROVE</option>
 				<option value="REJECTED" >REJECT</option>
@@ -260,3 +315,5 @@ foreach ($kra as $_kra) { ?>
 
 </script>
 <br>
+-->
+

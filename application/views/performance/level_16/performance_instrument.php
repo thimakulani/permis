@@ -8,21 +8,21 @@
 	<div class="card-body">
 		<dl class="row">
 			<dt class="col-sm-2">
-				Name of Executive Authority
+				NAME OF EXECUTIVE AUTHORITY
 			</dt>
 			<dd class="col-sm-10">
 				<?php echo $emp->Name . ' ' . $emp->LastName; ?>
 			</dd>
 
 			<dt class="col-sm-2">
-				Name of Head of Department
+				NAME OF HEAD OF DEPARTMENT
 			</dt>
 			<dd class="col-sm-10">
 				<?php echo $emp->S_Name ?>
 			</dd>
 
 			<dt class="col-sm-2">
-				Persal number
+				PERSAL NUMBER
 			</dt>
 			<dd class="col-sm-10">
 				<?php echo $emp->Persal ?>
@@ -31,21 +31,21 @@
 
 
 			<dt class="col-sm-2">
-				Branch name
+				BRANCH NAME
 			</dt>
 			<dd class="col-sm-10">
 				<?php echo '' ?>
 			</dd>
 
 			<dt class="col-sm-2">
-				Province (if applicable)
+				PROVINCE (IF APPLICABLE)
 			</dt>
 			<dd class="col-sm-10">
 				<?php echo '' ?>
 			</dd>
 
 			<dt class="col-sm-2">
-				Job title
+				JOB TITLE
 			</dt>
 			<dd class="col-sm-10">
 				<?php echo $emp->JobTitle ?>
@@ -55,12 +55,12 @@
 </div>
 <br/>
 <div>
-	<h3>Dispute resolution mechanism</h3>
-	<p>Any disputes about the nature of the HOD’s PA, whether it relates to key responsibilities, priorities, methods of
-		assessment in this agreement, shall be mediated by DG in the Presidency or DG in the Office of the premier.
+	<h3>DISPUTE RESOLUTION MECHANISM</h3>
+	<p>ANY DISPUTES ABOUT THE NATURE OF THE HOD’S PA, WHETHER IT RELATES TO KEY RESPONSIBILITIES, PRIORITIES, METHODS OF
+		ASSESSMENT IN THIS AGREEMENT, SHALL BE MEDIATED BY DG IN THE PRESIDENCY OR DG IN THE OFFICE OF THE PREMIER.
 
-		If, this mediation fails and the dispute remains unresolved at this level, the matter should, thereafter be
-		referred to the PSC.</p>
+		IF, THIS MEDIATION FAILS AND THE DISPUTE REMAINS UNRESOLVED AT THIS LEVEL, THE MATTER SHOULD, THEREAFTER BE
+		REFERRED TO THE PSC.</p>
 
 </div>
 

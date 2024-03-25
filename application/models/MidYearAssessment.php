@@ -11,7 +11,7 @@ class MidYearAssessment extends CI_Model
 	{
 		$this->db->insert('kra',$data);
 	}
-	public function get_kra($id,$period, $template_name)
+	public function get_kra($id, $period, $template_name)
 	{
 		$this->db->where('employee', $id);
 		$this->db->group_start();

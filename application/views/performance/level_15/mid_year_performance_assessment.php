@@ -69,7 +69,6 @@ foreach ($kra as $_kra) { ?>
 					<th>SUPERVISOR RATING</th>
 					<th>AGREED RATING</th>
 					<th></th>
-					<th></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -88,10 +87,11 @@ foreach ($kra as $_kra) { ?>
 								<th> <input class="form-control"  type="number" name="sms_rating" min="1" max="4" value="<?php echo $work['sms_rating'] ?>" /></th>
 								<th> <input class="form-control" type="text" disabled value="<?php echo $work['supervisor_rating'] ?>" /></th>
 								<th> <input class="form-control" type="text" disabled value="<?php echo $work['agreed_rating'] ?>" /></th>
-								<th> </th>
 								<th> <input type="submit" class="btn-sm btn-success"  <?php if(isset($work['actual_achievement']) && isset($work['sms_rating'])){echo 'disabled';} ?>  value="Update"> </th>
 							</tr>
 						</form>
+
+
 
 					<?php } ?>
 				<?php } ?>

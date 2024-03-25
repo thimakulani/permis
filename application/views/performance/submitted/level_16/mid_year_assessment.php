@@ -5,62 +5,51 @@
 
 
 <div class="table-responsive">
-	<table class="table table-sm">
-		<thead style="background-color: #C1D59AFF">
-		<tr>
-			<th>
-				Name of Executive Authority
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-			<th>
-				Province (if applicable)
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Name of Head of Department
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-			<th>
-				Performance cycle
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Persal Number
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-			<th>
-				Mid-Year Review
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Name of Department
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
+	<dl class="row">
+		<dt class="col-sm-2">
+			Name of Executive Authority
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->Name . ' ' . $emp->LastName; ?>
+		</dd>
 
-		</tr>
+		<dt class="col-sm-2">
+			Name of Head of Department
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->S_Name ?>
+		</dd>
 
-		</thead>
-	</table>
+		<dt class="col-sm-2">
+			Persal number
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->Persal ?>
+		</dd>
+
+
+
+		<dt class="col-sm-2">
+			Branch name
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo '' ?>
+		</dd>
+
+		<dt class="col-sm-2">
+			Province (if applicable)
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo '' ?>
+		</dd>
+
+		<dt class="col-sm-2">
+			Job title
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->JobTitle ?>
+		</dd>
+	</dl>
 </div>
 <br />
 
@@ -68,7 +57,6 @@
 <?php
 $counter = 1;
 foreach ($kra as $_kra) { ?>
-
 	<div class="card">
 		<h4 class="card-header">
 			KRA NO <?php echo $counter; ?> : <?php echo $_kra['name']; ?>

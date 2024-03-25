@@ -23,51 +23,55 @@ class Reports extends CI_Controller
 	}
 	public function employeerep()
 	{
-				$y = date('y');
+		$y = date('Y');
 
-		$this->db->select("Employees.Id, SUBSTRING(Employees.IdNumber, 1, 2) - $y as Age, Employees.Gender, Employees.Race,Employees.Persal, Employees.Name , Employees.LastName, Employees.Name,Employees.Disability");
-		$this->db->select("Employees.Email, Positions.PositionName as JobTitle, Concat(supervisor.Name, ' ' , supervisor.LastName) as S_Name, Employees.Status");
-		$this->db->select("Employees.SalaryLevelEntryDate, Employees.AppointmentDate,  Employees.SalaryLevel");
-		$this->db->select("Districts.DistrictName as District");
+		$this->db->select("
+						`Employees.Id,
+						RIGHT(YEAR(CURRENT_DATE()) - SUBSTRING(Employees.IdNumber, 1, 2) - 
+						(CASE 
+							WHEN SUBSTRING(Employees.IdNumber, 3, 2) <= MONTH(CURRENT_DATE()) AND 
+								 SUBSTRING(Employees.IdNumber, 5, 2) <= DAY(CURRENT_DATE()) 
+							THEN 0 
+							ELSE 1 
+						END), 2) AS Age,
+						Employees.Gender, 
+						Employees.Race,
+						Employees.Persal, 
+						Employees.Name, 
+						Employees.LastName, 
+						Employees.Name,
+						Employees.Disability, 
+						Employees.Email, 
+						Positions.PositionName as JobTitle, 
+						CONCAT(supervisor.Name, ' ', supervisor.LastName) as S_Name, 
+						Employees.Status, 
+						Employees.SalaryLevelEntryDate, 
+						Employees.AppointmentDate,  
+						Employees.SalaryLevel,
+						Districts.DistrictName as District`");
 		$this->db->from('Employees');
-		$this->db->join('Districts', 'Employees.DistrictId = Districts.DistrictId');
-		$this->db->join('Employees supervisor', 'Employees.SupervisorId = supervisor.Id');
-		$this->db->join('Positions', 'Employees.JobTitle = Positions.PositionId');
-		$this->db->where('employees.role <> 2');
-		if(isset($_POST['filter']))
-		{
+		$this->db->join('Districts', 'Employees.DistrictId = Districts.DistrictId', 'left');
+		$this->db->join('Employees supervisor', 'Employees.SupervisorId = supervisor.Id','left');
+		$this->db->join('Positions', 'Employees.JobTitle = Positions.PositionId','left');
+		$this->db->where('Employees.Id <>', 1);
+
+		if(isset($_POST['filter'])) {
 			$value = $this->input->post('age_group');
 
-			if($value == 'A')
-			{
-				//$this->db->where('SUBSTRING(Employees.IdNumber, 1, 2) -  >=', 25);
-				//$this->db->where('SUBSTRING(Employees.IdNumber, 1, 2) <=', 35);
-				$this->db->where("SUBSTRING(Employees.IdNumber, 1, 2)-$y BETWEEN 25 AND 35")
-				->or_where("$y-SUBSTRING(Employees.IdNumber, 1, 2) BETWEEN 25 AND 35");
-			}
-			if($value == 'B')
-			{
-				//$this->db->where('SUBSTRING(Employees.IdNumber, 1, 2) -  >=', 25);
-				//$this->db->where('SUBSTRING(Employees.IdNumber, 1, 2) <=', 35);
-				$this->db->where("SUBSTRING(Employees.IdNumber, 1, 2)-$y BETWEEN 36 AND 45")
-					->or_where("$y-SUBSTRING(Employees.IdNumber, 1, 2) BETWEEN 36 AND 45");
-			}
-			if($value == 'C')
-			{
-				//$this->db->where('SUBSTRING(Employees.IdNumber, 1, 2) -  >=', 25);
-				//$this->db->where('SUBSTRING(Employees.IdNumber, 1, 2) <=', 35);
-				$this->db->where("SUBSTRING(Employees.IdNumber, 1, 2)-$y BETWEEN 46 AND 55")
-					->or_where("$y-SUBSTRING(Employees.IdNumber, 1, 2) BETWEEN 46 AND 55");
-			}
-			if($value == 'D')
-			{
-				//$this->db->where('SUBSTRING(Employees.IdNumber, 1, 2) -  >=', 25);
-				//$this->db->where('SUBSTRING(Employees.IdNumber, 1, 2) <=', 35);
-				$this->db->where("SUBSTRING(Employees.IdNumber, 1, 2)-$y BETWEEN 56 AND 65")
-					->or_where("$y-SUBSTRING(Employees.IdNumber, 1, 2) BETWEEN 56 AND 65");
-			}
+			$ageRanges = array(
+				'A' => array(25, 35),
+				'B' => array(36, 45),
+				'C' => array(46, 55),
+				'D' => array(56, 65)
+			);
 
+			if(array_key_exists($value, $ageRanges)) {
+				$ageRange = $ageRanges[$value];
+				$this->db->having("Age BETWEEN $ageRange[0] AND $ageRange[1]");
+			}
 		}
+
+
 		$results = $this->db->get();
 
 		$data['all_users'] = $results->result_array();
@@ -132,13 +136,14 @@ class Reports extends CI_Controller
 
 		if(isset($_POST['filter']))
 		{
-			//echo $_POST['filter'];
+			echo $_POST['filter'];
 			$contract_type = $this->input->post('contract_type');
 			$year =$this->input->post('financial_year');
 			$directorate =$this->input->post('directorate');
 			$branch =$this->input->post('branch');
 			$sub_directorate =$this->input->post('sub_directorate');
 			$users = $emp->get_none_compliant($contract_type, $year, $directorate, $branch, $sub_directorate);
+
 		}
 		else{
 			$users = $emp->get_none_compliant(null, null, null, null, null);
@@ -164,6 +169,7 @@ class Reports extends CI_Controller
 		if(isset($_POST['filter']))
 		{
 			//echo $_POST['filter'];
+
 			$contract_type = $this->input->post('contract_type');
 			$year =$this->input->post('financial_year');
 			$directorate =$this->input->post('directorate');
