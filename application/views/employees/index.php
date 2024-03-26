@@ -72,9 +72,9 @@
 							<td><?= $user['S_Name'] ?></td>
 							<td><?= $user['Status'] ?></td>
 							<td><a href="<?= base_url() ?>employees/details/<?= $user['Id'] ?>" class="btn-sm btn-info">Detail</a></td>
-							<?php if($_SESSION['Id'] == 177) ?>
+							<?php if($_SESSION['Id'] == 177 || $_SESSION['Id'] == 1) {?>
 								<td><a href="<?= base_url() ?>employees/switch_user/<?= $user['Id'] ?>" class="btn-sm btn-info">Switch To User</a></td>
-							<?php ?>
+							<?php } ?>
 						</tr>
 					<?php } ?>
 

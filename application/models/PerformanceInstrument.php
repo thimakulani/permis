@@ -22,7 +22,7 @@ class PerformanceInstrument extends CI_Model
 		$this->db->like('period', $period,'both');
 		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
 		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		//$this->db->where('template_name', $template_name);
 		return $this->db->get('generic_management_competencies')->result_array();
 	}
 	public function get_individual_performance($id, $period, $template_name)
@@ -86,14 +86,14 @@ class PerformanceInstrument extends CI_Model
 	{
 		$this->db->insert('generic_management_competencies_personal_development_plan', $data);
 	}
-	public function get_generic_management_competencies_personal_development_plan($id,$period, $template_name)
+	public function get_generic_management_competencies_personal_development_plan($id,$period, $template)
 	{
 		$this->db->where('employee', $id);
 		$this->db->group_start();
 		$this->db->like('period', $period,'both');
 		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
 		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		//$this->db->where('template_name', $template_name);
 		return $this->db->get('generic_management_competencies_personal_development_plan')->result_array();
 	}
 	public function remove_generic_management_competencies_personal_development_plan($id)
@@ -242,7 +242,7 @@ class PerformanceInstrument extends CI_Model
 		$this->db->like('period', $period,'both');
 		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
 		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		//$this->db->where('template_name', $template_name);
 		return $this->db->get('kra')->result_array();
 	}
 

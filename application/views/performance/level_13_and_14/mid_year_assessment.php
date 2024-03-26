@@ -88,7 +88,7 @@
 					<th>SMS RATING</th>
 					<th>SUPERVISOR RATING</th>
 					<th>AGREED RATING</th>
-					<?php if($user_submission < 1){ ?>
+					<?php if($user_submission < 1 || empty($work['sms_rating'])){ ?>
 						<th></th>
 					<?php } ?>
 				</tr>
@@ -101,8 +101,10 @@
 					<?php if($work['kra_id'] == $_kra['id']) {?>
 
 						<?php
-							if (empty($work['sms_rating']))
+							if (empty($work['sms_rating'])){
 								$is_valid = false;
+							}
+
 						?>
 						<form id="update_wp<?php echo $work['id'] ?>" enctype="multipart/form-data" action="<?php echo base_url();?>performance/update_work_plan/<?php echo $work['id'];?>/10" method="post">
 							<input type="hidden" name="template_name" value="MID YEAR ASSESSMENT" />
@@ -114,14 +116,11 @@
 								<td><input type="number" min="1" max="4" name="sms_rating" value="<?php echo $work['sms_rating'] ?>" class="form-control"></td>
 								<td><input type="number" name="supervisor_rating" disabled value="<?php echo $work['supervisor_rating'] ?>" class="form-control"></td>
 								<td><input type="number" name="agreed_rating" disabled value="<?php echo $work['agreed_rating'] ?>" class="form-control"></td>
-								<?php if($user_submission < 1){ ?>
+								<?php if($user_submission < 1 || empty($work['sms_rating'])){ ?>
 									<td><input type="submit" value="update" class="btn-sm btn-info" /></td>
 								<?php } ?>
 							</tr>
 						</form>
-
-
-
 						<script>
 							$(document).ready(function () {
 								$('#update_wp<?php echo $work['id'] ?>').submit(function (e) {
@@ -131,8 +130,14 @@
 										url: '<?php echo base_url() ?>performance/update_work_plan/<?php echo $work['id'];?>/10',
 										data: $('#update_wp<?php echo $work['id'] ?>').serialize(), // serialize the form data
 										success: function (response) {
-											location.reload();
-											$('#response').html(response); // display the response on the page
+											Swal.fire({
+												icon: 'success',
+												title: 'Success',
+												text: 'Successfully Captured',
+												onClose: () => {
+													location.reload();
+												}
+											});
 										}
 									});
 								});

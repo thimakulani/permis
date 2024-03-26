@@ -1172,6 +1172,7 @@ class Performance extends CI_Controller
 		$emp = $e->get_profile($_SESSION['Id']);
 		$perf = new PerformanceModel();
 		$submission = $perf->get_specific_submission($sub_id);
+
 		$form_data['submission'] = $submission;
 		$form_data['period'] = $period;
 		$form_data['emp'] = $emp;
@@ -1233,6 +1234,11 @@ class Performance extends CI_Controller
 		$perf = new PerformanceModel();
 		$submission = $perf->get_specific_submission($sub_id);
 		$form_data['submission'] = $submission;
+		$form_data['user_submission'] = $perf->user_submission($_SESSION['Id'], $submission->period, 'MID YEAR ASSESSMENT');
+
+
+
+
 		$form_data['period'] = $period;
 		$form_data['emp'] = $emp;
 		//$form_data['sub_id'] = $sub_id;
@@ -1246,10 +1252,11 @@ class Performance extends CI_Controller
 			if($emp->SalaryLevel == 13 || $emp->SalaryLevel == 14)
 			{
 				$p_i = new PerformanceInstrument();
-				$form_data['kra'] = $p_i->get_kra($emp->id, $period, $template);
-				$form_data['gmc_personal_development_plan'] = $p_i->get_generic_management_competencies_personal_development_plan($emp->id, $period, $template);
+				$mid = new MidYearAssessment();
+				$form_data['kra'] = $mid->get_kra($emp->id, $submission->period, $template);
+				$form_data['personal_developmental_plan'] = $p_i->get_generic_management_competencies_personal_development_plan($emp->id, $submission->period, '');
 				$form_data['individual_performance'] = $p_i->get_individual_performance($emp->id, $period, $template);
-				$form_data['work_plan'] = $p_i->get_work_plan($emp->id, $period, $template);
+				$form_data['work_plan'] = $mid->get_work_plan($emp->id, $submission->period, $template);
 				$form_data['devplan'] = $p_i->get_personal_developmental_plan($emp->id, $period, $template);
 				$this->load->view("performance/edit_submission/level_13_and_14/mid_year_assessment",$form_data);
 			}
