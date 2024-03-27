@@ -72,7 +72,7 @@ class PerformanceInstrument extends CI_Model
 		$this->db->like('period', $period,'both');
 		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
 		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		//$this->db->where('template_name', $template_name);
 		return $this->db->get('personal_developmental_plan')->result_array();
 	}
 	public function remove_personal_developmental_plan($id)

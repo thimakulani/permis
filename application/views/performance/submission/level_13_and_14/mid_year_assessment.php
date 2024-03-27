@@ -3,7 +3,7 @@
 </div>
 <div style="text-align: center;">
 
-	<h4>MID YEAR ASSESSMENT FOR DEPUTY DIRECTOR-GENERAL </h4>
+	<h4>CHIEF DIRECTOR AND DIRECTOR PERFORMANCE MID-YEAR REVIEW TEMPLATE</h4>
 
 </div>
 <?php $is_valid = false; ?>

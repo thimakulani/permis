@@ -317,7 +317,7 @@ class PerformanceModel extends CI_Model
 		return $results->row();
 	}
 
-	public function get_submissions($branch)
+	public function get_submissions($branch, $contract_type, $financial_year )
 	{
 		
 		$this->db->select('performance_assessment.id, performance_assessment.status, performance_assessment.date_captured, performance_assessment.Status_Final, performance_assessment.template_name');
@@ -330,8 +330,15 @@ class PerformanceModel extends CI_Model
 		{
 			$this->db->where('emp.branch', $branch);
 		}
+		if($contract_type !== null)
+		{
+			$this->db->where('performance_assessment.template_name', $contract_type);
+		}
+		if($financial_year !== null)
+		{
+			$this->db->where('performance_assessment.period', $financial_year);
+		}
 		$this->db->where('performance_assessment.status', 'APPROVED');
-
 		return $this->db->get('performance_assessment')->result_array();
 	}
 

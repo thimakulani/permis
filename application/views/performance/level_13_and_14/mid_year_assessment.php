@@ -7,7 +7,7 @@
 </div>
 <div style="text-align: center;">
 
-	<h4>MID YEAR ASSESSMENT FOR DEPUTY DIRECTOR-GENERAL</h4>
+	<h4>CHIEF DIRECTOR AND DIRECTOR PERFORMANCE MID-YEAR REVIEW TEMPLATE</h4>
 
 </div>
 <?php if($user_submission < 1){ ?>
@@ -111,12 +111,12 @@
 							<tr>
 								<td><?php echo $work['key_activities'] ?></td>
 								<td><?php echo $work['target_date'] ?></td>
-								<!--<td><input type="text" name="actual_achievement" value="<?php /*echo $work['actual_achievement'] */?>" class="form-control"></td>-->
-								<td><?php echo $work['actual_achievement'] ?></td>
+								<td><input type="text" required name="actual_achievement" value="<?php echo $work['actual_achievement'] ?>" class="form-control"></td>
+								<!--<td><?php /*echo $work['actual_achievement'] */?></td>-->
 								<td><input type="number" min="1" max="4" name="sms_rating" value="<?php echo $work['sms_rating'] ?>" class="form-control"></td>
 								<td><input type="number" name="supervisor_rating" disabled value="<?php echo $work['supervisor_rating'] ?>" class="form-control"></td>
 								<td><input type="number" name="agreed_rating" disabled value="<?php echo $work['agreed_rating'] ?>" class="form-control"></td>
-								<?php if($user_submission < 1 || empty($work['sms_rating'])){ ?>
+								<?php if(empty($work['actual_achievement']) || empty($work['sms_rating']) || $user_submission < 1){ ?>
 									<td><input type="submit" value="update" class="btn-sm btn-info" /></td>
 								<?php } ?>
 							</tr>

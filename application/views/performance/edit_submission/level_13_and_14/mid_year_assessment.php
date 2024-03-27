@@ -118,8 +118,8 @@ else if($submission->status_final == 'REJECTED')
 							<tr>
 								<td><?php echo $work['key_activities'] ?></td>
 								<td><?php echo $work['target_date'] ?></td>
-								<!--<td><input type="text" name="actual_achievement" value="<?php /*echo $work['actual_achievement'] */?>" class="form-control"></td>-->
-								<td><?php echo $work['actual_achievement'] ?></td>
+								<td><input type="text" name="actual_achievement" value="<?php echo $work['actual_achievement'] ?>" required class="form-control"></td>
+								<!--<td><?php /*echo $work['actual_achievement'] */?></td>-->
 								<td><input type="number" min="1" max="4" name="sms_rating" value="<?php echo $work['sms_rating'] ?>" class="form-control"></td>
 								<td><input type="number" name="supervisor_rating" disabled value="<?php echo $work['supervisor_rating'] ?>" class="form-control"></td>
 								<td><input type="number" name="agreed_rating" disabled value="<?php echo $work['agreed_rating'] ?>" class="form-control"></td>

@@ -7,7 +7,7 @@
 	<div class="card-body">
 		<div class="row">
 			<?php foreach ($users as $user) { ?>
-				<div class="col-sm-4">
+				<div class="col-sm-4" style="margin: 5px">
 					<div class="card" style="width: 18rem;">
 						<div class="card-body">
 							<h5 class="card-title"><?php echo strtoupper($user['names']) ?></h5>

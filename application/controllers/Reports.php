@@ -13,6 +13,7 @@ class Reports extends CI_Controller
 		$this->load->model('PerformanceModel');
 		$this->load->model('BusinessUnitModel');
 		//$this->load->library('email');
+		$this->load->database();
 	}
 	public function index()
 	{
@@ -134,16 +135,45 @@ class Reports extends CI_Controller
 		$emp = new EmployeeModel();
 
 
+
+
+		$users = array();
+
 		if(isset($_POST['filter']))
 		{
-			echo $_POST['filter'];
+			//echo $_POST['filter'];
 			$contract_type = $this->input->post('contract_type');
 			$year =$this->input->post('financial_year');
 			$directorate =$this->input->post('directorate');
 			$branch =$this->input->post('branch');
 			$sub_directorate =$this->input->post('sub_directorate');
-			$users = $emp->get_none_compliant($contract_type, $year, $directorate, $branch, $sub_directorate);
+			$_users = $emp->get_none_compliant($contract_type, $year, $directorate, $branch, $sub_directorate);
 
+			if($year != null)
+			{
+				$this->db->where('period', $year);
+			}
+			if($contract_type != null)
+			{
+				$this->db->where('template_name', $year);
+			}
+			$assessments = $this->db->get('performance_assessment')->result_array();
+			foreach ($_users as $emp)
+			{
+				$found = false;
+				foreach ($assessments as $assess)
+				{
+					if($assess['employee'] === $emp['Id'])
+					{
+						$found = true;
+						break;
+					}
+				}
+				if(!$found)
+				{
+					$users[] = $emp;
+				}
+			}
 		}
 		else{
 			$users = $emp->get_none_compliant(null, null, null, null, null);

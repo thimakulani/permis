@@ -3,7 +3,6 @@
 </div>
 <h2 style="text-align: center;">PERFORMANCE AGREEMENT FOR DEPUTY DIRECTOR-GENERAL</h2>
 <br/>
-<?php //print_r($submission_row) ?>
 <dl class="row">
 	<dt class="col-sm-2">
 		SMS MEMBER'S NAME 

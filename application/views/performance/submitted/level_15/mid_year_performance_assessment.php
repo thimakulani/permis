@@ -60,7 +60,7 @@ foreach ($kra as $_kra) { ?>
 
 	<div class="card">
 		<h4 class="card-header">
-			KRA NO <?php echo $counter; ?> : <?php echo $_kra['name'] ?>
+			KRA NO <?php echo $counter; ?> : <?php echo $_kra['key_results_area'] ?>
 		</h4>
 		<div class="table table-responsive table-sm">
 			<table class="table table-striped projects">
@@ -85,10 +85,10 @@ foreach ($kra as $_kra) { ?>
 
 					if ($_kra['id'] === $kra_data['kra_id']) { ?>
 						<tr>
-							<th><input type="text" disabled value="<?php echo $kra_data['key_activities'] ?>"/></th>
-							<th><input type="text" disabled value="<?php echo $kra_data['indicator_target'] ?>"/></th>
-							<th><input type="text" disabled value="<?php echo $kra_data['actual_achievement'] ?>"/></th>
-							<th><input type="text" disabled value="<?php echo $kra_data['sms_rating'] ?>"/></th>
+							<th><?php echo $kra_data['key_activities'] ?></th>
+							<th><?php echo $kra_data['indicator_target'] ?></th>
+							<th><?php echo $kra_data['actual_achievement'] ?></th>
+							<th><?php echo $kra_data['sms_rating'] ?></th>
 							<th><input type="text" disabled value="<?php echo $kra_data['supervisor_rating'] ?>"/></th>
 							<th><input type="text" disabled value="<?php echo $kra_data['agreed_rating'] ?>"/></th>
 
@@ -104,9 +104,103 @@ foreach ($kra as $_kra) { ?>
 <?php $counter++; } ?>
 
 <!-- UNTIL HERE -->
-
+<br />
+<br />
+<br />
 
 <div class="card">
+	<div style="text-align: center;">
+		<h4>PERSONAL DEVELOPMENTAL PLAN FOR DEPUTY DIRECTOR-GENERAL</h4>
+	</div>
+	<div class="card-body p-0">
+		<div class="table-responsive">
+			<table class="table table-striped projects">
+				<thead style="background-color: #fbd4b4">
+				<tr>
+					<th>
+						DEVELOPMENTAL AREAS
+					</th>
+					<th>
+						TYPES OF INTERVENTIONS
+					</th>
+
+					<th>
+						TARGET DATE
+					</th>
+
+				</tr>
+				</thead>
+				<tbody>
+				<!-- To Retrieve Database information -->
+
+				<?php
+
+				foreach ($personal_development_plan as $work) { ?>
+
+					<tr>
+						<td><?php echo $work['developmental_areas'] ?></td>
+						<td><?php echo $work['types_of_interventions'] ?></td>
+						<td><?php echo $work['target_date'] ?></td>
+
+						<script>
+							$('.btn-remove-pdp<?php echo $work['id'] ?>').on('click', function () {
+								//var rowId = $(this).data('id');
+								$.ajax({
+									url: '<?php echo base_url()?>performance/remove_personal_developmental_plan/200/<?php echo $work['id']?>',
+									type: 'DELETE',
+									//data: {id: rowId},
+									success: function (response) {
+										Swal.fire({
+											icon: 'success',
+											title: 'Success',
+											text: 'Successfully Removed',
+											onClose: () => {
+												location.reload();
+											}
+										});
+									},
+									error: function (xhr, status, error) {
+										console.log(error);
+									}
+								});
+							});
+						</script>
+
+					</tr>
+				<?php } ?>
+
+				<script>
+					$(document).ready(function () {
+						$('#add_pdp').submit(function (e) {
+							e.preventDefault(); // prevent the form from submitting normally
+							$.ajax({
+								type: 'POST',
+								url: '<?php echo base_url();?>performance/add_personal_developmental_plan/200',
+								data: $('#add_pdp').serialize(), // serialize the form data
+								success: function (response) {
+									Swal.fire({
+										icon: 'success',
+										title: 'Success',
+										text: 'Successfully Added',
+										onClose: () => {
+											location.reload();
+										}
+									});
+								}
+							});
+						});
+					});
+
+				</script>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>
+
+
+<!--<div class="card">
 	<h4 class="card-header">
 		ORGANISATIONAL PERFORMANCE
 	</h4>
@@ -130,7 +224,7 @@ foreach ($kra as $_kra) { ?>
 			<tbody>
 
 			<?php
-
+/*
 			foreach ($organisational_performance as $org) {
 
 				echo '
@@ -144,11 +238,11 @@ foreach ($kra as $_kra) { ?>
 
 				</tr>
 ';
-				?>
+				*/?>
 
 
 
-			<?php } ?>
+			<?php /*} */?>
 			</tbody>
 		</table>
 	</div>
@@ -174,7 +268,7 @@ foreach ($kra as $_kra) { ?>
 			<tbody>
 
 			<?php
-
+/*
 			foreach ($personal_development_plan as $pers) {
 				echo '
 
@@ -187,26 +281,70 @@ foreach ($kra as $_kra) { ?>
 ';
 
 
-				?>
+				*/?>
 
 
-			<?php } ?>
+			<?php /*} */?>
 			</tbody>
 		</table>
 	</div>
 </div>
-<div>
+-->
+<br>
+<!--<div class="card">
+	<h4 class="card-header">
+		COMPETENCIES: PERSONAL DEVELOPMENT PLAN
+	</h4>
+	<div class="table table-responsive">
+		<table class="table table-striped projects">
+			<thead style="background-color: #C1D59AFF"
+			">
+			<tr>
+				<th>CORE MANAGEMENT COMPETENCIES</th>
+				<th>PROCESS COMPETENCIES
+				</th>
+				<th>OTHER DEVELOPMENTAL AREAS IDENTIFIED
+				</th>
+
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+
+			<?php
+/*			$emp_perf = array();
+			foreach ($personal_development_plan as $perf) { */?>
+
+				<tr>
+					<th><input type="text" value="<?php /*echo $perf['core_management_competencies'] */?>" class="form-control"></th>
+					<th><input type="text" value="<?php /*echo $perf['process_competencies'] */?>" class="form-control"></th>
+					<th><input type="text" value="<?php /*echo $perf['other_developmental_areas_identified'] */?>" class="form-control"></th>
+					<th></th>
+				</tr>
+
+			<?php /*} */?>
 
 
-	<div class="form-group">
-		<label for="exampleFormControlTextarea1">Comment by the SMS member on his/her performance</label>
-		<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-	</div>
-	<div class="form-group">
-		<label for="exampleFormControlTextarea1">Comment by the Supervisor</label>
-		<textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+			<form enctype="multipart/form-data" action="<?php /*echo base_url();*/?>performance/add_competencies_personal_development_plan/100" method="post">
+				<input type="hidden" value="MID YEAR ASSESSMENT" name="template_name">
+				<tr>
+					<td>
+						<input type="text" name="core_management_competencies" class="form-control">
+					</td>
+					<td>
+						<input type="text" name="process_competencies" class="form-control">
+					</td>
+					<td>
+						<input type="text" name="other_developmental_areas_identified" class="form-control">
+					</td>
+
+					<td>
+						<input type="submit" value="ADD" class="btn-sm btn-info"/>
+					</td>
+				</tr>
+			</form>
+			</tbody>
+		</table>
 	</div>
 </div>
-<br/>
-
-<br>
+<div>-->

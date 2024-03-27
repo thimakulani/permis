@@ -926,20 +926,34 @@ class Performance extends CI_Controller
 	public function permis_official_submissions()
 	{
 		$branch = null;
+		$financial_year = null;
+		$contract_type = null;
 		if(isset($_POST['filter_branch']))
 		{
 			$branch = $this->input->post('branch');
+			$financial_year = $this->input->post('financial_year');
+			$contract_type = $this->input->post('contract_type');
 			$_SESSION['branch'] = $this->input->post('branch');
+			$_SESSION['contract_type'] = $this->input->post('contract_type');
+			$_SESSION['financial_year'] = $this->input->post('financial_year');
 		}
 		else{
 			if(isset($_SESSION['branch']))
 			{
 				$branch = $_SESSION['branch'];
 			}
+			if(isset($_SESSION['financial_year']))
+			{
+				$financial_year = $_SESSION['financial_year'];
+			}
+			if(isset($_SESSION['contract_type']))
+			{
+				$contract_type = $_SESSION['contract_type'];
+			}
 		}
 		$perf = new PerformanceModel();
 		$br = $this->db->get('branch')->result_array();
-		$data['performance'] = $perf->get_submissions($branch);
+		$data['performance'] = $perf->get_submissions($branch, $contract_type, $financial_year);
 		$data['branch'] = $br;
 		$this->load->view("templates/header");
 		$this->load->view("performance/permis_official_submissions", $data);
@@ -1077,15 +1091,15 @@ class Performance extends CI_Controller
 			if ($submission_row->template_name == 'MID YEAR ASSESSMENT') {
 
 				$mid = new MidYearAssessment();
-
+				$p_i = new PerformanceInstrument();
 				$init = new Initialization();
 				$p_data['initialization'] = $init->get_initializations($id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 
 				$p_data['kra'] = $mid->get_kra($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$p_data['emp_perf'] = $mid->get_work_plan($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$p_data['organisational_performance'] = $mid->get_organisational_performance($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				$p_data['personal_development_plan'] = $mid->get_competencies_personal_development_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-
+				//$p_data['personal_development_plan'] = $mid->get_competencies_personal_development_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				$p_data['personal_development_plan'] = $p_i->get_personal_developmental_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$this->load->view("performance/submitted/level_15/mid_year_performance_assessment",$p_data);
 			}
 			$this->load->view("templates/footer");
@@ -2966,7 +2980,7 @@ class Performance extends CI_Controller
 		$mid = new MidYearAssessment();
 		//echo $this->input->post('job_holder_rating') . $this->input->post('par_score') . $this->input->post('performance_report');
 		$data = array(
-			//'actual_achievement'=>$this->input->post('actual_achievement'),
+			'actual_achievement'=>$this->input->post('actual_achievement'),
 			'sms_rating'=>$this->input->post('sms_rating'),
 			//'performance_report'=>$this->input->post('performance_report'),
 
