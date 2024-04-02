@@ -1216,7 +1216,6 @@ class Performance extends CI_Controller
 				$form_data['performance_plan'] = $perf->get_performance_plan($emp->id, $period, $template);
 				$form_data['personal_developmental_training'] = $perf->get_personal_developmental_training($emp->id, $period, $template);
 				//$form_data['submission_row'] = $submission_row;
-
 				$form_data['duties'] = $perf->get_duties($emp->id, $period, $template);
 				$form_data['duty_reason'] = $perf->get_duty_reason($emp->id, $period, $template);
 				$form_data['key_responsibility'] = $perf->get_key_responsibility($emp->id, $period, $template);
