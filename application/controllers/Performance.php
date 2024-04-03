@@ -12,13 +12,13 @@ class Performance extends CI_Controller
 		$this->load->model('PerformanceModel');
 		$this->load->model('EmployeeModel');
 		$this->load->model('MidYearAssessment');
-		$this->load->model('OperationalMemoModel');
+		//$this->load->model('OperationalMemoModel');
 		$this->load->model('OperationalMidYearModel');
 		$this->load->model('OperationalAnnualModel');
 		$this->load->model('DirectorMouIndividualModel');
 		$this->load->model('DirectorMouGmcModel');
 		$this->load->model('DirectorMouWorkplanModel');
-		$this->load->model('OperationalMemoModel');
+		//$this->load->model('OperationalMemoModel');
 		$this->load->model('DirectorMouDevPlanModel');
 		$this->load->model('SemesterModel');
 		$this->load->model('AnnualAssessment');
@@ -97,7 +97,7 @@ class Performance extends CI_Controller
 			$p_data['personal_developmental_training'] = $perf->get_personal_developmental_training($id, $period, $template_p_i);
 			$p_data['duties'] = $perf->get_duties($id, $period, $template_p_i);
 			$p_data['duty_reason'] = $perf->get_duty_reason($id, $period, $template_p_i);
-			$p_data['key_responsibility'] = $perf->get_key_responsibility($id, $period, $template_p_i);
+			//$p_data['key_responsibility'] = $perf->get_key_responsibility($id, $period, $template_p_i);
 			$this->load->view("templates/header");
 			$this->load->view("performance/level_1_to_12/performance_instrument", $p_data);
 			$this->load->view("templates/footer");
@@ -974,14 +974,14 @@ class Performance extends CI_Controller
 	public function view_submitted($_id)
 	{
 
-		$mou = new OperationalMemoModel();
+		//$mou = new OperationalMemoModel();
 		$submission = new PerformanceModel();
 		$submission_row = $submission->get_user_submission($_id);
 		$id = $submission_row->emp_id;
 		$p_data['submission_row'] = $submission_row;
 		$emp = new EmployeeModel();
 		$p_data['emp'] = $emp->get_profile($_SESSION['Id']);
-		$p_data['mou'] = $mou->get_op_mou($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+		//$p_data['mou'] = $mou->get_op_mou($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 		if ($submission_row->salarylevel <= 12)
 		{
 			$this->load->view("templates/header");
@@ -996,7 +996,7 @@ class Performance extends CI_Controller
 				$p_data['personal_developmental_training'] = $perf->get_personal_developmental_training($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$p_data['duties'] = $perf->get_duties($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$p_data['duty_reason'] = $perf->get_duty_reason($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				$p_data['key_responsibility'] = $perf->get_key_responsibility($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				//$p_data['key_responsibility'] = $perf->get_key_responsibility($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$this->load->view('performance/submitted/level_1_to_12/performance_instrument',$p_data);
 			}
 			if ($submission_row->template_name == 'ANNUAL ASSESSMENT') {
@@ -1043,7 +1043,7 @@ class Performance extends CI_Controller
 				$init = new Initialization();
 				$p_data['initialization'] = $init->get_initializations($id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 
-				$p_data['kra'] = $ann->get_kra($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
+				//$p_data['kra'] = $ann->get_kra($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$p_data['work_plan'] = $ann->get_work_plan($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$p_data['gmc_personal_development_plan'] = $ann->get_generic_management_competencies_personal_development_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$this->load->view("performance/submitted/level_13_and_14/annual_assessment",$p_data);
@@ -1055,7 +1055,7 @@ class Performance extends CI_Controller
 				$init = new Initialization();
 				$p_data['initialization'] = $init->get_initializations($id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 
-				$p_data['kra'] = $mid->get_kra($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
+				//$p_data['kra'] = $mid->get_kra($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$p_data['work_plan'] = $mid->get_work_plan($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$p_data['personal_developmental_plan'] = $mid->get_generic_management_competencies($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$this->load->view("performance/submitted/level_13_and_14/mid_year_assessment",$p_data);
@@ -1218,7 +1218,7 @@ class Performance extends CI_Controller
 				//$form_data['submission_row'] = $submission_row;
 				$form_data['duties'] = $perf->get_duties($emp->id, $period, $template);
 				$form_data['duty_reason'] = $perf->get_duty_reason($emp->id, $period, $template);
-				$form_data['key_responsibility'] = $perf->get_key_responsibility($emp->id, $period, $template);
+				//$form_data['key_responsibility'] = $perf->get_key_responsibility($emp->id, $period, $template);
 
 				$this->load->view("performance/edit_submission/level_1_to_12/performance_instrument",$form_data);
 			}
@@ -1282,7 +1282,7 @@ class Performance extends CI_Controller
 				//$form_data['submission_row'] = $submission_row;
 				$form_data['duties'] = $perf->get_duties($emp->id, $period, $template);
 				$form_data['duty_reason'] = $perf->get_duty_reason($emp->id, $period, $template);
-				$form_data['key_responsibility'] = $perf->get_key_responsibility($emp->id, $period, $template);
+				//$form_data['key_responsibility'] = $perf->get_key_responsibility($emp->id, $period, $template);
 
 				$this->load->view("performance/edit_submission/level_1_to_12/mid_year_assessment",$form_data);
 			}
@@ -1335,7 +1335,7 @@ class Performance extends CI_Controller
 
 
 		//$mou_ann = new OperationalAnnualModel();
-		$mou = new OperationalMemoModel();
+		//$mou = new OperationalMemoModel();
 		$submission = new PerformanceModel();
 
 		$emp = new EmployeeModel();
@@ -1364,8 +1364,8 @@ class Performance extends CI_Controller
 				$form_data['submission_row'] = $submission_row;
 				$form_data['duties'] = $perf->get_duties($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$form_data['duty_reason'] = $perf->get_duty_reason($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				$form_data['key_responsibility'] = $perf->get_key_responsibility($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				$form_data['mou'] = $mou->get_op_mou($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				//$form_data['key_responsibility'] = $perf->get_key_responsibility($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				//$form_data['mou'] = $mou->get_op_mou($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$this->load->view("performance/submission/level_1_to_12/performance_instrument",$form_data);
 			}
 			if ($submission_row->template_name == 'ANNUAL ASSESSMENT') {
@@ -1393,7 +1393,7 @@ class Performance extends CI_Controller
 				$mou_gmc = new DirectorMouGmcModel();
 				$p_i = new PerformanceInstrument();
 				$form_data['data'] = $submission_row;
-				$form_data['kra'] = $p_i->get_kra($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
+				//$form_data['kra'] = $p_i->get_kra($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$form_data['gmc_personal_development_plan'] = $p_i->get_generic_management_competencies_personal_development_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$form_data['individual_performance'] = $p_i->get_individual_performance($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$form_data['mou'] = $mou_dir->get_dir_mou($id, $submission_row->period, $submission_row->template_name);
@@ -1519,7 +1519,7 @@ class Performance extends CI_Controller
 
 
 		$mou_ann = new OperationalAnnualModel();
-		$mou = new OperationalMemoModel();
+		//$mou = new OperationalMemoModel();
 		$submission = new PerformanceModel();
 
 		$emp = new EmployeeModel();
@@ -1548,8 +1548,8 @@ class Performance extends CI_Controller
 				$form_data['submission_row'] = $submission_row;
 				$form_data['duties'] = $perf->get_duties($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$form_data['duty_reason'] = $perf->get_duty_reason($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				$form_data['key_responsibility'] = $perf->get_key_responsibility($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				$form_data['mou'] = $mou->get_op_mou($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				//$form_data['key_responsibility'] = $perf->get_key_responsibility($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				//$form_data['mou'] = $mou->get_op_mou($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				//$form_data['mou'] = $mou->get_op_mou($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$this->load->view("performance/permis_submission/level_1_to_12/performance_instrument",$form_data);
 			}
@@ -2411,7 +2411,7 @@ class Performance extends CI_Controller
 		$this->template($type);
 	}
 
-	public function add_factor($type)
+/*	public function add_factor($type)
 	{
 		//id	employee	period	template_name	sub_total_a	of_assessment	c_score
 
@@ -2436,9 +2436,9 @@ class Performance extends CI_Controller
 		} else {
 			$this->template($type);
 		}
-	}
+	}*/
 
-	public function op_mou($type)
+/*	public function op_mou($type)
 	{
 		$this->form_validation->set_rules('kra', '', 'required');
 		$this->form_validation->set_rules('gafs', '', 'required');
@@ -2446,7 +2446,7 @@ class Performance extends CI_Controller
 		$this->form_validation->set_rules('supervisor_decision', '', 'required');
 		$this->form_validation->set_rules('par', '', 'required');
 		$this->form_validation->set_rules('performance_report', '', 'required');
-		$mou = new OperationalMemoModel();
+		//$mou = new OperationalMemoModel();
 		if ($this->form_validation->run()) {
 			$year = date('Y');
 			$next_year = $year + 1;
@@ -2468,9 +2468,9 @@ class Performance extends CI_Controller
 		} else {
 			$this->template($type);
 		}
-	}
+	}*/
 
-	public function remove_mou($id)
+/*	public function remove_mou($id)
 	{
 
 		$type = $this->uri->segment(3);
@@ -2478,7 +2478,7 @@ class Performance extends CI_Controller
 		$mou = new OperationalMemoModel();
 		$mou->remove_mou($id);
 		$this->template($type);
-	}
+	}*/
 	public function add_work_plan()
 	{
 		$this->form_validation->set_rules('key_activities', '', 'required');

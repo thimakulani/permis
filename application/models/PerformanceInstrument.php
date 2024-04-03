@@ -94,17 +94,17 @@ class PerformanceInstrument extends CI_Model
 		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
 		$this->db->group_end();
 		//$this->db->where('template_name', $template_name);
-		return $this->db->get('generic_management_competencies_personal_development_plan')->result_array();
+		return $this->db->get('generic_management_competencies')->result_array();
 	}
 	public function remove_generic_management_competencies_personal_development_plan($id)
 	{
 		$this->db->where('id', $id);
-		$this->db->delete('generic_management_competencies_personal_development_plan');
+		$this->db->delete('generic_management_competencies');
 	}
 	public function update_generic_management_competencies_personal_development_plan(array $data, $id)
 	{
 		$this->db->where('id', $id);
-		$this->db->update('generic_management_competencies_personal_development_plan', $data);
+		$this->db->update('generic_management_competencies', $data);
 	}
 	public function update_generic_management_competencies(array $data, $id)
 	{
@@ -115,7 +115,7 @@ class PerformanceInstrument extends CI_Model
     {
 		$this->db->insert('performance_plan', $data);
     }
-	public function get_key_responsibility($id,$period, $template_name)
+/*	public function get_key_responsibility($id,$period, $template_name)
     {
 		$this->db->where('employee', $id);
 		$this->db->group_start();
@@ -124,7 +124,7 @@ class PerformanceInstrument extends CI_Model
 		$this->db->group_end();
 		$this->db->where('template_name', $template_name);
 		return $this->db->get('key_responsibility')->result_array();
-    }
+    }*/
 
 	public function remove_key_responsibility($id)
 	{
