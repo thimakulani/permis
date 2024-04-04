@@ -31,7 +31,7 @@
 				Branch name
 			</dt>
 			<dd class="col-sm-10">
-				<?php echo '' ?>
+				<?php echo $emp->b_name ?>
 			</dd>
 
 			<dt class="col-sm-2">
@@ -112,7 +112,7 @@
 			foreach ($gmc_work_plan as $work) {
 				?>
 				<tr>
-					<td><?php echo $work['core_management_competencies'] ?></td>
+					<td><?php echo $work['core_management'] ?></td>
 					<td><?php echo $work['process_competencies'] ?></td>
 					<td><?php echo $work['dev_required'] ?></td>
 				</tr>
@@ -177,14 +177,14 @@
 
 				<?php
 
-				foreach ($kra as $_kra) {
+				foreach ($bp as $_kra) {
 
 
 					foreach ($work_plan as $work) {
 						if ($_kra['id'] == $work['kra_id']) { ?>
 
 							<tr>
-								<td><?php echo $_kra['name'] ?></td>
+								<td><?php echo $_kra['kra_id'] ?></td>
 								<td><?php echo $work['key_activities'] ?></td>
 								<td><?php echo $work['weight'] ?></td>
 								<td><?php echo $work['target_date'] ?></td>

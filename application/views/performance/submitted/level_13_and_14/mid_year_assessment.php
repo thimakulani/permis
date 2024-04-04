@@ -62,47 +62,29 @@ foreach ($kra as $_kra){
 
 <div class="card-body table-responsive">
 
-		<table class="table table-striped projects">
-			<thead style="background-color: #c1d59a">
+	<table class="table table-striped projects">
+		<thead style="background-color: #c1d59a">
+		<tr>
+			<th>CORE MANAGEMENT COMPETENCIES(CMCs)</th>
+			<th>PROCESS COMPETENCIES(PCs)</th>
+			<th>DEV REQUIRED(CMCs)</th>
+			<th>DEV REQUIRED(PCs)</th>
+			<th></th>
+		</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($personal_developmental_plan as $p_dev): ?>
 			<tr>
-				<th>
-					CORE MANAGEMENT COMPETENCIES(CMCs)
-
-				</th>
-				<th>
-					PROCESS COMPETENCIES(PCs)
-				</th>
-				<th>
-					DEV REQUIRED(CMCs)
-				</th>
-				<th>
-					DEV REQUIRED(PCs)
-				</th>
-				<th></th>
+				<td><?= $p_dev['core_management'] ?></td>
+				<td><?= $p_dev['process_competencies'] ?></td>
+				<td><?= $p_dev['dev_required_cmcs'] ?></td>
+				<td><?= $p_dev['dev_required_pcs'] ?></td>
+				<td></td>
 			</tr>
-			</thead>
-			<tbody>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
 
-			<?php
-
-			foreach ($personal_developmental_plan as $p_dev) {
-				echo '
-							<tr>
-								<td><input class="form-control-sm" disabled  type="text" value="' . $p_dev['core_management'] . '" /></td>
-								<td><input class="form-control-sm" disabled  type="text" value="' . $p_dev['process_competencies'] . '" /></td>
-								<td><input class="form-control-sm" disabled  type="text" value="' . $p_dev['dev_required_cmcs'] . '" /></td>
-								<td><input class="form-control-sm" disabled  type="text" value="' . $p_dev['dev_required_pcs'] . '" /></td>
-							</tr>
-							';
-			}
-
-
-			?>
-
-
-			</tbody>
-
-		</table>
 
 </div>
 </div>

@@ -452,7 +452,7 @@
 					?>
 
 					<tr>
-						<td><?php echo $gmcWork['core_management_competencies'] ?></td>
+						<td><?php echo $gmcWork['core_management'] ?></td>
 						<td><?php echo $gmcWork['process_competencies'] ?></td>
 						<td><?php echo $gmcWork['dev_required'] ?></td>
 						<td>
@@ -475,7 +475,7 @@
 
 											<div class="form-group">
 												<label class="control-label">CORE MANAGEMENT COMPETENCIES</label>
-												<input class="form-control" required name="core_management_competencies" value="<?php echo $gmcWork['core_management_competencies']; ?>"/>
+												<input class="form-control" required name="core_management" value="<?php echo $gmcWork['core_management_competencies']; ?>"/>
 
 
 											</div>
@@ -1016,7 +1016,7 @@
 					<input class="form-control" type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
 					<div class="form-group">
 						<label class="control-label">CORE MANAGEMENT COMPETENCIES</label>
-						<input class="form-control" required name="core_management_competencies"/>
+						<input class="form-control" required name="core_management"/>
 					</div>
 
 					<div class="form-group">

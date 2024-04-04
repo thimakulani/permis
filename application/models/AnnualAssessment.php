@@ -12,9 +12,14 @@ class AnnualAssessment extends CI_Model
 		$this->db->insert('individual_performance',$data);
 
 	}
-	public function get_individual_performance($id)
+	public function get_individual_performance($id, $period)
 	{
 		$this->db->where('employee', $id);
+		$this->db->group_start();
+		$this->db->like('period', $period,'both');
+		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
+		$this->db->group_end();
+		//$this->db->where('template_name', $template_name);
 		return $this->db->get('individual_performance')->result_array();
 	}
 	public function remove_individual_performance($id)
@@ -89,7 +94,7 @@ class AnnualAssessment extends CI_Model
 		$this->db->where('employee', $id);
 		$this->db->where('period', $period);
 		$this->db->where('template_name', $template_name);
-		return $this->db->get('key_result_area')->result_array();
+		return $this->db->get('individual_performance')->result_array();
 	}
 /*	public function remove_kra($id)
 	{

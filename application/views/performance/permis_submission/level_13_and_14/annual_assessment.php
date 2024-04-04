@@ -1,12 +1,18 @@
 <div>
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/permis_official_submissions">BACK</a>
 </div>
+<div style="text-align: center;">
+	<h3 style="margin: 20px">CHIEF DIRECTOR AND DIRECTORS ANNUAL PERFORMANCE ASSESSMENT TEMPLATE</h3>
+</div>
+
+<?php print_r($submission_row) ?>
 
 <h4>EMPLOYEE PERFORMANCE: KEY RESULT AREAS (KRAs)</h4>
 <?php $count_kra = 1;
 foreach ($kra as $_kra)
 {
-	?>   <div class="card">
+	?>
+	<div class="card">
 		<h4 class="card-header">
 			KRA NO <?php echo $count_kra; ?>: <?php echo $_kra['name']; ?>
 		</h4>
@@ -111,7 +117,7 @@ moderated_rating
 				echo '
 
 					<tr>
-						<td>' . $gmcWork['core_management_competencies'] . '</td>
+						<td>' . $gmcWork['core_management'] . '</td>
 						<td>' . $gmcWork['process_competencies'] . '</td>
 						<td>' . $gmcWork['dev_required'] . '</td>
 		

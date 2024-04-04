@@ -16,11 +16,8 @@ class Initialization extends CI_Model
 	public function get_initializations($id, $period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		$this->db->where('period', $period);
+		//$this->db->where('template_name', $template_name);
 		$results=$this->db->get('initializations');
 		return $results->row();
 	}

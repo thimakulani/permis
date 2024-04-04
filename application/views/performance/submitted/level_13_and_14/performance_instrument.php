@@ -216,7 +216,7 @@
 					?>
 
 					<tr>
-						<td><?php echo $gmcWork['core_management_competencies'] ?></td>
+						<td><?php echo $gmcWork['core_management'] ?></td>
 						<td><?php echo $gmcWork['process_competencies'] ?></td>
 						<td><?php echo $gmcWork['dev_required'] ?></td>
 

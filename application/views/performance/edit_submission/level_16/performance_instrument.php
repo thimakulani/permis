@@ -302,7 +302,7 @@
 			foreach ($gmc_work_plan as $gmcWork) {
 				?>
 								<tr>
-									<td><input class="form-control" disabled  value="<?php echo $gmcWork['core_management_competencies'] ?>" /></td>
+									<td><input class="form-control" disabled  value="<?php echo $gmcWork['core_management'] ?>" /></td>
 									<td><input class="form-control" disabled   value="<?php echo $gmcWork['process_competencies'] ?>" /></td>
 									<td><input class="form-control" disabled  value="<?php echo $gmcWork['dev_required'] ?>" /></td>
 									<?php if($user_submission != 1){ ?>
@@ -317,7 +317,7 @@
 							<form method="post" action="<?php echo base_url() ?>performance/add_generic_management_competencies_personal_development_plan/500">
 								<input name="template_name"   value="PERFORMANCE INSTRUMENT" type="hidden" />
 								<tr>
-									<td><input class="form-control" name="core_management_competencies" required  type="text" /></td>
+									<td><input class="form-control" name="core_management" required  type="text" /></td>
 									<td><input class="form-control" name="process_competencies" required  type="text" /></td>
 									<td>
 										<select name="dev_required" class="form-control select">

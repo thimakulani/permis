@@ -118,7 +118,7 @@
 							
 							<form method="post" action="' . base_url() . 'performance/gmc_performance_plan/10">
 								<tr>
-									<td><input class="form-control" name="core_management_competencies" required  type="text" /></td>
+									<td><input class="form-control" name="core_management" required  type="text" /></td>
 									<td><input class="form-control" name="process_competencies" required  type="text" /></td>
 									<td>
 										<select name="CmcdevRequired" class="form-control select">

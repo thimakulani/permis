@@ -85,7 +85,7 @@ foreach ($kra as $_kra){
 			foreach ($gmc_personal_development_plan as $g) {?>
 
 					<tr>
-						<td><input class="form-control-sm" disabled  type="text" value="<?php echo $g['core_management_competencies'];?>" /></td>
+						<td><input class="form-control-sm" disabled  type="text" value="<?php echo $g['core_management'];?>" /></td>
 						<td><input class="form-control-sm" disabled  type="text" value="<?php echo $g['process_competencies'];?>" /></td>
 						<td><input class="form-control-sm" disabled  type="text" value="<?php echo $g['dev_required'];?>" /></td>
 						

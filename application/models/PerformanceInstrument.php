@@ -28,10 +28,7 @@ class PerformanceInstrument extends CI_Model
 	public function get_individual_performance($id, $period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
+		$this->db->where('period', $period);
 		$this->db->where('template_name', $template_name);
 		return $this->db->get('individual_performance')->result_array();
 	}
@@ -53,11 +50,8 @@ class PerformanceInstrument extends CI_Model
 	public function get_work_plan($id,$period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		$this->db->where('period', $period);
+		//$this->db->where('template_name', $template_name);
 		return $this->db->get('work_plan')->result_array();
 	}
 
@@ -68,10 +62,7 @@ class PerformanceInstrument extends CI_Model
 	public function get_personal_developmental_plan($id,$period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
+		$this->db->where('period', $period);
 		//$this->db->where('template_name', $template_name);
 		return $this->db->get('personal_developmental_plan')->result_array();
 	}
@@ -84,15 +75,12 @@ class PerformanceInstrument extends CI_Model
 
 	public function add_generic_management_competencies_personal_development_plan(array $data)
 	{
-		$this->db->insert('generic_management_competencies_personal_development_plan', $data);
+		$this->db->insert('generic_management_competencies', $data);
 	}
 	public function get_generic_management_competencies_personal_development_plan($id,$period, $template)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
+		$this->db->where('period', $period);
 		//$this->db->where('template_name', $template_name);
 		return $this->db->get('generic_management_competencies')->result_array();
 	}
@@ -144,21 +132,13 @@ class PerformanceInstrument extends CI_Model
 	public function get_duties($id,$period, $template_name)
     {
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		$this->db->where('period', $period);
 		return $this->db->get('duties')->result_array();
     }
 	public function get_duty_reason($id,$period, $template_name)
     {
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		$this->db->where('period', $period);
 		return $this->db->get('duty_reason')->result_array();
     }
 
@@ -177,11 +157,7 @@ class PerformanceInstrument extends CI_Model
 	public function get_performance_plan($id, $period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		$this->db->where('period', $period,'both');
 		$results=$this->db->get('performance_plan');
 		return $results->result_array();
 	}
@@ -207,11 +183,7 @@ class PerformanceInstrument extends CI_Model
     public function get_personal_developmental_training($id, $period, $template_name)
     {
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		$this->db->where('period', $period);
 		$results=$this->db->get('personal_developmental_training');
 		return $results->result_array();
     }
@@ -234,7 +206,7 @@ class PerformanceInstrument extends CI_Model
     {
 		$this->db->insert('kra', $data);
     }
-	public function get_kra($id, $period, $template_name)
+/*	public function get_kra($id, $period, $template_name)
 	{
 
 		$this->db->where('employee', $id);
@@ -244,7 +216,7 @@ class PerformanceInstrument extends CI_Model
 		$this->db->group_end();
 		//$this->db->where('template_name', $template_name);
 		return $this->db->get('kra')->result_array();
-	}
+	}*/
 
 	public function remove_kra($id)
 	{
@@ -305,7 +277,7 @@ class PerformanceInstrument extends CI_Model
 	{
 		$this->db->where('employee', $id);
 		$this->db->where('period', $period);
-		$this->db->where('template_name', $template_name);
+		//$this->db->where('template_name', $template_name);
 		return $this->db->get('key_government_focus_areas')->result_array();
 	}
 

@@ -216,20 +216,14 @@ class PerformanceModel extends CI_Model
 	{
 
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
+		$this->db->where('period', $period);
 		$this->db->where('template_name', $template_name);
 		return $this->db->get('performance_assessment')->num_rows();
 	}
 	public function user_sub($id, $period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
+		$this->db->where('period', $period);
 		$this->db->where('template_name', $template_name);
 		return $this->db->get('performance_assessment')->num_rows();
 	}

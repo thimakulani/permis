@@ -197,7 +197,7 @@ else if($submission->status_final == 'REJECTED')
 
 			<?php foreach ($personal_developmental_plan as $gmcWork): ?>
 				<tr>
-					<td><?= $gmcWork['core_management_competencies'] ?></td>
+					<td><?= $gmcWork['core_management'] ?></td>
 					<td><?= $gmcWork['process_competencies'] ?></td>
 					<td><?= $gmcWork['dev_required'] ?></td>
 					<!--<td><?php /*= $gmcWork['dev_required_pcs'] */?></td>-->

@@ -389,7 +389,7 @@
 					?>
 
 					<tr>
-						<td><?php echo $gmcWork['core_management_competencies'] ?></td>
+						<td><?php echo $gmcWork['core_management'] ?></td>
 						<td><?php echo $gmcWork['process_competencies'] ?></td>
 						<td><?php echo $gmcWork['dev_required'] ?></td>
 						<?php if($user_submission !=1){ ?>
@@ -420,7 +420,7 @@
 										<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
 										<div class="form-group">
 											<label class="control-label">CORE MANAGEMENT COMPETENCIES</label>
-											<input class="form-control" name="core_management_competencies" value="<?php echo $gmcWork['core_management_competencies']?>" required type="text"/>
+											<input class="form-control" name="core_management" value="<?php echo $gmcWork['core_management']?>" required type="text"/>
 										</div>
 										<div class="form-group">
 											<label class="control-label">PROCESS COMPETENCIES</label>
@@ -498,7 +498,7 @@
 					<form id="add_gmcpdp" method="post" action="<?php echo base_url() ?>performance/add_generic_management_competencies_personal_development_plan/9">
 						<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT" />
 						<tr>
-							<td><input class="form-control" name="core_management_competencies" required  type="text" /></td>
+							<td><input class="form-control" name="core_management" required  type="text" /></td>
 							<td><input class="form-control" name="process_competencies" required  type="text" /></td>
 							<td>
 								<select name="dev_required" class="form-control select">

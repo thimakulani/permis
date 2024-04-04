@@ -3,7 +3,7 @@
 </div>
 <div>
 
-	<h1 style="font-weight: bold" align="center">FORMAL PERFORMANCE ASSESSMENT</h1>
+	<h1 style="font-weight: bold" align="center">FORMAL ANNUAL ASSESSMENT</h1>
 	<h4 style="font-weight: bold" align="center">PERFORMANCE PERIOD: <?php echo $submission_row->period?></h4>
 	<h4 style="font-weight: bold" align="center">COMMENTS BY JOBHOLDER</h4>
 	<p style="font-weight: bold">(To be completed by the jobholder, prior to the assessment process. If the space

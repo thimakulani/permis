@@ -238,4 +238,15 @@ class MidYearAssessment extends CI_Model
 		$this->db->where('template_name', $string);
 		return $this->db->get('auditor_general_opinion_and_findings')->row();
     }
+
+	public function get_individual_performance($id, $period, $template_name)
+	{
+		$this->db->where('employee', $id);
+		$this->db->group_start();
+		$this->db->like('period', $period,'both');
+		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
+		$this->db->group_end();
+		//$this->db->where('template_name', $template_name);
+		return $this->db->get('individual_performance')->result_array();
+	}
 }

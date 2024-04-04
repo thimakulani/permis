@@ -126,7 +126,7 @@
 			foreach ($gmc_work_plan as $work) {
 				?>
 				<tr>
-					<td><?php echo $work['core_management_competencies'] ?></td>
+					<td><?php echo $work['core_management'] ?></td>
 					<td><?php echo $work['process_competencies'] ?></td>
 					<td><?php echo $work['dev_required'] ?></td>
 				</tr>
