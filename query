@@ -1,0 +1,35 @@
+DROP TABLE auditorgeneralfocusarea;
+DROP TABLE competencies_personal_development_plan;
+DROP TABLE contracts;
+DROP TABLE contracttypes;
+DROP TABLE factor;
+INSERT INTO generic_management_competencies (employee, period, core_management, competencies, process_competencies, dev_required, dev_required_cmcs, dev_required_pcs, template_name)
+SELECT employee, period, core_management_competencies, '', process_competencies, dev_required, '', '', template_name FROM generic_management_competencies_personal_development_plan;
+
+DROP TABLE generic_management_competencies_personal_development_plan;
+DROP TABLE key_responsibility;
+DROP TABLE key_result_area;
+DROP TABLE kgfa;
+DROP TABLE kra;
+DROP TABLE operational_memorandum;
+DROP TABLE performanceagreements;
+DROP TABLE performanceplans;
+DROP TABLE personaldevelopmentplans;
+DROP TABLE post_summary;
+DROP TABLE pt_submission;
+DROP TABLE typeoftraining;
+DROP TABLE workplan;
+
+
+UPDATE duties SET period = '2023/2024' WHERE period = 2024/2025;
+UPDATE duty_reason SET period = '2023/2024' WHERE period = 2024/2025;
+UPDATE generic_management_competencies SET period = '2023/2024' WHERE period = 2024/2025;
+UPDATE individual_performance SET period = '2023/2024' WHERE period = 2024/2025;
+UPDATE initializations SET period = '2023/2024' WHERE period = 2024/2025;
+UPDATE key_government_focus_areas SET period = '2023/2024' WHERE period = 2024/2025;
+UPDATE organisational_performance SET period = '2023/2024' WHERE period = 2024/2025;
+UPDATE performance_assessment SET period = '2023/2024' WHERE period = 2024/2025;
+UPDATE performance_plan SET period = '2023/2024' WHERE period = 2024/2025;
+UPDATE personal_developmental_plan SET period = '2023/2024' WHERE period = 2024/2025;
+UPDATE personal_developmental_training SET period = '2023/2024' WHERE period = 2024/2025;
+UPDATE work_plan SET period = '2023/2024' WHERE period = 2024/2025;
