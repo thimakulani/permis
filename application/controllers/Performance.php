@@ -28,8 +28,8 @@ class Performance extends CI_Controller
 	}
 	public function load_template($type, $period)
 	{
+		$period_dash = $period;
 		$period = str_replace("-", "/", $period);
-
 		if (!empty($_SESSION['Id'])) {
 			$id = $_SESSION['Id'];
 		}
@@ -40,6 +40,7 @@ class Performance extends CI_Controller
 		$user = $emp->get_profile($_SESSION['Id']);
 		$form_data['emp'] = $user;
 		$form_data['period'] = $period;
+		$form_data['period_dash'] = $period_dash;
 		$submission = new PerformanceModel();
 		$init = new Initialization();
 
@@ -81,6 +82,37 @@ class Performance extends CI_Controller
 			elseif ($user->SalaryLevel == 16)
 			{
 				$this->load->view("performance/level_16/performance_instrument", $form_data);
+			}
+		}
+		elseif($type == 3)
+		{
+
+			$submission = new PerformanceModel();
+			$form_data['user_submission'] = $submission->user_submission($id, $period, 'ANNUAL ASSESSMENT');
+			$form_data['user_sub'] = $submission->user_sub($id, $period, 'ANNUAL ASSESSMENT');
+			if($user->SalaryLevel <= 12)
+			{
+
+				$ann = new AnnualAssessment();
+				$form_data['performance_plan'] = $ann->get_performance_plan($id, $period, 'ANNUAL ASSESSMENT');
+				$this->load->view("performance/level_1_to_12/annual_assessment", $form_data);
+			}
+			elseif ($user->SalaryLevel == 13 || $user->SalaryLevel == 14 )
+			{
+				$p_i = new PerformanceInstrument();
+				$form_data['gmc_personal_development_plan'] = $p_i->get_generic_management_competencies_personal_development_plan($id, $period, '');
+				$form_data['individual_performance'] = $p_i->get_individual_performance($id, $period, '');
+				$form_data['work_plan'] = $p_i->get_work_plan($id,$period, '');
+				$form_data['devplan'] = $p_i->get_personal_developmental_plan($id,$period, '');
+				$this->load->view("performance/level_13_and_14/annual_assessment", $form_data);
+			}
+			elseif ($user->SalaryLevel == 15)
+			{
+				$this->load->view("performance/level_15/annual_assessment", $form_data);
+			}
+			elseif ($user->SalaryLevel == 16)
+			{
+				$this->load->view("performance/level_16/annual_assessment", $form_data);
 			}
 		}
 		else{
@@ -1032,7 +1064,7 @@ class Performance extends CI_Controller
 			}
 			if ($submission_row->template_name == 'ANNUAL ASSESSMENT') {
 
-				$perf = new PerformanceInstrument();
+				$perf = new AnnualAssessment();
 				$init = new Initialization();
 				$p_data['initialization'] = $init->get_initializations($id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$p_data['performance_plan'] = $perf->get_performance_plan($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
@@ -2273,13 +2305,10 @@ class Performance extends CI_Controller
 	}
 
 
-	public function submit_performance_ann($type)
+	public function submit_performance_ann($type,$period)
 	{
-
+		$period = str_replace("-", "/", $period);
 		$perf = new PerformanceModel();
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
 
 		$check = $perf->validate_submission_ann($period, $this->input->post('template_name'));
 		if ($check > 0) {
@@ -2311,7 +2340,7 @@ class Performance extends CI_Controller
 			'reason' => $this->input->post('reason'),
 		);
 		$perf->submit_to_manager_ann_performance($data);
-		$this->template($type);
+		$this->load_template($type, $period);
 	}
 
 	public function submit_performance_hod_ann($type)

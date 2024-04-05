@@ -87,14 +87,14 @@
 						</td>
 
 						<td>
-							<input class="form-control" disabled  type="text" value="<?php echo $m['job_holder_rating'] ?>" />
+							<input class="form-control" disabled  type="text" value="<?php echo $m['job_holder_rating_ann'] ?>" />
 						</td>
 
 						<td>
-							<input class="form-control" disabled  type="text" value="<?php echo $m['supervisor_rating'] ?>" />
+							<input class="form-control" disabled  type="text" value="<?php echo $m['supervisor_rating_ann'] ?>" />
 						</td>
 						<td>
-							<input class="form-control" disabled  type="text"  value="<?php echo $m['decision_of_supervisor'] ?>" />
+							<input class="form-control" disabled  type="text"  value="<?php echo $m['decision_of_supervisor_ann'] ?>" />
 						</td>
 						<td>
 							<input class="form-control" disabled type="text" value="<?php echo $m['par_score'] ?>" />

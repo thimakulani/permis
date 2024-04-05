@@ -1,5 +1,5 @@
 <div>
-	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/performance_capture" >BACK</a>
+	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/performance_capture">BACK</a>
 </div>
 <div>
 
@@ -82,12 +82,17 @@
 							<td><input class="form-control" disabled type="text"
 									   value="<?php echo $m['outcome_weight'] ?>"/></td>
 
-							<td><input class="form-control" type="number" min="1" max="4" name="job_holder_rating_ann" value="<?php echo $m['job_holder_rating_ann']?>"/></td>
+							<td><input class="form-control" type="number" min="1" max="4" name="job_holder_rating_ann"
+									   value="<?php echo $m['job_holder_rating_ann'] ?>"/></td>
 
-							<td><input class="form-control" disabled  type="number" name="supervisor_rating_ann" value="<?php echo $m['supervisor_rating_ann'] ?>"/></td>
+							<td><input class="form-control" disabled type="number" name="supervisor_rating_ann"
+									   value="<?php echo $m['supervisor_rating_ann'] ?>"/></td>
 
-							<td><input class="form-control" type="number" name="par_score_ann" disabled value="<?php echo $m['par_score_ann'] ?>"/></td>
-							<td><input class="form-control" name="performance_report_ann" type="text" value="<?php if(isset($m['performance_report_ann'])) echo $m['performance_report_ann'] ?>" /> </td>
+							<td><input class="form-control" type="number" name="par_score_ann" disabled
+									   value="<?php echo $m['par_score_ann'] ?>"/></td>
+							<td><input class="form-control" name="performance_report_ann" type="text"
+									   value="<?php if (isset($m['performance_report_ann'])) echo $m['performance_report_ann'] ?>"/>
+							</td>
 							<td>
 								<input type="submit" value="update" class="btn-sm btn-info"/>
 							</td>
@@ -107,7 +112,7 @@
 
 </div>
 
-<form method="post" action="<?php echo base_url() ?>performance/submit_performance_ann/8">
+<form method="post" action="<?php echo base_url() ?>performance/submit_performance_ann/3/<?php echo $period_dash ?>">
 
 	<div class="card">
 		<div class="card-header">
@@ -150,28 +155,32 @@
 
 
 	<br/>
-	<input type="hidden" name="template_name" value="ANNUAL ASSESSMENT">
-	<div>
-		<input class="btn btn-info" type="submit" value="SUBMIT TO SUPERVISOR"/>
-	</div>
+
+	<?php if($user_submission != 1) { ?>
+		<input type="hidden" name="template_name" value="ANNUAL ASSESSMENT">
+		<div>
+			<input class="btn btn-info" type="submit" value="SUBMIT TO SUPERVISOR"/>
+		</div>
+	<?php } ?>
 
 </form>
-<?php
-if (isset($user_sub->status))
-{?>
-	<?php if ($user_sub->status == 'REJECTED')
-{?>
-	<div class="card">
-		<div class="card-body">
-			<form class="form-inline"  method="post" action="<?php echo base_url()?>performance/sup_update_status_correction/<?php echo $submission_id; ?>">
 
-				<input type="Correct" class="btn-sm btn-primary m-2" />
-			</form>
+<?php
+if (isset($user_submission->status)) {
+	?>
+	<?php if ($user_submission->status == 'REJECTED') {
+		?>
+		<div class="card">
+			<div class="card-body">
+				<form class="form-inline" method="post"
+					  action="<?php echo base_url() ?>performance/sup_update_status_correction/<?php echo $submission_id; ?>">
+					<input type="submit" class="btn-sm btn-primary m-2"/>
+				</form>
+			</div>
 		</div>
-	</div>
-<?php } ?>
+	<?php } ?>
 <?php }
 ?>
 
-<br />
+<br/>
 

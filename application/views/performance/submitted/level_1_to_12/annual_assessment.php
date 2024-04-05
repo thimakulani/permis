@@ -89,13 +89,13 @@
 							<?php echo $m['outcome_weight'] ?>
 						</td>
 						<td class="text-center">
-							<?php echo $m['job_holder_rating'] ?>
+							<?php echo $m['job_holder_rating_ann'] ?>
 						</td>
 						<td class="text-center">
-							<?php echo $m['supervisor_rating'] ?>
+							<?php echo $m['supervisor_rating_ann'] ?>
 						</td>
 						<td>
-							<?php echo $m['decision_of_supervisor'] ?>
+							<?php echo $m['decision_of_supervisor_ann'] ?>
 						</td>
 						<td class="text-center">
 							<strong> <p><?php echo $m['par_score'] ?></p> </strong>
