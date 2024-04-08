@@ -135,7 +135,7 @@
 
 </div>
 
-<form method="post" action="<?php echo base_url() ?>performance/submit_performance_ann/8">
+<form method="post" action="<?php echo base_url() ?>performance/submit_performance_ann/3">
 
 	<div class="card"><H2>AGREEMENT ASSESSMENT</H2>      <br>
 		<table class="table table-bordered">

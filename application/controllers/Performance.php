@@ -44,10 +44,6 @@ class Performance extends CI_Controller
 		$submission = new PerformanceModel();
 		$init = new Initialization();
 
-
-
-
-
 		$this->load->view("templates/header");
 		if($type == 1)
 		{
@@ -99,11 +95,11 @@ class Performance extends CI_Controller
 			}
 			elseif ($user->SalaryLevel == 13 || $user->SalaryLevel == 14 )
 			{
-				$p_i = new PerformanceInstrument();
-				$form_data['gmc_personal_development_plan'] = $p_i->get_generic_management_competencies_personal_development_plan($id, $period, '');
-				$form_data['individual_performance'] = $p_i->get_individual_performance($id, $period, '');
-				$form_data['work_plan'] = $p_i->get_work_plan($id,$period, '');
-				$form_data['devplan'] = $p_i->get_personal_developmental_plan($id,$period, '');
+				$ann = new AnnualAssessment();
+				$form_data['kra'] = $ann->get_kra($id,$period, 'PERFORMANCE INSTRUMENT');
+				$form_data['work_plan'] = $ann->get_work_plan($id,$period, 'PERFORMANCE INSTRUMENT');
+				$form_data['gmc_personal_development_plan'] = $ann->get_generic_management_competencies_personal_development_plan($id,$period, '$template_ann');
+
 				$this->load->view("performance/level_13_and_14/annual_assessment", $form_data);
 			}
 			elseif ($user->SalaryLevel == 15)
@@ -1033,6 +1029,7 @@ class Performance extends CI_Controller
 	}
 
 
+
 	///submitted
 	public function view_submitted($_id)
 	{
@@ -1287,6 +1284,68 @@ class Performance extends CI_Controller
 				$form_data['personal_developmental_plan'] = $p_i->get_personal_developmental_plan($emp->id, $period, $template);
 
 				$this->load->view("performance/edit_submission/level_15/performance_instrument",$form_data);
+			}
+		}
+		$this->load->view("templates/footer");
+	}
+
+	public function edit_submission_ann($sub_id)
+	{
+		$e = new EmployeeModel();
+
+
+		$emp = $e->get_profile($_SESSION['Id']);
+		$perf = new PerformanceModel();
+		$submission = $perf->get_specific_submission($sub_id);
+		$form_data['submission'] = $submission;
+		$form_data['user_submission'] = $perf->user_submission($_SESSION['Id'], $submission->period, 'MID YEAR ASSESSMENT');
+
+
+
+
+		$form_data['period'] = $submission->period;
+		$form_data['emp'] = $emp;
+		//$form_data['sub_id'] = $sub_id;
+		$init = new Initialization();
+		$form_data['initialization'] = $init->get_initializations($emp->id, $submission->period, 'MID YEAR ASSESSMENT');
+
+		$template = 'ANNUAL ASSESSMENT';
+		$this->load->view("templates/header");
+		if($submission->template_name == $template)
+		{
+			if($emp->SalaryLevel == 13 || $emp->SalaryLevel == 14)
+			{
+				$p_i = new PerformanceInstrument();
+				$mid = new MidYearAssessment();
+				$form_data['kra'] = $mid->get_kra($emp->id, $submission->period, $template);
+				$form_data['personal_developmental_plan'] = $p_i->get_generic_management_competencies_personal_development_plan($emp->id, $submission->period, '');
+				$form_data['individual_performance'] = $p_i->get_individual_performance($emp->id, $submission->period, $template);
+				$form_data['work_plan'] = $mid->get_work_plan($emp->id, $submission->period, $template);
+				$form_data['devplan'] = $p_i->get_personal_developmental_plan($emp->id, $submission->period, $template);
+				$this->load->view("performance/edit_submission/level_13_and_14/annual_assessment",$form_data);
+			}
+			if($emp->SalaryLevel <= 12)
+			{
+				$perf = new PerformanceInstrument();
+				$form_data['data'] = $submission;
+				$form_data['performance_plan'] = $perf->get_performance_plan($emp->id, $submission->period, 'PERFORMANCE INSTRUMENT');
+				$form_data['personal_developmental_training'] = $perf->get_personal_developmental_training($emp->id, $submission->period, $template);
+				//$form_data['submission_row'] = $submission_row;
+				$form_data['duties'] = $perf->get_duties($emp->id, $submission->period, $template);
+				$form_data['duty_reason'] = $perf->get_duty_reason($emp->id, $submission->period, $template);
+				//$form_data['key_responsibility'] = $perf->get_key_responsibility($emp->id, $period, $template);
+
+				$this->load->view("performance/edit_submission/level_1_to_12/annual_assessment",$form_data);
+			}
+			if($emp->SalaryLevel == 15)
+			{
+				$p_i = new PerformanceInstrument();
+				$form_data['individual_performance'] = $p_i->get_individual_performance($emp->id, $period, $template);
+				$form_data['generic_management_competencies'] = $p_i->get_generic_management_competencies($emp->id, $period, $template);
+				$form_data['work_plan'] = $p_i->get_work_plan($emp->id, $submission->period, $template);
+				$form_data['personal_developmental_plan'] = $p_i->get_personal_developmental_plan($emp->id, $period, $template);
+
+				$this->load->view("performance/edit_submission/level_15/annual_assessment",$form_data);
 			}
 		}
 		$this->load->view("templates/footer");
@@ -2223,7 +2282,45 @@ class Performance extends CI_Controller
 	{
 
 	}
+	public function submit_annual_assessment()
+	{
 
+		$perf = new PerformanceModel();
+		$year = date('Y');
+		$next_year = $year + 1;
+		$period = $year .'/'.$next_year;
+
+		$check = $perf->validate_submission_mid_dir($period, $this->input->post('template_name'));
+		if ($check > 0) {
+			$this->load->view('flush');
+			$toaster = new Toastr();
+			$toaster->warning("YOU ALREADY SUBMITTED YOUR PERFORMANCE FOR THIS FINANCIAL YEAR");
+			$this->load->view('flush');
+			//$this->load->view('flush');
+			//$this->template($type);
+			return;
+		}
+
+		$emp = new EmployeeModel();
+		$user = $emp->get_single_user($_SESSION['Id']);
+		$data = array(
+			'supervisor' => $user->SupervisorId,
+			'employee' => $_SESSION['Id'],
+			'date_captured' => date('Y-m-d'),
+			'period' => $this->input->post('period'),
+			'status' => 'PENDING',
+			'status_final' => 'PENDING',
+			'sup_comment' => NULL,
+			'emp_comment' => $this->input->post('emp_comment'),
+			'pmd_comment' => NULL,
+			'template_name' => $this->input->post('template_name'),
+			'agree' => NULL,
+			'reason' => NULL,
+		);
+		//$this->input->post('supervisor_comment')
+		$perf->submit_to_manager_mid_dir_performance($data);
+
+	}
 	public function submit_performance_dir_mid($type)
 	{
 
@@ -2263,6 +2360,7 @@ class Performance extends CI_Controller
 		$perf->submit_to_manager_mid_dir_performance($data);
 		$this->template($type);
 	}
+
 
 	public function submit_performance_dir_mid_ddg($type)
 	{
@@ -2305,7 +2403,7 @@ class Performance extends CI_Controller
 	}
 
 
-	public function submit_performance_ann($type,$period)
+	public function submit_performance_ann($type, $period)
 	{
 		$period = str_replace("-", "/", $period);
 		$perf = new PerformanceModel();
@@ -2321,7 +2419,6 @@ class Performance extends CI_Controller
 			return;
 		}
 
-
 		$emp = new EmployeeModel();
 		$user = $emp->get_single_user($_SESSION['Id']);
 		$data = array(
@@ -2333,7 +2430,7 @@ class Performance extends CI_Controller
 			'status' => 'PENDING',
 			'status_final' => 'PENDING',
 			'sup_comment' => '',
-			'emp_comment' => '',
+			'emp_comment' => $this->input->post('reason'),
 			'pmd_comment' => NULL,
 			'template_name' => $this->input->post('template_name'),
 			'agree' => $this->input->post('option'),
@@ -2992,7 +3089,7 @@ class Performance extends CI_Controller
 		//echo $this->input->post('job_holder_rating') . $this->input->post('par_score') . $this->input->post('performance_report');
 		$data = array(
 			'job_holder_rating'=>$this->input->post('job_holder_rating'),
-			'par_score'=>$this->input->post('par_score'),
+			//'par_score'=>$this->input->post('par_score'),
 			'performance_report'=>$this->input->post('performance_report'),
 		);
 
@@ -3003,17 +3100,19 @@ class Performance extends CI_Controller
 		$this->template($type);
 	}
 
-	public function update_performance_ann($id, $type)
+
+
+
+	public function update_performance_ann($id)
 	{
 		$this->form_validation->set_rules('job_holder_rating_ann', '', 'required');
 		//$this->form_validation->set_rules('par_score', '', 'required');
 		$this->form_validation->set_rules('performance_report_ann', '', 'required');
 
 		$mid = new MidYearAssessment();
-		//echo $this->input->post('job_holder_rating') . $this->input->post('par_score') . $this->input->post('performance_report');
 		$data = array(
 			'job_holder_rating_ann'=>$this->input->post('job_holder_rating_ann'),
-			'par_score_ann'=>$this->input->post('par_score_ann'),
+			//'par_score_ann'=>$this->input->post('par_score_ann'),
 			'performance_report_ann'=>$this->input->post('performance_report_ann'),
 		);
 
@@ -3021,7 +3120,27 @@ class Performance extends CI_Controller
 		{
 			$mid->update_performance($id, $data);
 		}
-		$this->template($type);
+		//$this->load_template(3, $period);
+	}
+
+	//level 13
+	public function update_work_plan_annual()
+	{
+		$this->form_validation->set_rules('actual_achievement_ann', '', 'required');
+		$this->form_validation->set_rules('sms_rating_ann', '', 'required');
+		$mid = new MidYearAssessment();
+		if($this->input->post('id') !== null)
+		{
+			$data = array(
+				'actual_achievement_ann'=>$this->input->post('actual_achievement_ann'),
+				'sms_rating_ann'=>$this->input->post('sms_rating_ann'),
+			);
+
+			if($this->form_validation->run())
+			{
+				$mid->update_work_plan($this->input->post('id'), $data);
+			}
+		}
 	}
 
 	public function update_work_plan($id, $type)

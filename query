@@ -33,3 +33,15 @@ UPDATE performance_plan SET period = '2023/2024' WHERE period = 2024/2025;
 UPDATE personal_developmental_plan SET period = '2023/2024' WHERE period = 2024/2025;
 UPDATE personal_developmental_training SET period = '2023/2024' WHERE period = 2024/2025;
 UPDATE work_plan SET period = '2023/2024' WHERE period = 2024/2025;
+
+
+///NEW QUERY
+
+ALTER TABLE work_plan
+ADD COLUMN sms_rating_ann INT DEFAULT NULL,
+ADD COLUMN supervisor_rating_ann INT DEFAULT NULL,
+ADD COLUMN agreed_rating_ann INT DEFAULT NULL,
+ADD COLUMN actual_achievement_ann VARCHAR(255) DEFAULT NULL,
+ADD COLUMN evaluated_score_ann INT DEFAULT NULL,
+ADD COLUMN moderated_rating_ann INT DEFAULT NULL;
+

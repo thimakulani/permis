@@ -115,8 +115,14 @@ else if($submission->status_final == 'REJECTED')
 									url: '<?php echo base_url() ?>performance/update_performance/<?php echo $m['id']; ?>/7',
 									data: $('#update_pp<?php echo $m['id']?>').serialize(), // serialize the form data
 									success: function (response) {
-										location.reload();
-										$('#response').html(response); // display the response on the page
+										Swal.fire({
+											icon: 'success',
+											title: 'Success',
+											text: 'Successfully updated',
+											onClose: () => {
+												location.reload();
+											}
+										});
 									}
 								});
 							});
@@ -297,7 +303,15 @@ else if($submission->status_final == 'REJECTED')
 			let tot = val_a * val_b;
 			document.getElementById('val_total').value = tot;
 		} else {
-			alert('PLEASE PROVIDE THE VALUE OF (A) SUB-TOTAL OR (B) % OF ASSESSMENT');
+
+			Swal.fire({
+				icon: 'warning',
+				title: 'Warning',
+				text: 'PLEASE PROVIDE THE VALUE OF (A) SUB-TOTAL OR (B) % OF ASSESSMENT',
+				onClose: () => {
+					location.reload();
+				}
+			});
 		}
 
 	}

@@ -43,24 +43,11 @@
 <div>
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/performance_capture">BACK</a>
 </div>
-<div>
+<div style="text-align: center;">
 
-	<h1 style="font-weight: bold" align="center">FORMAL PERFORMANCE AGREEMENT</h1>
-	<h4 style="font-weight: bold" align="center">PERFORMANCE PERIOD: <?php echo $period; ?> </h4>
-	<h4 style="font-weight: bold" align="center">COMMENTS BY JOBHOLDER</h4>
-	<!-- <p style="font-weight: bold">(To be completed by the jobholder, prior to the assessment process. If the space
-		provided is insufficient, the comments can be included as an attachment)</p>
-	<ul>
-		<li>During this performance assessment period, my major achievements / accomplishments as they relate to my
-			Performance Agreement were:
-		</li>
-		<li>During this performance assessment period, I have achieved / accomplished the following, which was/were not
-			part of my Performance Agreement:
-		</li>
-		<li>During this performance assessment period, I was less successful in the following areas, which formed part
-			of my Performance Agreement, for the reasons stated
-		</li>
-	</ul> -->
+	<h1 style="font-weight: bold" >FORMAL PERFORMANCE AGREEMENT</h1>
+	<h4 style="font-weight: bold" >PERFORMANCE PERIOD: <?php echo $period; ?> </h4>
+	<h4 style="font-weight: bold" >COMMENTS BY JOBHOLDER</h4>
 
 </div>
 <br/>
@@ -78,52 +65,56 @@ if($emp != null)
 	<div class="card-body">
 
 		<p><strong>
-			1. The information required in 1.1 and 1.2 should be provided as it is indicated within the approved job
-			description of the post or other approved directives that have an impact on the post.</strong>
+			1. THE INFORMATION REQUIRED IN 1.1 AND 1.2 SHOULD BE PROVIDED AS IT IS INDICATED WITHIN THE APPROVED JOB
+			DESCRIPTION OF THE POST OR OTHER APPROVED DIRECTIVES THAT HAVE AN IMPACT ON THE POST.</strong>
 		</p>
-		<p>The purpose of the post:</p>
-		<p>The Key Responsibilities of the post:</p>
+		<p>THE PURPOSE OF THE POST:</p>
+		<p>THE KEY RESPONSIBILITIES OF THE POST:</p>
 
-		<table class="table">
-			<?php
-			$count_key_rows = 1;
-			foreach ($performance_plan as $kr) {
-				?>
-				<tr>
-					<td>1.<?php echo $count_key_rows ?></td>
-					<td><?php echo $kr['key_responsibility'] ?></td>
-					<?php if($user_submission != 1) { ?>
-						<td>
-							<button class="btn-sm btn-danger text-decoration-none text-white delete-btn_<?php echo $kr['id'] ?>" data-id="<?php echo $kr['id']?>">Remove</button>
+		<div class="table-responsive">
+			<table class="table">
+				<?php
+				$count_key_rows = 1;
+				foreach ($performance_plan as $kr) {
+					?>
+					<tr>
+						<td style="width: 50px;">1.<?php echo $count_key_rows ?></td>
+						<td style="width: calc(100% - 100px);"><?php echo $kr['key_responsibility'] ?></td>
+						<td style="text-align: right;"> <!-- Apply inline CSS for right alignment -->
+							<?php if($user_submission != 1) { ?>
+								<button class="btn-sm btn-danger text-decoration-none text-white delete-btn_<?php echo $kr['id'] ?>" data-id="<?php echo $kr['id']?>">Remove</button>
+							<?php } ?>
 						</td>
-					<?php } ?>
-				</tr>
+					</tr>
 
 
-				<script>
-					$('.delete-btn_<?php echo $kr['id'] ?>').on('click', function() {
-						var rowId = $(this).data('id');
-						$.ajax({
-							url: '<?php echo base_url() ?>performance/remove_key_responsibility/6/<?php echo $kr['id'] ?>',
-							type: 'DELETE',
-							data: {id: rowId},
-							success: function(response) {
-								// remove the row from the table
-								location.reload();
-							},
-							error: function(xhr, status, error) {
-								console.log(error);
-							}
+
+
+					<script>
+						$('.delete-btn_<?php echo $kr['id'] ?>').on('click', function() {
+							var rowId = $(this).data('id');
+							$.ajax({
+								url: '<?php echo base_url() ?>performance/remove_key_responsibility/6/<?php echo $kr['id'] ?>',
+								type: 'DELETE',
+								data: {id: rowId},
+								success: function(response) {
+									// remove the row from the table
+									location.reload();
+								},
+								error: function(xhr, status, error) {
+									console.log(error);
+								}
+							});
 						});
-					});
-				</script>
-				<?php $count_key_rows++;
-			} ?>
+					</script>
+					<?php $count_key_rows++;
+				} ?>
 
 
 
 
-		</table>
+			</table>
+		</div>
 		<?php if($user_submission != 1) { ?>
 			<form id="add_key_resp" action="<?php echo base_url() ?>performance/add_key_responsibility/6" method="post">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
@@ -159,9 +150,9 @@ if($emp != null)
 			<strong>
 
 
-			2. The information required in 2.1 and 2.2 does not form part of the approved job description of the post
-			or other approved directives that
-			have an impact on the post and is applicable on a temporary basis only.
+			2. THE INFORMATION REQUIRED IN 2.1 AND 2.2 DOES NOT FORM PART OF THE APPROVED JOB DESCRIPTION OF THE POST
+			OR OTHER APPROVED DIRECTIVES THAT
+			HAVE AN IMPACT ON THE POST AND IS APPLICABLE ON A TEMPORARY BASIS ONLY.
 			</strong>
 		</p>
 		<p>
@@ -178,10 +169,10 @@ if($emp != null)
 			foreach ($duties as $kr) {
 				?>
 				<tr>
-					<td>1.<?php echo $count_duty_rows ?></td>
-					<td><?php echo $kr['description'] ?></td>
+					<td style="width: 50px">1.<?php echo $count_duty_rows ?></td>
+					<td style="width: calc(100% - 100px);"><?php echo $kr['description'] ?></td>
 					<?php if($user_submission != 1) { ?>
-					<td>
+					<td style="text-align: right;">
 						<button
 								class="btn-sm btn-danger text-decoration-none delete-btn_duty<?php echo $kr['id'] ?>" data-id="<?php echo $kr['id'] ?>">Remove</button></td>
 					<?php } ?>
@@ -254,11 +245,10 @@ if($emp != null)
 			foreach ($duty_reason as $kr) {
 				?>
 				<tr>
-					<td>1.<?php echo $count_duty_reason_rows ?></td>
-					<td><?php echo $kr['description'] ?></td>
-
+					<td style="width: 50px">1.<?php echo $count_duty_reason_rows ?></td>
+					<td style="width: calc(100% - 100px);"><?php echo $kr['description'] ?></td>
 					<?php if($user_submission != 1) { ?>
-					<td>
+						<td style="text-align: right;">
 						<button
 						   class="btn-sm btn-danger text-decoration-none delete-btn_duty_reason<?php echo $kr['id'] ?>" id="delete-btn_duty_reason<?php echo $kr['id'] ?>" data-id="<?php echo $kr['id'] ?>">Remove</button>
 
@@ -770,8 +760,6 @@ if($emp != null)
 
 					<?php if ($user_submission != 1){ ?>
 					<td>
-
-
 						<button class="btn-sm m-2 btn-danger delete-btn_pdt<?php echo $perf['id'] ?>" style="margin: 3px"
 						   >Remove</button>
 						<a class="btn-sm btn-info" data-toggle="modal" href="#"

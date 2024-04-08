@@ -12,27 +12,13 @@
 		<thead style="background-color: #fbd4b4">
 		<tr>
 			<th>
-				Name of the SMS member
+				NAME OF THE SMS MEMBER
 			</th>
 			<th>
 				<input type="text" class="form-control-sm" />
 			</th>
 			<th>
-				Job title
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Persal Number
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
-				Performance cycle
+				JOB TITLE
 			</th>
 			<th>
 				<input type="text" class="form-control-sm" />
@@ -40,13 +26,13 @@
 		</tr>
 		<tr>
 			<th>
-				Name of the Supervisor
+				PERSAL NUMBER
 			</th>
 			<th>
 				<input type="text" class="form-control-sm" />
 			</th>
 			<th>
-				Period under review
+				PERFORMANCE CYCLE
 			</th>
 			<th>
 				<input type="text" class="form-control-sm" />
@@ -54,7 +40,21 @@
 		</tr>
 		<tr>
 			<th>
-				Name of Department
+				NAME OF THE SUPERVISOR
+			</th>
+			<th>
+				<input type="text" class="form-control-sm" />
+			</th>
+			<th>
+				PERIOD UNDER REVIEW
+			</th>
+			<th>
+				<input type="text" class="form-control-sm" />
+			</th>
+		</tr>
+		<tr>
+			<th>
+				NAME OF DEPARTMENT
 			</th>
 			<th>
 				<input type="text" class="form-control-sm" />
@@ -68,7 +68,7 @@
 		</tr>
 		<tr>
 			<th>
-				Province (if applicable)
+				PROVINCE (IF APPLICABLE)
 			</th>
 			<th>
 				<input type="text" class="form-control-sm" />

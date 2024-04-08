@@ -60,8 +60,9 @@
 					<th>
 						PERFORMANCE REPORT
 					</th>
+					<?php if($user_submission != 1) { ?>
 					<th></th>
-					<th></th>
+					<?php } ?>
 				</tr>
 				</thead>
 				<tbody>
@@ -73,8 +74,7 @@
 
 
 					?>
-					<form method="post"
-						  action="<?php echo base_url() ?>performance/update_performance_ann/<?php echo $m['id']; ?>/8">
+					<form method="post" id="update_pp<?php echo $m['id']; ?>" >
 						<tr>
 							<td><?php echo $m['key_responsibility'] ?></td>
 							<td><?php echo $m['gafs'] ?></td>
@@ -90,30 +90,58 @@
 
 							<td><input class="form-control" type="number" name="par_score_ann" disabled
 									   value="<?php echo $m['par_score_ann'] ?>"/></td>
-							<td><input class="form-control" name="performance_report_ann" type="text"
+							<td>
+								<input class="form-control" name="performance_report_ann" type="text"
 									   value="<?php if (isset($m['performance_report_ann'])) echo $m['performance_report_ann'] ?>"/>
 							</td>
-							<td>
-								<input type="submit" value="update" class="btn-sm btn-info"/>
-							</td>
-
+							<?php if($user_submission != 1) { ?>
+								<td>
+									<input type="submit" value="update" class="btn-sm btn-info"/>
+								</td>
+							<?php } ?>
 						</tr>
 					</form>
+
+					<script>
+						$(document).ready(function () {
+							$('#update_pp<?php echo $m['id']; ?>').submit(function (e) {
+								e.preventDefault(); // prevent the form from submitting normally
+								$.ajax({
+									type: 'POST',
+									url: '<?php echo base_url() ?>performance/update_performance_ann/<?php echo $m['id']; ?>',
+									data: $('#update_pp<?php echo $m['id']?>').serialize(), // serialize the form data
+									success: function (response) {
+										Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Changes saved successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										});
+									}
+								});
+							});
+						});
+
+					</script>
+
+
 				<?php } ?>
 				</tbody>
 
 			</table>
-			<?php echo '<Legend> Sub-Total: ' . $counter . '</Legend>' ?>
+
 
 
 		</div>
+		<?php echo '<b style="margin: 10px"> SUB-TOTAL: ' . $counter . '</b>' ?>
 	</div>
 
 
 </div>
 
-<form method="post" action="<?php echo base_url() ?>performance/submit_performance_ann/3/<?php echo $period_dash ?>">
-
+<form id="performanceForm" method="post">
 	<div class="card">
 		<div class="card-header">
 			<h4>AGREEMENT ASSESSMENT</h4>
@@ -121,8 +149,8 @@
 		<br>
 		<table class="table table-bordered">
 			<thead style="background: #939ba7">
-			<th> JOBHOLDER</th>
-			<th> SUPERVISOR</th>
+			<th>JOBHOLDER</th>
+			<th>SUPERVISOR</th>
 			</thead>
 			<tbody>
 			<tr>
@@ -130,19 +158,17 @@
 					<h5>I acknowledge that my supervisor and I have discussed the performance and I:</h5>
 					<br>
 					<input type="radio" checked name="option" value="yes">
-					<label for="agree"> AGREE WITH THE ASSESSMENT</label>
+					<label for="agree">AGREE WITH THE ASSESSMENT</label>
 					<br> <br>
 					<input type="radio" name="option" value="no">
-					<label for="not_agree"> DO NOT AGREE WITH ASSESSMENT (If in disagreement please provide and attach
-						written reasons) </label><br>
+					<label for="not_agree">DO NOT AGREE WITH ASSESSMENT (If in disagreement please provide and attach written reasons)</label><br>
 				</td>
 				<td>
-					<h5>I acknowledge that I have discussed the official’s performance with him / her and that the
-						assessment is a true reflection of his / her performance of the period:</h5>
+					<h5>I acknowledge that I have discussed the official’s performance with him / her and that the assessment is a true reflection of his / her performance of the period:</h5>
 				</td>
 			</tr>
 			<tr>
-				<td><input placeholder="Reason If you Disagree" class="form-control" name="reason" type="text"/></td>
+				<td><input placeholder="Reason If you Disagree" value="<?php if(isset($user_submission->reason)) echo $user_submission->reason; ?>" class="form-control" name="reason" type="text"/></td>
 				<td><p>To put the date(period)</p></td>
 			</tr>
 			<tr>
@@ -153,34 +179,68 @@
 		</table>
 	</div>
 
-
 	<br/>
 
 	<?php if($user_submission != 1) { ?>
 		<input type="hidden" name="template_name" value="ANNUAL ASSESSMENT">
 		<div>
-			<input class="btn btn-info" type="submit" value="SUBMIT TO SUPERVISOR"/>
+			<input id="submitBtn" class="btn btn-info" type="button" value="SUBMIT TO SUPERVISOR"/>
 		</div>
 	<?php } ?>
 
 </form>
 
+<script>
+	$(document).ready(function() {
+		// Submit form via AJAX
+		$('#submitBtn').click(function() {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo base_url() ?>performance/submit_performance_ann/3/<?php echo $period_dash ?>',
+				data: $('#performanceForm').serialize(),
+				success: function(response) {
+					// Handle successful response with SweetAlert2
+					Swal.fire({
+						icon: 'success',
+						title: 'Success!',
+						text: 'Your Annual Assessment has been successfully submitted to your supervisor!',
+						onClose: () => {
+							location.reload();
+						}
+					});
+				},
+				error: function(xhr, status, error) {
+					// Handle error response with SweetAlert2
+					Swal.fire({
+						icon: 'error',
+						title: 'Error!',
+						text: 'An error occurred. Please try again later.',
+
+					});
+				}
+			});
+		});
+	});
+</script>
+
+
+<!--
 <?php
-if (isset($user_submission->status)) {
-	?>
-	<?php if ($user_submission->status == 'REJECTED') {
-		?>
+/*if (isset($user_submission->status)) {
+	*/?>
+	<?php /*if ($user_submission->status == 'REJECTED') {
+		*/?>
 		<div class="card">
 			<div class="card-body">
 				<form class="form-inline" method="post"
-					  action="<?php echo base_url() ?>performance/sup_update_status_correction/<?php echo $submission_id; ?>">
+					  action="<?php /*echo base_url() */?>performance/sup_update_status_correction/<?php /*echo $submission_id; */?>">
 					<input type="submit" class="btn-sm btn-primary m-2"/>
 				</form>
 			</div>
 		</div>
-	<?php } ?>
-<?php }
-?>
+	<?php /*} */?>
+--><?php /*}
+*/?>
 
 <br/>
 
