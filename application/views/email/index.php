@@ -5,35 +5,44 @@
 		<h3>EMAIL</h3>
 	</div><!-- /.card-header -->
 	<div class="card-body">
-		<div class="tab-content">
-			<div>
+		
+			
 				<!-- Post -->
 				<form enctype="multipart/form-data" class="form-horizontal" method="post" action="<?php echo base_url()?>leaves/leave_application">
-					<div class="form-group row">
-						<label  class="col-sm-2 col-form-label">MESSAGE</label>
+				<div class="form-group row">
+						<label  class="col-sm-2 col-form-label">SENT TO</label>
 						<div class="col-sm-10">
-                            <textarea class="form-control" name="message" placeholder="First Name"></textarea>
+							<select class="form-control" name="employee_group">
+								<option value="all">ALL EMPLOYEES</option>
+								<option value="non-sms">NONE SMS MEMBERS</option>
+								<option value="sms">SMS MEMBERS</option>
+							</select>
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label  class="col-sm-2 col-form-label">SENT TO</label>
+						<label  class="col-sm-2 col-form-label">SUBJECT</label>
 						<div class="col-sm-10">
-							<select class="form-control" name="employee_group">
-								<option value="sick">SICK LEAVE</option>
-								<option value="maternity">MATERNITY</option>
-							</select>
+                            <input class="form-control" name="subject" placeholder="SUBJECT" />
 						</div>
 					</div>
+
+					<div class="form-group row">
+						<label  class="col-sm-2 col-form-label">MESSAGE</label>
+						<div class="col-sm-10">
+                            <textarea class="form-control" name="message" placeholder="MESSAGE"></textarea>
+						</div>
+					</div>
+					
 					<div class="form-group row">
 						<div class="offset-sm-2 col-sm-10">
-							<input type="submit" name="SEND" class="btn-sm btn-danger" />
+							<input type="submit" value="SEND EMAIL" class="btn-sm btn-info" />
 						</div>
 					</div>
 				</form>
 				<!-- /.post -->
-			</div>
-		</div>
+	
+		
 		<!-- /.tab-content -->
 	</div><!-- /.card-body -->
 </div>
