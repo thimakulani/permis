@@ -74,8 +74,7 @@
 
 					?>
 
-					<form id="update_pp<?php echo $m['id']; ?>" method="post"
-						  action="<?php echo base_url() ?>performance/update_performance/<?php echo $m['id']; ?>/7">
+					<form id="update_pp<?php echo $m['id']; ?>" method="post">
 						<tr>
 							<td><input class="form-control" disabled type="text"
 									   value="<?php echo $m['key_responsibility'] ?>"/></td>
@@ -256,7 +255,8 @@
 	</div>
 </form>
 <?php
-if(isset($user_sub->status)){
+if(isset($user_sub->status))
+{
 if ($user_sub->status == 'REJECTED')
 {?>
 	<div class="card">

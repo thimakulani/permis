@@ -62,6 +62,9 @@ $route['manual/(:any)'] = 'manual/$1';
 $route['branch'] = 'branch/index';
 $route['branch/(:any)'] = 'branch/$1';
 
+$route['email'] = 'email/index';
+$route['email/(:any)'] = 'email/$1';
+
 $route['achievements'] = 'achievements/index';
 $route['achievements/(:any)'] = 'achievements/$1';
 

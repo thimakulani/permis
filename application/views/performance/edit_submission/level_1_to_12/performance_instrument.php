@@ -670,8 +670,14 @@
 						url: '<?php echo base_url() ?>performance/initialization',
 						data: $('#initialize_part_1').serialize(), // serialize the form data
 						success: function (response) {
-							location.reload();
-							$('#response').html(response); // display the response on the page
+							Swal.fire({
+								icon: 'success',
+								title: 'Success',
+								text: 'Initials have been added',
+								onClose: () => {
+									location.reload();
+								}
+							});
 						}
 					});
 				});
@@ -796,11 +802,24 @@
 							type: 'DELETE',
 							data: {id: rowId},
 							success: function(response) {
-								// remove the row from the table
-								location.reload();
+								Swal.fire({
+									icon: 'success',
+									title: 'Success',
+									text: 'Successfully Updated',
+									onClose: () => {
+										location.reload();
+									}
+								});
 							},
 							error: function(xhr, status, error) {
-								console.log(error);
+								Swal.fire({
+									icon: 'error',
+									title: 'Error',
+									text: error,
+									onClose: () => {
+										location.reload();
+									}
+								});
 							}
 						});
 					});
@@ -890,8 +909,14 @@
 								url: '<?php echo base_url() ?>performance/edit_pdp/6/<?php echo $perf['id'] ?>',
 								data: $('#update_pdp<?php echo $perf['id'] ?>').serialize(),
 								success: function (response) {
-									location.reload();
-									$('#response').html(response);
+									Swal.fire({
+										icon: 'success',
+										title: 'Success',
+										text: 'Successfully Updated',
+										onClose: () => {
+											location.reload();
+										}
+									});
 								}
 							});
 						});
@@ -973,8 +998,14 @@
 						url: '<?php echo base_url(); ?>performance/add_personal_developmental_training/6',
 						data: $('#add_personal_developmental_training').serialize(), // serialize the form data
 						success: function (response) {
-							location.reload();
-							$('#response').html(response); // display the response on the page
+							Swal.fire({
+								icon: 'success',
+								title: 'Success',
+								text: 'Successfully Added',
+								onClose: () => {
+									location.reload();
+								}
+							});
 						}
 					});
 				});
@@ -1005,8 +1036,14 @@
 							url: '<?php echo base_url() ?>performance/initialization',
 							data: $('#initialize_part_1').serialize(), // serialize the form data
 							success: function (response) {
-								location.reload();
-								$('#response').html(response); // display the response on the page
+								Swal.fire({
+									icon: 'success',
+									title: 'Success',
+									text: 'Initials added',
+									onClose: () => {
+										location.reload();
+									}
+								});
 							}
 						});
 					});
@@ -1198,10 +1235,22 @@
 		let form = document.getElementById("form_submit_mou");
 		let wo = <?php echo $counter?>;
 		if (wo < 100) {
-			alert("WEIGHT OF OUTCOME MUST NOT BE LESS THAN 100%");
-			return;
+			//alert("");
+			Swal.fire({
+				icon: 'warning',
+				title: 'Warning',
+				text: 'WEIGHT OF OUTCOME MUST NOT BE LESS THAN 100%',
+				onClose: () => {
+					//location.reload();
+					return;
+				}
+			});
+
 		}
-		form.submit();
+		else	{
+			form.submit();
+		}
+
 	}
 
 	var sig = $('#sig').signature({syncField: '#signature64', syncFormat: 'PNG'});

@@ -1,6 +1,19 @@
 <div>
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/performance_capture" >BACK</a>
 </div>
+
+<div style="margin: 20px" class="alert alert-info">
+	<?php if($submission->status == 'REJECTED')
+	{ ?>
+		<h3 style="color: crimson;font-weight: bold">SUPERVISOR COMMENT: <?php echo $submission->sup_comment ?> </h3>
+	<?php }
+	else if($submission->status_final == 'REJECTED')
+	{ ?>
+		<p>PMD OFFICIALS COMMENT: <?php echo $submission->pmd_comment ?> </p>
+	<?php }
+	?>
+</div>
+
 <div>
 
 	<h1 style="font-weight: bold" align="center">ANNUAL ASSESSMENT</h1>
@@ -73,22 +86,20 @@
 
 
 					?>
-					<form method="post"
-						  action="<?php echo base_url() ?>performance/update_performance/<?php echo $m['id']; ?>/7">
+					<form method="post" id="update_pp<?php echo $m['id']; ?>"
+						  >
 						<tr>
-							<td><input class="form-control" disabled type="text"
-									   value="<?php echo $m['key_responsibility'] ?>"/></td>
-							<td><input class="form-control" disabled type="text" value="<?php echo $m['gafs'] ?>"/></td>
+							<td><?php echo $m['key_responsibility'] ?></td>
+							<td><?php echo $m['gafs'] ?></td>
 
-							<td><input class="form-control" disabled type="text"
-									   value="<?php echo $m['outcome_weight'] ?>"/></td>
+							<td><?php echo $m['outcome_weight'] ?></td>
 
-							<td><input class="form-control" DISABLED type="number" min="1" max="4" name="job_holder_rating" value="<?php echo $m['job_holder_rating']?>"/></td>
+							<td><input class="form-control" type="number" min="1" max="4" name="job_holder_rating_ann" value="<?php echo $m['job_holder_rating_ann']?>"/></td>
 
-							<td><input class="form-control" disabled  type="number" name="supervisor_rating" value="<?php echo $m['supervisor_rating'] ?>"/></td>
+							<td><input class="form-control" disabled  type="number" name="supervisor_rating_ann" value="<?php echo $m['supervisor_rating_ann'] ?>"/></td>
 
-							<td><input class="form-control" disabled type="number" name="par_score" value="<?php echo $m['par_score'] ?>"/></td>
-							<td><input class="form-control" disabled name="performance_report" value="<?php if(isset($m['performance_report'])) echo $m['performance_report'] ?>" />  </td>
+							<td><input class="form-control" disabled type="number" name="par_score_ann" value="<?php echo $m['par_score_ann'] ?>"/></td>
+							<td><input class="form-control" name="performance_report_ann" value="<?php if(isset($m['performance_report_ann'])) echo $m['performance_report_ann'] ?>" />  </td>
 
 							<td>
 								<input type="submit" value="update" class="btn-sm btn-info"/>
@@ -96,6 +107,26 @@
 
 						</tr>
 					</form>
+					<script>
+						$(document).ready(function () {
+							$('#update_pp<?php echo $m['id']; ?>').submit(function (e) {
+								e.preventDefault(); // prevent the form from submitting normally
+								$.ajax({
+									type: 'POST',
+									url: '<?php echo base_url() ?>performance/update_performance_ann/<?php echo $m['id']; ?>',
+									data: $('#update_pp<?php echo $m['id']?>').serialize(), // serialize the form data
+									success: function (response) {
+										location.reload();
+										$('#response').html(response); // display the response on the page
+									}
+								});
+							});
+						});
+
+					</script>
+
+
+
 				<?php } ?>
 				</tbody>
 
@@ -108,8 +139,8 @@
 
 
 </div>
-
-<form method="post" action="<?php echo base_url() ?>performance/submit_performance_ann/8">
+<br />
+<!--<form method="post" action="<?php /*echo base_url() */?>performance/submit_performance_ann/8">
 
 	<div class="card">
 		<div class="card-header">
@@ -158,5 +189,59 @@
 	</div>
 
 </form>
+-->
 <br />
+
+<?php if($submission->status == 'REJECTED' || $submission->status_final == 'REJECTED') { ?>
+	<form id="submissionForm" action="<?php echo base_url() ?>performance/resubmit_changes/<?php echo $submission->id ?>" method="post">
+		<br/>
+		<div class="card">
+			<div class="card-footer">
+				<div style="text-align: right;">
+					<input type="hidden" name="status" value="<?php echo $submission->status ?>"/>
+					<input type="hidden" name="status_final" value="<?php echo $submission->status_final ?>"/>
+					<input type="submit" value="SAVE CHANGES" class="btn btn-info text-decoration-none text-white" />
+				</div>
+			</div>
+		</div>
+	</form>
+	<script>
+		$(document).ready(function() {
+			// Intercept form submission
+			$('#submissionForm').submit(function(event) {
+				event.preventDefault(); // Prevent default form submission
+
+				// Serialize form data
+				var formData = $(this).serialize();
+
+				// Send AJAX request
+				$.ajax({
+					type: 'POST',
+					url: '<?php echo base_url() ?>performance/resubmit_changes/<?php echo $submission->id ?>',
+					data: formData,
+					success: function(response) {
+						// Handle successful response with SweetAlert2
+						Swal.fire({
+							icon: 'success',
+							title: 'Success!',
+							text: 'Changes saved successfully!',
+							onClose: () => {
+								location.reload();
+							}
+						});
+					},
+					error: function(xhr, status, error) {
+						// Handle error response with SweetAlert2
+						Swal.fire({
+							icon: 'error',
+							title: 'Error!',
+							text: 'An error occurred. Please try again later.',
+						});
+					}
+				});
+			});
+		});
+	</script>
+<?php } ?>
+
 

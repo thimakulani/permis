@@ -67,37 +67,26 @@
 				</tr>
 				</thead>
 				<tbody>
-
 				<?php
 				$counter = 0;
 				foreach ($mou as $m) {
-					$counter = $counter + $m['outcome_weight'];
-					echo '
-								<tr>
-									<td>'. $m['key_result_areas'] .'</td>
-									<td>' . $m['gafs'] . '</td>
-									
-									<td><input class="form-control" disabled  type="text" value="' . $m['outcome_weight'] . '" /></td>
-
-                                    <td><input class="form-control" disabled  type="text" value="' . $m['job_holder_rating'] . '" /></td>
-
-									<td><input class="form-control" disabled  type="text" value="' . $m['supervisor_rating'] . '" /></td>
-									<td>
-										' . $m['decision_of_supervisor'] . '
-									</td>
-									<td><input class="form-control" disabled type="text" value="' . $m['par_score'] . '" /></td>
-                                    <td>
-                                    	' . $m['performance_report'] . '
-                                    </td>
-                              
-								</tr>
-								';
+					$counter += $m['outcome_weight'];
+					?>
+					<tr>
+						<td><?= $m['key_result_areas'] ?></td>
+						<td><?= $m['gafs'] ?></td>
+						<td><input class="form-control" disabled type="text" value="<?= $m['outcome_weight_ann'] ?>" /></td>
+						<td><input class="form-control" disabled type="text" value="<?= $m['job_holder_rating_ann'] ?>" /></td>
+						<td><input class="form-control" disabled type="text" value="<?= $m['supervisor_rating_ann'] ?>" /></td>
+						<td><?= $m['decision_of_supervisor'] ?></td>
+						<td><input class="form-control" disabled type="text" value="<?= $m['par_score_ann'] ?>" /></td>
+						<td><?= $m['performance_report'] ?></td>
+					</tr>
+					<?php
 				}
-
-
-
 				?>
 				</tbody>
+
 
 			</table>
 			<?php echo '<Legend> Sub-Total: ' . $counter . '</Legend>' ?>

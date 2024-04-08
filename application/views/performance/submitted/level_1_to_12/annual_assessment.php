@@ -67,7 +67,6 @@
 					<th>
 						PERFORMANCE REPORT
 					</th>
-					<th></th>
 				</tr>
 				</thead>
 				<tbody>
@@ -98,10 +97,10 @@
 							<?php echo $m['decision_of_supervisor_ann'] ?>
 						</td>
 						<td class="text-center">
-							<strong> <p><?php echo $m['par_score'] ?></p> </strong>
+							<strong> <p><?php echo $m['par_score_ann'] ?></p> </strong>
 						</td>
 						<td>
-							<?php echo $m['performance_report'] ?>
+							<?php echo $m['performance_report_ann'] ?>
 						</td>
 					</tr>
 				<?php } ?>

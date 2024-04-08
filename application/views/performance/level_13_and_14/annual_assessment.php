@@ -1,5 +1,6 @@
 <?php
 $is_valid = true;
+
 ?>
 <div>
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/performance_capture">BACK</a>
@@ -89,7 +90,9 @@ $is_valid = true;
 					<th>SUPERVISOR RATING</th>
 					<th>AGREED RATING</th>
 					<th>MODERATED  RATING</th>
-					<th></th>
+					<?php if($user_submission == 0){ ?>
+						<th></th>
+					<?php } ?>
 				</tr>
 				</thead>
 				<tbody>
@@ -98,31 +101,48 @@ $is_valid = true;
 
 				foreach ($work_plan as $work){ ?>
 					<?php if($work['kra_id'] == $_kra['id']) {?>
-						<form id="update_wp<?php echo $work['id'] ?>" enctype="multipart/form-data"  method="post">
+						<form id="update_form_data_<?php echo $work['id'] ?>"  method="post">
 							<input type="hidden" name="template_name" value="MID YEAR ASSESSMENT" />
+							<input type="hidden" name="id" value="<?php echo $_kra['id']; ?>" />
 							<tr>
-								<td><input type="text" name="key_activities" disabled value="<?php echo $work['key_activities'] ?>"  class="form-control"></td>
-								<td><input type="text" name="target_date" disabled value="<?php echo $work['target_date'] ?>" class="form-control"></td>
-								<td><input type="text" name="actual_achievement"  value="<?php echo $work['actual_achievement_ann'] ?>" class="form-control"></td>
-								<td><input type="text" name="sms_rating"  value="<?php echo $work['sms_rating_ann'] ?>" class="form-control"></td>
-								<td><input type="text" name="supervisor_rating" disabled value="<?php echo $work['supervisor_rating_ann'] ?>" class="form-control"></td>
-								<td><input type="text" name="agreed_rating" disabled value="<?php echo $work['agreed_rating_ann'] ?>" class="form-control"></td>
-								<td><input type="text" name="moderated_rating" disabled value="<?php echo $work['moderated_rating_ann'] ?>" class="form-control"></td>
-								<td><input type="submit" value="update" class="btn-sm btn-info" /></td>
+								<td><?php echo $work['key_activities'] ?></td>
+								<td><?php echo $work['target_date'] ?></td>
+								<td><input type="text" <?php if($user_submission == 1) { echo 'disabled';} ?> name="actual_achievement_ann"  value="<?php echo $work['actual_achievement_ann'] ?>" class="form-control"></td>
+								<td><input type="number" max="4" min="1" name="sms_rating_ann" <?php if($user_submission == 1) { echo 'disabled';} ?> value="<?php echo $work['sms_rating_ann'] ?>" class="form-control"></td>
+								<td><?php echo $work['supervisor_rating_ann'] ?></td>
+								<td><?php echo $work['agreed_rating_ann'] ?></td>
+								<td><?php echo $work['moderated_rating_ann'] ?></td>
+								<?php if($user_submission == 0){ ?>
+									<td>  <input type="submit" value="update" class="btn-sm btn-info" /></td>
+								<?php } ?>
 							</tr>
 						</form>
 
 						<script>
 							$(document).ready(function () {
-								$('#update_wp<?php echo $work['id'] ?>').submit(function (e) {
+								$('#update_form_data_<?php echo $work['id'] ?>').submit(function (e) {
 									e.preventDefault(); // prevent the form from submitting normally
 									$.ajax({
 										type: 'POST',
-										url: '<?php echo base_url() ?>performance/update_work_plan_ann/<?php echo $work['id'];?>/11',
+										url: '<?php echo base_url() ?>performance/update_work_plan_annual',
 										data: $('#update_wp<?php echo $work['id'] ?>').serialize(), // serialize the form data
 										success: function (response) {
-											location.reload();
-											$('#response').html(response); // display the response on the page
+											Swal.fire({
+												icon: 'success',
+												title: 'Success!',
+												text: 'Changes saved successfully!',
+												onClose: () => {
+													location.reload();
+												}
+											});
+										},
+										error: function(xhr, status, error) {
+											// Handle error response with SweetAlert2
+											Swal.fire({
+												icon: 'error',
+												title: 'Error!',
+												text: `An error occurred. Please try again later. ${error}`,
+											});
 										}
 									});
 								});
@@ -158,9 +178,9 @@ $is_valid = true;
 			<tbody>
 			<?php foreach ($gmc_personal_development_plan as $gmcWork): ?>
 				<tr>
-					<td><input class="form-control" disabled type="text" value="<?= $gmcWork['core_management'] ?>" /></td>
-					<td><input class="form-control" disabled type="text" value="<?= $gmcWork['process_competencies'] ?>" /></td>
-					<td><input class="form-control" disabled type="text" value="<?= $gmcWork['dev_required'] ?>" /></td>
+					<td><?= $gmcWork['core_management'] ?></td>
+					<td><?= $gmcWork['process_competencies'] ?></td>
+					<td><?= $gmcWork['dev_required'] ?></td>
 				</tr>
 			<?php endforeach; ?>
 			</tbody>
@@ -223,16 +243,16 @@ $is_valid = true;
 <br>
 -->
 
-<form method="post" action="<?php echo base_url() ?>performance/submit_performance_dir_mid/11">
+<form id="assessmentForm" method="post" >
 	<br/>
+	<input type="hidden" value="<?php echo $period ?>" name="period" />
 	<div class="card">
 		<div class="card-body">
 			<div class="form-group">
 				<label>
-					Comment by the SMS member  on his/her performance
+					COMMENT BY THE SMS MEMBER ON HIS/HER PERFORMANCE
 				</label>
-				<textarea <?php if($user_submission >= 1) echo 'disabled'?> class="form-control" name="emp_comment" ></textarea>
-
+				<textarea <?php if($user_submission >= 1) echo 'disabled'?> class="form-control" name="emp_comment"></textarea>
 			</div>
 			<br />
 
@@ -240,20 +260,58 @@ $is_valid = true;
 				<label>
 					Comment by the Supervisor
 				</label>
-				<textarea disabled class="form-control" ></textarea>
-
+				<textarea disabled class="form-control"></textarea>
 			</div>
 			<br />
 		</div>
 		<input value="ANNUAL ASSESSMENT" type="hidden" name="template_name"/>
-		<?php if($user_submission <1)
-		{?>
+		<?php if($user_submission < 1) { ?>
 			<div class="card-footer">
-				<input type="submit" <?php if($is_valid !== true){ echo 'disabled'; } ?> class="btn btn-info" value="SUBMIT TO SUPERVISOR"/>
+				<button type="submit" id="submitButton" <?php if($is_valid !== true) { echo 'disabled'; } ?> class="btn btn-info">SUBMIT TO SUPERVISOR</button>
 			</div>
-		<?php }  ?>
+		<?php } ?>
 	</div>
 </form>
+<script>
+	$(document).ready(function() {
+		$('#assessmentForm').submit(function(e) {
+			e.preventDefault(); // Prevent default form submission
+
+			// Serialize form data
+			var formData = $(this).serialize();
+
+			// Perform AJAX request
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo base_url() ?>performance/submit_annual_assessment',
+				data: formData,
+				success: function(response) {
+					// Handle success response
+					console.log(response);
+					Swal.fire({
+						icon: 'success',
+						title: 'Success!',
+						text: 'Annual assessment has been successfully submitted to your supervisor!',
+						onClose: () => {
+							location.reload();
+						}
+					});
+					// You can update UI or perform any action here
+				},
+				error: function(xhr, status, error) {
+					// Handle error response
+					console.error(xhr.responseText);
+					Swal.fire({
+						icon: 'error',
+						title: 'Error!',
+						text: 'Form submission failed!',
+					});
+					// You can display error messages or perform any action here
+				}
+			});
+		});
+	});
+</script>
 
 
 <script>

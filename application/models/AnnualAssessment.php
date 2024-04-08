@@ -93,7 +93,7 @@ class AnnualAssessment extends CI_Model
 	{
 		$this->db->where('employee', $id);
 		$this->db->where('period', $period);
-		$this->db->where('template_name', $template_name);
+		//$this->db->where('template_name', $template_name);
 		return $this->db->get('individual_performance')->result_array();
 	}
 /*	public function remove_kra($id)
@@ -108,11 +108,8 @@ class AnnualAssessment extends CI_Model
 	public function get_generic_management_competencies_personal_development_plan($id, $period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		$this->db->where('period', $period,'both');
+		//$this->db->where('template_name', $template_name);
 		return $this->db->get('generic_management_competencies')->result_array();
 	}
 	public function remove_generic_management_competencies_personal_development_plan($id)
