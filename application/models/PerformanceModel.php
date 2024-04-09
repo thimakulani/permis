@@ -373,10 +373,9 @@ class PerformanceModel extends CI_Model
 	public function validate_submission($period, $t_name)
 	{
 		$this->db->where('employee', $_SESSION['Id']);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
+		
+		$this->db->like('period', $period);
+		
 		$this->db->where('template_name', $t_name);
 		return $this->db->get('performance_assessment')->num_rows();
 	}

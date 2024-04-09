@@ -2136,7 +2136,7 @@ class Performance extends CI_Controller
 			'pmd_user' => $user->pmd,
 			'employee' => $_SESSION['Id'],
 			'date_captured' => date('Y-m-d'),
-			'period' => $period,
+			'period' => $this->input->post('period'),
 			'status' => 'PENDING',
 			'status_final' => 'PENDING',
 			'sup_comment' => '',

@@ -373,7 +373,7 @@ if($emp != null)
 		</div>
 		<div>
 
-			<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization/6">
+			<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization">
 				<input type="hidden" value="PART 1" name="description">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
 				<div style="text-align: right;" class="form-inline justify-content-end">
@@ -682,7 +682,7 @@ if($emp != null)
 <div class="card-footer">
 	<div>
 
-		<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization/6">
+		<form id="initialize_part_2" method="post" action="<?php echo base_url() ?>performance/initialization">
 			<input type="hidden" value="PART 1" name="description">
 			<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
 			<div style="text-align: right;" class="form-inline justify-content-end">
@@ -695,7 +695,7 @@ if($emp != null)
 
 		<script>
 			$(document).ready(function () {
-				$('#initialize_part_1').submit(function (e) {
+				$('#initialize_part_2').submit(function (e) {
 					e.preventDefault(); // prevent the form from submitting normally
 					$.ajax({
 						type: 'POST',
@@ -971,7 +971,7 @@ if($emp != null)
 	<div class="card-footer">
 		<div>
 
-			<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization/6">
+			<form id="initialize_part_3" method="post" action="<?php echo base_url() ?>performance/initialization">
 				<input type="hidden" value="PART 1" name="description">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
 				<div style="text-align: right;" class="form-inline justify-content-end">
@@ -989,7 +989,7 @@ if($emp != null)
 						$.ajax({
 							type: 'POST',
 							url: '<?php echo base_url() ?>performance/initialization',
-							data: $('#initialize_part_1').serialize(), // serialize the form data
+							data: $('#initialize_part_3').serialize(), // serialize the form data
 							success: function (response) {
 								location.reload();
 								$('#response').html(response); // display the response on the page
@@ -1070,7 +1070,7 @@ if($emp != null)
 	<div class="card-footer">
 		<div>
 
-			<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization/6">
+			<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization">
 				<input type="hidden" value="PART 1" name="description">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
 				<div style="text-align: right;" class="form-inline justify-content-end">
@@ -1083,12 +1083,12 @@ if($emp != null)
 
 			<script>
 				$(document).ready(function () {
-					$('#initialize_part_1').submit(function (e) {
+					$('#initialize_part_4').submit(function (e) {
 						e.preventDefault(); // prevent the form from submitting normally
 						$.ajax({
 							type: 'POST',
 							url: '<?php echo base_url() ?>performance/initialization',
-							data: $('#initialize_part_1').serialize(), // serialize the form data
+							data: $('#initialize_part_4').serialize(), // serialize the form data
 							success: function (response) {
 								location.reload();
 								$('#response').html(response); // display the response on the page
@@ -1129,7 +1129,7 @@ if($emp != null)
 	<div class="card-footer">
 		<div>
 
-			<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization/6">
+			<form id="initialize_part_5" method="post" action="<?php echo base_url() ?>performance/initialization/">
 				<input type="hidden" value="PART 1" name="description">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
 				<div style="text-align: right;" class="form-inline justify-content-end">
@@ -1142,12 +1142,12 @@ if($emp != null)
 
 			<script>
 				$(document).ready(function () {
-					$('#initialize_part_1').submit(function (e) {
+					$('#initialize_part_5').submit(function (e) {
 						e.preventDefault(); // prevent the form from submitting normally
 						$.ajax({
 							type: 'POST',
 							url: '<?php echo base_url() ?>performance/initialization',
-							data: $('#initialize_part_1').serialize(), // serialize the form data
+							data: $('#initialize_part_5').serialize(), // serialize the form data
 							success: function (response) {
 								location.reload();
 								$('#response').html(response); // display the response on the page
@@ -1171,6 +1171,7 @@ if($emp != null)
 				<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
 				<input value="<?php echo $counter ?>" type="hidden" name="weight_outcome"/>
 				<input value="<?php echo $count_key_rows ?>" type="hidden" name="weight_outcome"/>
+				<input value="<?php echo $period ?>" type="hidden" name="period"/>
 			</div>
 			<div class="card-footer">
 				<div style="text-align: right;">
