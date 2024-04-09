@@ -58,13 +58,50 @@ if($emp != null)
 
 <div class="card">
 	<div class="card-header">
-		<div style="display: flex; justify-content: space-between">
-			<h4>PART 1: POST SUMMARY</h4>
-			<form method="post" action="<?php echo base_url() ?>performance/load_previous">
-				<input type="hidden"  name="period" value="<?php echo $period ?>" />
-				<input class="btn btn-info" type="submit" value="USE PREVIOUS YEAR MOU" />
-			</form>
-		</div>
+	<div style="display: flex; justify-content: space-between">
+    <h4>PART 1: POST SUMMARY</h4>
+    <form id="previousYearForm" method="post" action="<?php echo base_url() ?>performance/load_previous">
+        <input type="hidden" name="period" value="<?php echo $period ?>" />
+        <input id="submitButton" class="btn btn-info" type="button" value="USE PREVIOUS YEAR MOU" />
+    </form>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#submitButton').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: $('#previousYearForm').attr('action'),
+                data: $('#previousYearForm').serialize(),
+                success: function (response) {
+                    // Handle success response
+                    console.log('Form submitted successfully');
+                    Swal.fire({
+												icon: 'success',
+												title: 'Success!',
+												text: 'submitted successfully',
+												onClose: () => {
+													location.reload();
+												}
+											});
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    Swal.fire({
+												icon: 'error',
+												title: 'Error!',
+												text: 'Something went wrong',
+												onClose: () => {
+													location.reload();
+												}
+											});
+                }
+            });
+        });
+    });
+</script>
+
 	</div>
 	<div class="card-body">
 
@@ -103,7 +140,14 @@ if($emp != null)
 								data: {id: rowId},
 								success: function(response) {
 									// remove the row from the table
-									location.reload();
+									Swal.fire({
+												icon: 'success',
+												title: 'Success!',
+												text: 'Successfully removed',
+												onClose: () => {
+													location.reload();
+												}
+											});
 								},
 								error: function(xhr, status, error) {
 									console.log(error);

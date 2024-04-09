@@ -59,6 +59,7 @@ class Performance extends CI_Controller
 		$this->db->where('period', $new_period);
 		$duty_reason = $this->db->get('duty_reason')->result_array();
 
+		
 		foreach ($duties as $d)
 		{
 			$data = array(
@@ -80,13 +81,37 @@ class Performance extends CI_Controller
 			$this->db->insert('duty_reason', $data);
 		}
 
-		echo 'ADDED';
-		return;
+		foreach ($personal_developmental_training as $d)
+		{
+			$data = array(
+				'development_required'=>$d['development_required'],
+				'training_type'=>$d['training_type'],
+				'reason'=>$d['reason'],
+				'time_frame'=>$d['time_frame'],
+				'progress'=>$d['progress'],
+				'period'=>$period,
+				'template_name'=>$d['template_name'],
+				'employee'=>$_SESSION['Id'],
+			);
+			$this->db->insert('personal_developmental_training', $data);
+		}
 
-
-
-
-
+		foreach ($performance_plan as $d)
+		{
+			$data = array(
+				'key_responsibility'=>$d['key_responsibility'],
+				'gafs'=>$d['gafs'],
+				'performance_outcome'=>$d['performance_outcome'],
+				'outcome_weight'=>$d['outcome_weight'],
+				'performance_measurement'=>$d['performance_measurement'],
+				'time_frames'=>$d['time_frames'],
+				'resources'=>$d['resources'],
+				'period'=>$period,
+				'template_name'=>$d['template_name'],
+				'employee'=>$_SESSION['Id'],
+			);
+			$this->db->insert('performance_plan', $data);
+		}
 
 	}
 
