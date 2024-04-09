@@ -42,7 +42,7 @@ ADD COLUMN actual_achievement_ann VARCHAR(255) DEFAULT NULL,
 ADD COLUMN evaluated_score_ann INT DEFAULT NULL,
 ADD COLUMN moderated_rating_ann INT DEFAULT NULL;
 
-
+//new query
 UPDATE duties SET period = '2023/2024' WHERE period = '2024/2025';
 UPDATE duty_reason SET period = '2023/2024' WHERE period = '2024/2025';
 UPDATE generic_management_competencies SET period = '2023/2024' WHERE period = '2024/2025';
