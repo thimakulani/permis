@@ -26,6 +26,71 @@ class Performance extends CI_Controller
 		$this->load->library('toastr');
 
 	}
+
+	public function load_previous()
+	{
+
+		$period = $this->input->post('period');
+		$parts = explode('/', $period);
+
+		// Decrement each part of the period
+		$parts[0]--; // Decrement the first part
+		$parts[1]--; // Decrement the second part
+
+		// Construct the new period string
+		$new_period = $parts[0] . '/' . $parts[1];
+
+		//echo $new_period; // Output: 2023/2024
+
+		$emp_id = $_SESSION['Id'];
+		$this->db->where('employee', $emp_id);
+		$this->db->where('period', $new_period);
+		$performance_plan = $this->db->get('performance_plan')->result_array();
+
+		$this->db->where('employee', $emp_id);
+		$this->db->where('period', $new_period);
+		$personal_developmental_training = $this->db->get('personal_developmental_training')->result_array();
+
+		$this->db->where('employee', $emp_id);
+		$this->db->where('period', $new_period);
+		$duties = $this->db->get('duties')->result_array();
+
+		$this->db->where('employee', $emp_id);
+		$this->db->where('period', $new_period);
+		$duty_reason = $this->db->get('duty_reason')->result_array();
+
+		foreach ($duties as $d)
+		{
+			$data = array(
+				'description'=>$d['description'],
+				'period'=>$period,
+				'template_name'=>'',
+				'employee'=>$_SESSION['Id'],
+			);
+			$this->db->insert('duties', $data);
+		}
+		foreach ($duty_reason as $d)
+		{
+			$data = array(
+				'description'=>$d['description'],
+				'period'=>$period,
+				'template_name'=>'',
+				'employee'=>$_SESSION['Id'],
+			);
+			$this->db->insert('duty_reason', $data);
+		}
+
+		echo 'ADDED';
+		return;
+
+
+
+
+
+
+	}
+
+
 	public function load_template($type, $period)
 	{
 		$period_dash = $period;
@@ -1030,6 +1095,7 @@ class Performance extends CI_Controller
 
 
 
+
 	///submitted
 	public function view_submitted($_id)
 	{
@@ -1460,7 +1526,7 @@ class Performance extends CI_Controller
 		$init = new Initialization();
 		$form_data['initialization'] = $init->get_initializations($id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 		$form_data['submission_row'] = $submission_row;
-		$form_data['user_submission'] = $submission->user_submission($id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
+		$form_data['user_submission'] = $submission->user_submission($id, $submission_row->period, $submission_row->template_name);
 
 		if ($submission_row->salarylevel <= 12)
 		{

@@ -37,8 +37,7 @@
 		height: auto;
 	}
 </style>
-<?php $period = $_SESSION['period'];
-?>
+
 
 <div>
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/performance_capture">BACK</a>
@@ -58,9 +57,14 @@ if($emp != null)
 { ?>
 
 <div class="card">
-
 	<div class="card-header">
-		<h4>PART 1: POST SUMMARY</h4>
+		<div style="display: flex; justify-content: space-between">
+			<h4>PART 1: POST SUMMARY</h4>
+			<form method="post" action="<?php echo base_url() ?>performance/load_previous">
+				<input type="hidden"  name="period" value="<?php echo $period ?>" />
+				<input class="btn btn-info" type="submit" value="USE PREVIOUS YEAR MOU" />
+			</form>
+		</div>
 	</div>
 	<div class="card-body">
 

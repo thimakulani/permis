@@ -558,7 +558,7 @@ class PerformanceModel extends CI_Model
 
 	public function get_user_submission($id)
 	{
-		$this->db->select('performance_assessment.id,performance_assessment.employee, performance_assessment.status,performance_assessment.status_final, performance_assessment.date_captured, performance_assessment.template_name, performance_assessment.period, performance_assessment.emp_comment, performance_assessment.supervisor');
+		$this->db->select('performance_assessment.id,performance_assessment.employee, performance_assessment.status,performance_assessment.status_final, performance_assessment.date_captured, performance_assessment.template_name, performance_assessment.period, performance_assessment.emp_comment, performance_assessment.supervisor, performance_assessment.reason');
 		$this->db->select("Concat(emp.Name, ' ' , emp.LastName) as E_Name, emp.Persal, emp.Id as emp_id, emp.salarylevel");
 		$this->db->join('employees as emp', 'performance_assessment.employee = emp.Id');
 		$this->db->where('performance_assessment.id', $id);

@@ -8,7 +8,7 @@
 		
 			
 				<!-- Post -->
-				<form enctype="multipart/form-data" class="form-horizontal" method="post" action="<?php echo base_url()?>leaves/leave_application">
+				<form enctype="multipart/form-data" class="form-horizontal" method="post" action="<?php echo base_url()?>email/send_email">
 				<div class="form-group row">
 						<label  class="col-sm-2 col-form-label">SENT TO</label>
 						<div class="col-sm-10">
@@ -41,8 +41,39 @@
 					</div>
 				</form>
 				<!-- /.post -->
-	
-		
+		<script>
+			$(document).ready(function() {
+				$('#emailForm').submit(function(e) {
+					e.preventDefault(); // Prevent default form submission
+
+					// Serialize form data
+					var formData = new FormData($(this)[0]);
+
+					// Perform AJAX request
+					$.ajax({
+						type: 'POST',
+						url: '<?php echo base_url()?>email/send_email',
+						data: formData,
+						contentType: false,
+						processData: false,
+						success: function(response) {
+							// Handle success response
+							console.log(response);
+							alert('Email sent successfully!');
+							// You can update UI or perform any action here
+						},
+						error: function(xhr, status, error) {
+							// Handle error response
+							console.error(xhr.responseText);
+							alert('Failed to send email!');
+							// You can display error messages or perform any action here
+						}
+					});
+				});
+			});
+		</script>
+
+
 		<!-- /.tab-content -->
 	</div><!-- /.card-body -->
 </div>

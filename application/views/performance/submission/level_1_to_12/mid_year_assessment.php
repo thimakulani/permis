@@ -7,7 +7,7 @@
 
 <div>
 
-	<h1 style="font-weight: bold" align="center">FORMAL PERFORMANCE ASSESSMENT</h1>
+	<h1 style="font-weight: bold" align="center">FORMAL MID YEAR ASSESSMENT</h1>
 	<h4 style="font-weight: bold" align="center">PERFORMANCE PERIOD: <?php echo $period; ?></h4>
 	<h4 style="font-weight: bold" align="center">COMMENTS BY JOBHOLDER</h4>
 	<p style="font-weight: bold">(To be completed by the jobholder, prior to the assessment process. If the space
@@ -66,7 +66,10 @@
 					<th>
 						PERFORMANCE REPORT
 					</th>
-					<th></th>
+					<?php if($user_submission == 0){ ?>
+						<th></th>
+						<th></th>
+					<?php } ?>
 				</tr>
 				</thead>
 				<tbody>
@@ -99,16 +102,17 @@
 							<td>
 								<input class="form-control rate" required type="text" name="agreed_rating" value="<?php echo $m['agreed_rating'] ?>"/>
 							</td>
-							<td><input class="form-control par" required name="par_score" value="<?php echo $m['par_score'] ?>"/></td>
-							<td><textarea class="form-control" name="performance_report" disabled > <?php if(isset($m['performance_report'])) echo $m['performance_report'] ?></textarea></td>
+							<td><input class="form-control par" readonly required name="par_score" value="<?php echo $m['par_score'] ?>"/></td>
+							<td>  <?php echo $m['performance_report']  ?></td>
 
-							<td><button type="button" class="btn-info process">par</button></td>
+							<?php if($user_submission == 0){ ?>
+							<td><button type="button" class="btn-sm btn-info process">par</button></td>
 							<td>
 								<?php // if($track_update==0) {?>
 								<input type="submit" value="update" class="btn-sm btn-info"/>
 								<?php // }?>
 							</td>
-
+							<?php }?>
 						</tr>
 					</form>
 
@@ -263,7 +267,7 @@
 
 <br/>
 <div class="card">
-	<?php if($submission_row->status == 'PENDING' || $submission_row->status == 'APPROVED'){ ?>
+	<?php if($submission_row->status == 'PENDING'){ ?>
 
 		<div class="card-body">
 			<form class="form-inline"  method="post" action="<?php echo base_url()?>performance/sup_update_status/<?php echo $submission_id ?>">
