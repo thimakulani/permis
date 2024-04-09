@@ -80,7 +80,7 @@
 			document.querySelector("#memorandum_of_understanding").href = "<?php echo base_url(); ?>performance/load_template/1/" + selectedYear;
 			document.querySelector("#mid_year_assessment").href = "<?php echo base_url(); ?>performance/load_template/2/" + selectedYear;
 			document.querySelector("#annual_assessment").href = "<?php echo base_url(); ?>performance/load_template/3/" + selectedYear;
-			document.querySelector("#memorandum_of_understanding").style.display = "none";
+			//document.querySelector("#memorandum_of_understanding").style.display = "none";
 			document.querySelector("#mid_year_assessment").style.display = "none";
 		}
 		else {
