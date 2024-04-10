@@ -184,8 +184,27 @@ if($emp != null)
 						url: '<?php echo base_url() ?>performance/add_key_responsibility/6',
 						data: $('#add_key_resp').serialize(), // serialize the form data
 						success: function (response) {
-							location.reload();
-							$('#response').html(response); // display the response on the page
+							// Handle success response
+							console.log('Form submitted successfully');
+							Swal.fire({
+								icon: 'success',
+								title: 'Success!',
+								text: 'successfully added key responsibility',
+								onClose: () => {
+									location.reload();
+								}
+							});
+						},
+						error: function (xhr, status, error) {
+							// Handle error
+							Swal.fire({
+								icon: 'error',
+								title: 'Error!',
+								text: 'Something went wrong',
+								onClose: () => {
+									location.reload();
+								}
+							});
 						}
 					});
 				});
@@ -234,12 +253,28 @@ if($emp != null)
 							url: '<?php echo base_url() ?>performance/remove_duties/6/<?php echo $kr['id'] ?>',
 							type: 'DELETE',
 							data: {id: rowId},
-							success: function(response) {
-								// remove the row from the table
-								location.reload();
+							success: function (response) {
+								// Handle success response
+								console.log('Form submitted successfully');
+								Swal.fire({
+									icon: 'success',
+									title: 'Success!',
+									text: 'successfully removed',
+									onClose: () => {
+										location.reload();
+									}
+								});
 							},
-							error: function(xhr, status, error) {
-								console.log(error);
+							error: function (xhr, status, error) {
+								// Handle error
+								Swal.fire({
+									icon: 'error',
+									title: 'Error!',
+									text: 'Something went wrong',
+									onClose: () => {
+										location.reload();
+									}
+								});
 							}
 						});
 					});
@@ -271,8 +306,27 @@ if($emp != null)
 						url: '<?php echo base_url() ?>performance/add_duties/6',
 						data: $('#add_duty').serialize(), // serialize the form data
 						success: function (response) {
-							location.reload();
-							$('#response').html(response); // display the response on the page
+							// Handle success response
+							console.log('Form submitted successfully');
+							Swal.fire({
+								icon: 'success',
+								title: 'Success!',
+								text: 'successfully added duty',
+								onClose: () => {
+									location.reload();
+								}
+							});
+						},
+						error: function (xhr, status, error) {
+							// Handle error
+							Swal.fire({
+								icon: 'error',
+								title: 'Error!',
+								text: 'Something went wrong',
+								onClose: () => {
+									location.reload();
+								}
+							});
 						}
 					});
 				});
@@ -310,12 +364,28 @@ if($emp != null)
 								url: '<?php echo base_url() ?>performance/remove_duty_reason/6/<?php echo $kr['id'] ?>',
 								type: 'DELETE',
 								data: {id: rowId},
-								success: function(response) {
-									// remove the row from the table
-									location.reload();
+								success: function (response) {
+									// Handle success response
+									console.log('Form submitted successfully');
+									Swal.fire({
+										icon: 'success',
+										title: 'Success!',
+										text: 'successfully removed',
+										onClose: () => {
+											location.reload();
+										}
+									});
 								},
-								error: function(xhr, status, error) {
-									console.log(error);
+								error: function (xhr, status, error) {
+									// Handle error
+									Swal.fire({
+										icon: 'error',
+										title: 'Error!',
+										text: 'Something went wrong',
+										onClose: () => {
+											location.reload();
+										}
+									});
 								}
 							});
 						});
@@ -346,8 +416,27 @@ if($emp != null)
 						url: '<?php echo base_url() ?>performance/add_duty_reason/6',
 						data: $('#add_duty_reason').serialize(), // serialize the form data
 						success: function (response) {
-							location.reload();
-							$('#response').html(response); // display the response on the page
+							// Handle success response
+							console.log('Form submitted successfully');
+							Swal.fire({
+								icon: 'success',
+								title: 'Success!',
+								text: 'successfully added duty reason',
+								onClose: () => {
+									location.reload();
+								}
+							});
+						},
+						error: function (xhr, status, error) {
+							// Handle error
+							Swal.fire({
+								icon: 'error',
+								title: 'Error!',
+								text: 'Something went wrong',
+								onClose: () => {
+									location.reload();
+								}
+							});
 						}
 					});
 				});
@@ -393,8 +482,27 @@ if($emp != null)
 							url: '<?php echo base_url() ?>performance/initialization',
 							data: $('#initialize_part_1').serialize(), // serialize the form data
 							success: function (response) {
-								location.reload();
-								$('#response').html(response); // display the response on the page
+								// Handle success response
+								console.log('Form submitted successfully');
+								Swal.fire({
+									icon: 'success',
+									title: 'Success!',
+									text: 'Initials successfully added',
+									onClose: () => {
+										location.reload();
+									}
+								});
+							},
+							error: function (xhr, status, error) {
+								// Handle error
+								Swal.fire({
+									icon: 'error',
+									title: 'Error!',
+									text: 'Something went wrong',
+									onClose: () => {
+										location.reload();
+									}
+								});
 							}
 						});
 					});
@@ -544,8 +652,27 @@ if($emp != null)
 									url: '<?php echo base_url() ?>performance/update_performance_plan/6/<?php echo $m['id'] ?>',
 									data: $('#update_performance<?php echo $m['id']?>').serialize(), // serialize the form data
 									success: function (response) {
-										location.reload();
-										$('#response').html(response); // display the response on the page
+										// Handle success response
+										console.log('Form submitted successfully');
+										Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'updated successfully',
+											onClose: () => {
+												location.reload();
+											}
+										});
+									},
+									error: function (xhr, status, error) {
+										// Handle error
+										Swal.fire({
+											icon: 'error',
+											title: 'Error!',
+											text: 'Something went wrong',
+											onClose: () => {
+												location.reload();
+											}
+										});
 									}
 								});
 							});
@@ -642,8 +769,27 @@ if($emp != null)
 									url: '<?php echo base_url() ?>performance/update_performance_plan/6/<?php echo $m['id'] ?>',
 									data: $('#update_pp_<?php echo $m['id'] ?>').serialize(), // serialize the form data
 									success: function (response) {
-										location.reload();
-										$('#response').html(response); // display the response on the page
+										// Handle success response
+										console.log('Form submitted successfully');
+										Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'updated successfully',
+											onClose: () => {
+												location.reload();
+											}
+										});
+									},
+									error: function (xhr, status, error) {
+										// Handle error
+										Swal.fire({
+											icon: 'error',
+											title: 'Error!',
+											text: 'Something went wrong',
+											onClose: () => {
+												location.reload();
+											}
+										});
 									}
 								});
 							});
@@ -682,7 +828,7 @@ if($emp != null)
 <div class="card-footer">
 	<div>
 
-		<form id="initialize_part_2" method="post" action="<?php echo base_url() ?>performance/initialization">
+		<form id="initialize_part_2" method="post" >
 			<input type="hidden" value="PART 1" name="description">
 			<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
 			<div style="text-align: right;" class="form-inline justify-content-end">
@@ -700,7 +846,7 @@ if($emp != null)
 					$.ajax({
 						type: 'POST',
 						url: '<?php echo base_url() ?>performance/initialization',
-						data: $('#initialize_part_1').serialize(), // serialize the form data
+						data: $('#initialize_part_2').serialize(), // serialize the form data
 						success: function (response) {
 							location.reload();
 							$('#response').html(response); // display the response on the page
@@ -825,12 +971,28 @@ if($emp != null)
 							url: '<?php echo base_url() ?>performance/remove_personal_developmental_training/6/<?php echo $perf['id'] ?>',
 							type: 'DELETE',
 							data: {id: rowId},
-							success: function(response) {
-								// remove the row from the table
-								location.reload();
+							success: function (response) {
+								// Handle success response
+								console.log('Form submitted successfully');
+								Swal.fire({
+									icon: 'success',
+									title: 'Success!',
+									text: 'removed successfully',
+									onClose: () => {
+										location.reload();
+									}
+								});
 							},
-							error: function(xhr, status, error) {
-								console.log(error);
+							error: function (xhr, status, error) {
+								// Handle error
+								Swal.fire({
+									icon: 'error',
+									title: 'Error!',
+									text: 'Something went wrong',
+									onClose: () => {
+										location.reload();
+									}
+								});
 							}
 						});
 					});
@@ -914,8 +1076,27 @@ if($emp != null)
 								url: '<?php echo base_url() ?>performance/edit_pdp/6/<?php echo $perf['id'] ?>',
 								data: $('#update_pdp<?php echo $perf['id'] ?>').serialize(),
 								success: function (response) {
-									location.reload();
-									$('#response').html(response);
+									// Handle success response
+									console.log('Form submitted successfully');
+									Swal.fire({
+										icon: 'success',
+										title: 'Success!',
+										text: 'updated successfully',
+										onClose: () => {
+											location.reload();
+										}
+									});
+								},
+								error: function (xhr, status, error) {
+									// Handle error
+									Swal.fire({
+										icon: 'error',
+										title: 'Error!',
+										text: 'Something went wrong',
+										onClose: () => {
+											location.reload();
+										}
+									});
 								}
 							});
 						});
@@ -955,8 +1136,27 @@ if($emp != null)
 							url: '<?php echo base_url(); ?>performance/add_personal_developmental_training/6',
 							data: $('#add_personal_developmental_training').serialize(), // serialize the form data
 							success: function (response) {
-								location.reload();
-								$('#response').html(response); // display the response on the page
+								// Handle success response
+								console.log('Form submitted successfully');
+								Swal.fire({
+									icon: 'success',
+									title: 'Success!',
+									text: 'added successfully',
+									onClose: () => {
+										location.reload();
+									}
+								});
+							},
+							error: function (xhr, status, error) {
+								// Handle error
+								Swal.fire({
+									icon: 'error',
+									title: 'Error!',
+									text: 'Something went wrong',
+									onClose: () => {
+										location.reload();
+									}
+								});
 							}
 						});
 					});
@@ -971,7 +1171,7 @@ if($emp != null)
 	<div class="card-footer">
 		<div>
 
-			<form id="initialize_part_3" method="post" action="<?php echo base_url() ?>performance/initialization">
+			<form id="initialize_part_3" method="post">
 				<input type="hidden" value="PART 1" name="description">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
 				<div style="text-align: right;" class="form-inline justify-content-end">
@@ -984,15 +1184,34 @@ if($emp != null)
 
 			<script>
 				$(document).ready(function () {
-					$('#initialize_part_1').submit(function (e) {
+					$('#initialize_part_3').submit(function (e) {
 						e.preventDefault(); // prevent the form from submitting normally
 						$.ajax({
 							type: 'POST',
 							url: '<?php echo base_url() ?>performance/initialization',
 							data: $('#initialize_part_3').serialize(), // serialize the form data
 							success: function (response) {
-								location.reload();
-								$('#response').html(response); // display the response on the page
+								// Handle success response
+								console.log('Form submitted successfully');
+								Swal.fire({
+									icon: 'success',
+									title: 'Success!',
+									text: 'initials added successfully',
+									onClose: () => {
+										location.reload();
+									}
+								});
+							},
+							error: function (xhr, status, error) {
+								// Handle error
+								Swal.fire({
+									icon: 'error',
+									title: 'Error!',
+									text: 'Something went wrong',
+									onClose: () => {
+										location.reload();
+									}
+								});
 							}
 						});
 					});
@@ -1090,8 +1309,27 @@ if($emp != null)
 							url: '<?php echo base_url() ?>performance/initialization',
 							data: $('#initialize_part_4').serialize(), // serialize the form data
 							success: function (response) {
-								location.reload();
-								$('#response').html(response); // display the response on the page
+								// Handle success response
+								console.log('Form submitted successfully');
+								Swal.fire({
+									icon: 'success',
+									title: 'Success!',
+									text: 'initials added successfully',
+									onClose: () => {
+										location.reload();
+									}
+								});
+							},
+							error: function (xhr, status, error) {
+								// Handle error
+								Swal.fire({
+									icon: 'error',
+									title: 'Error!',
+									text: 'Something went wrong',
+									onClose: () => {
+										location.reload();
+									}
+								});
 							}
 						});
 					});
@@ -1129,7 +1367,7 @@ if($emp != null)
 	<div class="card-footer">
 		<div>
 
-			<form id="initialize_part_5" method="post" action="<?php echo base_url() ?>performance/initialization/">
+			<form id="initialize_part_5" method="post">
 				<input type="hidden" value="PART 1" name="description">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
 				<div style="text-align: right;" class="form-inline justify-content-end">
