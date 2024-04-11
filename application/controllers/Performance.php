@@ -163,7 +163,12 @@ class Performance extends CI_Controller
 			}
 			elseif ($user->SalaryLevel == 15)
 			{
-
+				$p_i = new PerformanceInstrument();
+				$form_data['individual_performance'] = $p_i->get_individual_performance($_SESSION['Id'], $period, '');
+				$form_data['generic_management_competencies'] = $p_i->get_generic_management_competencies($_SESSION['Id'], $period, '');
+				$form_data['work_plan'] = $p_i->get_work_plan($_SESSION['Id'], $period, '');
+				//$p_data['kra'] = $p_i->get_kra($_SESSION['Id'], $period, $template_p_i);
+				$form_data['personal_developmental_plan'] = $p_i->get_personal_developmental_plan($_SESSION['Id'], $period, '');
 				$this->load->view("performance/level_15/performance_instrument", $form_data);
 			}
 			elseif ($user->SalaryLevel == 16)
@@ -204,7 +209,7 @@ class Performance extends CI_Controller
 				$form_data['work_plan'] = $mid->get_work_plan($_SESSION['Id'],$period, 'PERFORMANCE INSTRUMENT');
 				$form_data['kgfa'] = $mid->get_kgfa($id,$period, 'PERFORMANCE INSTRUMENT');
 				$form_data['key_government_focus_areas'] = $mid->get_key_government_focus_areas($id,$period, 'PERFORMANCE INSTRUMENT');
-				$form_data['cmc'] = $mid->get_generic_management_competencies($id,$period, $template_mid);
+				$form_data['cmc'] = $mid->get_generic_management_competencies($id,$period, '');
 				$this->load->view("performance/level_16/mid_year_assessment", $form_data);
 			}
 		}
@@ -233,22 +238,22 @@ class Performance extends CI_Controller
 			elseif ($user->SalaryLevel == 15)
 			{
 				$p_i = new PerformanceInstrument();
-				$form_data['individual_performance'] = $p_i->get_individual_performance($_SESSION['Id'], $period, $template_p_i);
-				$form_data['generic_management_competencies'] = $p_i->get_generic_management_competencies($_SESSION['Id'], $period, $template_p_i);
-				$form_data['work_plan'] = $p_i->get_work_plan($_SESSION['Id'], $period, $template_p_i);
+				$form_data['individual_performance'] = $p_i->get_individual_performance($_SESSION['Id'], $period, '');
+				$form_data['generic_management_competencies'] = $p_i->get_generic_management_competencies($_SESSION['Id'], $period, '');
+				$form_data['work_plan'] = $p_i->get_work_plan($_SESSION['Id'], $period, '');
 				//$p_data['kra'] = $p_i->get_kra($_SESSION['Id'], $period, $template_p_i);
-				$form_data['personal_developmental_plan'] = $p_i->get_personal_developmental_plan($_SESSION['Id'], $period, $template_p_i);
+				$form_data['personal_developmental_plan'] = $p_i->get_personal_developmental_plan($_SESSION['Id'], $period, '');
 				$this->load->view("performance/level_15/annual_assessment", $form_data);
 			}
 			elseif ($user->SalaryLevel == 16)
 			{
 				$i_p = new PerformanceInstrument();
-				$form_data['gmc_work_plan'] = $i_p->get_generic_management_competencies_personal_development_plan($id,$period, $template_p_i);
-				$form_data['bp'] = $i_p->get_individual_performance($id, $period, $template_p_i);
-				$form_data['work_plan'] = $i_p->get_work_plan($id, $period, $template_p_i);
+				$form_data['gmc_work_plan'] = $i_p->get_generic_management_competencies_personal_development_plan($id,$period, '');
+				$form_data['bp'] = $i_p->get_individual_performance($id, $period, '');
+				$form_data['work_plan'] = $i_p->get_work_plan($id, $period, '');
 				$form_data['key_government_focus_areas'] = $i_p->get_key_government_focus_areas($id, $period, 'PERFORMANCE INSTRUMENT');
-				$form_data['personal_developmental_plan'] = $i_p->get_personal_developmental_plan($_SESSION['Id'], $period, $template_p_i);
-				$form_data['kgfa'] = $i_p->get_kgfa($id, $period, $template_p_i);
+				$form_data['personal_developmental_plan'] = $i_p->get_personal_developmental_plan($_SESSION['Id'], $period, '');
+				$form_data['kgfa'] = $i_p->get_kgfa($id, $period, '');
 				$this->load->view("performance/level_16/annual_assessment", $form_data);
 			}
 		}
