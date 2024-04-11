@@ -99,11 +99,18 @@ $is_valid = true;
 
 				<?php
 
-				foreach ($work_plan as $work){ ?>
+				foreach ($work_plan as $work)
+				{ ?>
 					<?php if($work['kra_id'] == $_kra['id']) {?>
+						<?php
+							if (empty($work['sms_rating_ann'])){
+								$is_valid = false;
+							}
+
+						?>
 						<form id="update_form_data_<?php echo $work['id'] ?>"  method="post">
 							<input type="hidden" name="template_name" value="MID YEAR ASSESSMENT" />
-							<input type="hidden" name="id" value="<?php echo $_kra['id']; ?>" />
+							<input type="hidden" name="id" value="<?php echo $work['id']; ?>" />
 							<tr>
 								<td><?php echo $work['key_activities'] ?></td>
 								<td><?php echo $work['target_date'] ?></td>
@@ -125,7 +132,7 @@ $is_valid = true;
 									$.ajax({
 										type: 'POST',
 										url: '<?php echo base_url() ?>performance/update_work_plan_annual',
-										data: $('#update_wp<?php echo $work['id'] ?>').serialize(), // serialize the form data
+										data: $('#update_form_data_<?php echo $work['id'] ?>').serialize(), // serialize the form data
 										success: function (response) {
 											Swal.fire({
 												icon: 'success',
