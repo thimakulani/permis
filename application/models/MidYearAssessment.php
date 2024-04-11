@@ -14,10 +14,7 @@ class MidYearAssessment extends CI_Model
 	public function get_kra($id, $period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
+		$this->db->where('period', $period);
 		//$this->db->where('template_name', $template_name);
 		return $this->db->get('individual_performance')->result_array();
 	}
@@ -40,21 +37,14 @@ class MidYearAssessment extends CI_Model
 	public function get_organisational_performance($Id,$period, $template_name)
 	{
 		$this->db->where('employee', $Id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
+		$this->db->where('period', $period);
 		$this->db->where('template_name', $template_name);
 		return $this->db->get('organisational_performance')->result_array();
 	}
 	public function get_competencies_personal_development_plan($Id,$period, $template_name)
 	{
 		$this->db->where('employee', $Id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		$this->db->where('period', $period);
 		return $this->db->get('competencies_personal_development_plan')->result_array();
 	}
 	public function add_competencies_personal_development_plan(array $data)
@@ -113,11 +103,7 @@ class MidYearAssessment extends CI_Model
 	public function get_generic_management_competencies($id,$period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		$this->db->where('period', $period);
 		return $this->db->get('generic_management_competencies')->result_array();
 	}
 
@@ -144,11 +130,7 @@ class MidYearAssessment extends CI_Model
 	public function get_performance_plan($id, $period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
-		$this->db->where('template_name', $template_name);
+		$this->db->where('period', $period);
 		$results=$this->db->get('performance_plan');
 		return $results->result_array();
 	}
@@ -185,10 +167,7 @@ class MidYearAssessment extends CI_Model
 	public function get_work_plan($id,$period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
+		$this->db->where('period', $period);
 		//$this->db->where('template_name', $template_name);
 		return $this->db->get('work_plan')->result_array();
 	}

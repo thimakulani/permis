@@ -75,30 +75,15 @@
 				{
 					$counter = $counter + $m['outcome_weight'];
 
-/*
-id
-employee
-period
-template_name
-key_responsibility Ascending 1
-gafs
-performance_outcome
-
-performance_measurement
-time_frames
-resources
-
-
-
-
-performance_report*/
+					if($counter >= 0)
+					{
 					 ?>
 								<tr>
 									<td>
 										<?php echo $m['key_responsibility'] ?>
 									</td>
 									<td>
-										<?php echo $m['gafs'] ?>
+										<?php echo $m['period'] ?>
 									</td>
 									<td class="text-center">
 										<?php echo $m['outcome_weight'] ?>
@@ -119,7 +104,7 @@ performance_report*/
 										<?php echo $m['performance_report'] ?>
 									</td>
 								</tr>
-				<?php } ?>
+				<?php } } ?>
 				<tr>
 					<td>SUB-TOTAL:</td>
 					<td></td>

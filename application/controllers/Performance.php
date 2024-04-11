@@ -133,15 +133,15 @@ class Performance extends CI_Controller
 		$form_data['period_dash'] = $period_dash;
 		$submission = new PerformanceModel();
 		$init = new Initialization();
-
+		$form_data['initialization'] = $init->get_initializations($id, $period,'PERFORMANCE INSTRUMENT');
+		$form_data['user_submission'] = $submission->user_submission($id, $period, 'PERFORMANCE INSTRUMENT');
+		$form_data['user_sub'] = $submission->user_sub($id, $period, 'PERFORMANCE INSTRUMENT');
+		$form_data['period']=$period;
 		$this->load->view("templates/header");
 		if($type == 1)
 		{
 			$perf = new PerformanceInstrument();
-			$form_data['initialization'] = $init->get_initializations($id, $period,'PERFORMANCE INSTRUMENT');
-			$form_data['user_submission'] = $submission->user_submission($id, $period, 'PERFORMANCE INSTRUMENT');
-			$form_data['user_sub'] = $submission->user_sub($id, $period, 'PERFORMANCE INSTRUMENT');
-			$form_data['period']=$period;
+
 
 			if($user->SalaryLevel <= 12)
 			{
@@ -169,6 +169,43 @@ class Performance extends CI_Controller
 			elseif ($user->SalaryLevel == 16)
 			{
 				$this->load->view("performance/level_16/performance_instrument", $form_data);
+			}
+		}
+		elseif($type == 2)
+		{
+			if ($user->SalaryLevel <=12)
+			{
+				$mid = new  MidYearAssessment();
+				$form_data['performance_plan'] = $mid->get_performance_plan($id, $period, '');
+				$this->load->view("performance/level_1_to_12/mid_year_assessment", $form_data);
+			}
+			elseif ($user->SalaryLevel == 14 || $user->SalaryLevel == 13)
+			{
+				$mid = new MidYearAssessment();
+				$form_data['kra'] = $mid->get_kra($id, $period, 'PERFORMANCE INSTRUMENT');
+				$form_data['work_plan'] = $mid->get_work_plan($id,$period, 'PERFORMANCE INSTRUMENT');
+				$form_data['personal_developmental_plan'] = $mid->get_generic_management_competencies($id,$period, '');
+				$this->load->view("performance/level_13_and_14/mid_year_assessment", $form_data);
+			}
+			elseif ($user->SalaryLevel == 15)
+			{
+				$mid = new MidYearAssessment();
+				$form_data['kra'] = $mid->get_kra($_SESSION['Id'], $period, '');
+				$form_data['work_plan'] = $mid->get_work_plan($_SESSION['Id'], $period,'');
+				$form_data['organisational_performance'] = $mid->get_organisational_performance($_SESSION['Id'], $period, '');
+				$form_data['personal_development_plan'] = $mid->get_competencies_personal_development_plan($_SESSION['Id'], $period, '');
+
+				$this->load->view("performance/level_15/mid_year_assessment", $form_data);
+			}
+			elseif ($user->SalaryLevel == 16)
+			{
+				$mid = new MidYearAssessment();
+				$form_data['kra'] = $mid->get_kra($_SESSION['Id'],$period, 'PERFORMANCE INSTRUMENT');
+				$form_data['work_plan'] = $mid->get_work_plan($_SESSION['Id'],$period, 'PERFORMANCE INSTRUMENT');
+				$form_data['kgfa'] = $mid->get_kgfa($id,$period, 'PERFORMANCE INSTRUMENT');
+				$form_data['key_government_focus_areas'] = $mid->get_key_government_focus_areas($id,$period, 'PERFORMANCE INSTRUMENT');
+				$form_data['cmc'] = $mid->get_generic_management_competencies($id,$period, $template_mid);
+				$this->load->view("performance/level_16/mid_year_assessment", $form_data);
 			}
 		}
 		elseif($type == 3)
@@ -1142,6 +1179,8 @@ class Performance extends CI_Controller
 		//$mou = new OperationalMemoModel();
 		$submission = new PerformanceModel();
 		$submission_row = $submission->get_user_submission($_id);
+
+
 		$id = $submission_row->emp_id;
 		$p_data['submission_row'] = $submission_row;
 		$emp = new EmployeeModel();

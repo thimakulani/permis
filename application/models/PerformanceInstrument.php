@@ -157,7 +157,7 @@ class PerformanceInstrument extends CI_Model
 	public function get_performance_plan($id, $period, $template_name)
 	{
 		$this->db->where('employee', $id);
-		$this->db->where('period', $period,'both');
+		$this->db->where('period', $period);
 		$results=$this->db->get('performance_plan');
 		return $results->result_array();
 	}

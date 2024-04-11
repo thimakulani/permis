@@ -55,3 +55,102 @@ UPDATE performance_plan SET period = '2023/2024' WHERE period = '2024/2025';
 UPDATE personal_developmental_plan SET period = '2023/2024' WHERE period = '2024/2025';
 UPDATE personal_developmental_training SET period = '2023/2024' WHERE period = '2024/2025';
 UPDATE work_plan SET period = '2023/2024' WHERE period = '2024/2025';
+
+
+//new query
+
+ALTER TABLE achievements
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE app_logs
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE attachments
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE auditor_general_opinion_and_findings
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE branch
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE business_unit
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE directorate
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE districts
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE duties
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE duty_reason
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE employees
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE generic_management_competencies
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE individual_performance
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE initializations
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE key_government_focus_areas
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE ldap_login
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE leaves
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE leavestatuses
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE link_directorate
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE organisational_performance
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE performance_assessment
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE performance_plan
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE personal_developmental_plan
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE personal_developmental_training
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE positions
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE roles
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE semesters
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE semestertypes
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE sub_directorate
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE template_types
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+ALTER TABLE work_plan
+ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
+
+
+
