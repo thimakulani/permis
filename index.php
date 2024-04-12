@@ -146,12 +146,12 @@ switch (ENVIRONMENT)
  *
  * IMPORTANT: If you set the routing here, NO OTHER controller will be
  * callable. In essence, this preference limits your application to ONE
- * specific controller. Leave the function name blank if you need
+ * specific controller. SpecialRequestModel the function name blank if you need
  * to call functions dynamically via the URI.
  *
  * Un-comment the $routing array below to use this feature
  */
-	// The directory name, relative to the "controllers" directory.  Leave blank
+	// The directory name, relative to the "controllers" directory.  SpecialRequestModel blank
 	// if your controller is not in a sub-directory within the "controllers" one
 	// $routing['directory'] = '';
 

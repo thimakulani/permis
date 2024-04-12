@@ -1,6 +1,6 @@
 <?php
 
-class Leaves extends CI_Controller
+class SpecialRequest extends CI_Controller
 {
 	public function __construct()
 	{
@@ -9,7 +9,7 @@ class Leaves extends CI_Controller
 		$this->load->library('form_validation');
 		$this->load->library('session');
 		$this->load->model('PerformanceModel');
-		$this->load->model('Leave');
+		$this->load->model('SpecialRequestModel');
 		$this->load->model('SemesterModel');
 		$this->load->database();
 		$config = array(
@@ -37,30 +37,51 @@ class Leaves extends CI_Controller
 		}
 
 
-		$leaves = new Leave();
-		$data['leaves'] = $leaves->my_leaves($_SESSION['Id']);
+		$req = new SpecialRequestModel();
+		$data['special_request'] = $req->my_special_request($_SESSION['Id']);
 		$this->load->view('templates/header');
-		$this->load->view('leaves/index', $data);
+		$this->load->view('emp_special_request/index', $data);
 		$this->load->view('templates/footer');
 	}
 	public function submitted_leaves()
 	{
 		$this->load->view('templates/header');
-		$this->load->view('leaves/submitted_leaves');
+		$this->load->view('emp_special_request/submitted_leaves');
 		$this->load->view('templates/footer');
 	}
 	public function leave_types()
 	{
 		$this->load->view('templates/header');
-		$this->load->view('leaves/leave_types');
+		$this->load->view('emp_special_request/leave_types');
 		$this->load->view('templates/footer');
+	}
+	public function submit_request()
+	{
+		$attachment = '';
+		if($this->upload->do_upload('attachment')){
+			$output = $this->upload->data();
+
+			$file_name = $output['file_name'];
+			$file_path = $output['file_path'];
+			$attachment = $file_path.$file_name;
+		}
+		$data = array(
+			'attachment' => $attachment,
+			'comment' => $this->input->post('comment'),
+			'status' => 'PENDING',
+			'employee' => $_SESSION['Id'],
+			'request_type' => $this->input->post('request_type'),
+			'period' => $this->input->post('period')
+		);
+		$this->db->insert('special_request', $data);
+		echo "Request submitted successfully!";
 	}
 	public function create_leave()
 	{
-		$emp = new Leave();
+		$emp = new SpecialRequestModel();
 		$form_data['employees'] = $emp->get_employees();
 		$this->load->view('templates/header');
-		$this->load->view('leaves/create_leave', $form_data);
+		$this->load->view('emp_special_request/create_leave', $form_data);
 		$this->load->view('templates/footer');
 	}
 	public function leave_application()
@@ -92,14 +113,14 @@ class Leaves extends CI_Controller
 					'comment'=>$this->input->post('comment'),
 					'attachment'=>$attachment,
 				);
-				$this->db->insert('leaves', $data);
-				redirect('leaves');
+				$this->db->insert('emp_special_request', $data);
+				redirect('emp_special_request');
 			}
 		}
 		//$this->db->where('supervisorid', $_SESSION['Id']);
 		//$data['employees'] = $this->db->get('employees')->result_array();
 		$this->load->view('templates/header');
-		$this->load->view('leaves/leave_application');
+		$this->load->view('emp_special_request/leave_application');
 		$this->load->view('templates/footer');
 	}
 	public function process_download($name)

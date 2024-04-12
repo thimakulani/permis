@@ -78,13 +78,13 @@ class Dashboard extends CI_Controller
 		$data = null;
 		if ($_SESSION['Role'] == 3) {
 			$this->db->where('status', null);//->or_where('status', 'PENDING');
-			$leaves_counter = $this->db->get('leaves')->num_rows();
+			$leaves_counter = $this->db->get('emp_special_request')->num_rows();
 			$data['leaves_counter'] = $leaves_counter;
 
 
 			$id = $_SESSION["Id"];
 			$this->db->where('employee !=', $id);
-			$recommended_counter = $this->db->get('leaves')->num_rows();
+			$recommended_counter = $this->db->get('emp_special_request')->num_rows();
 
 			$data['recommended_counter'] = $recommended_counter;
 		}

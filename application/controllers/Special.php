@@ -10,17 +10,25 @@ class Special extends CI_Controller
 		$this->load->library('session');
 		$this->load->database();
 	}
+	public function emp_special_request()
+	{
+		$this->load->view('templates/header');
+		$this->load->view('emp_special_request/index');
+		$this->load->view('templates/footer');
+	}
+	public function request(){
 
+	}
 	public function index()
 	{
-		$this->db->select('leaves.id, leaves.start_date, leaves.leave_type, leaves.end_date, leaves. attachment, leaves.comment, leaves.status, leaves.employee,  leaves.recommender, leaves.approver');
+		$this->db->select('emp_special_request.id, emp_special_request.start_date, emp_special_request.leave_type, emp_special_request.end_date, emp_special_request. attachment, emp_special_request.comment, emp_special_request.status, emp_special_request.employee,  emp_special_request.recommender, emp_special_request.approver');
 		$this->db->select("CONCAT(e.name,' ', e.lastname) AS emp");
-		$this->db->from('leaves');
-		$this->db->join('employees e', 'leaves.employee = e.id');
+		$this->db->from('emp_special_request');
+		$this->db->join('employees e', 'emp_special_request.employee = e.id');
 
 		$leaves = $this->db->get()->result_array();
 
-		$view_data['leaves'] = $leaves;
+		$view_data['emp_special_request'] = $leaves;
 		$this->load->view('templates/header');
 		$this->load->view('special_requests/index', $view_data);
 		$this->load->view('templates/footer');
@@ -28,12 +36,12 @@ class Special extends CI_Controller
 
 	public function recommended()
 	{
-		$this->db->select('leaves.id, leaves.start_date, leaves.end_date, leaves.attachment, leaves.comment, 
-		leaves.status, leaves.employee, leaves.recommender, leaves.approver, leaves.leave_type');
+		$this->db->select('emp_special_request.id, emp_special_request.start_date, emp_special_request.end_date, emp_special_request.attachment, emp_special_request.comment, 
+		emp_special_request.status, emp_special_request.employee, emp_special_request.recommender, emp_special_request.approver, emp_special_request.leave_type');
 		$this->db->select("CONCAT(emp.name, ' ', emp.lastname) recommended_by");
-		$this->db->from('leaves');
-		$this->db->join('employees AS emp', 'leaves.recommender = emp.id');
-		$this->db->where('leaves.status', 'RECOMMENDED');
+		$this->db->from('emp_special_request');
+		$this->db->join('employees AS emp', 'emp_special_request.recommender = emp.id');
+		$this->db->where('emp_special_request.status', 'RECOMMENDED');
 		$recommended = $this->db->get()->result_array();
 
 		$data['recommended'] = $recommended;
@@ -43,14 +51,14 @@ class Special extends CI_Controller
 	}
 	public function view($id = null)
 	{
-		$this->db->select('leaves.id, leaves.start_date, leaves.leave_type, leaves.end_date, leaves. attachment, 
-								leaves.comment, leaves.status, leaves.employee,  leaves.recommender, leaves.approver');
+		$this->db->select('emp_special_request.id, emp_special_request.start_date, emp_special_request.leave_type, emp_special_request.end_date, emp_special_request. attachment, 
+								emp_special_request.comment, emp_special_request.status, emp_special_request.employee,  emp_special_request.recommender, emp_special_request.approver');
 		$this->db->select("CONCAT(e.name,' ', e.lastname) AS emp");
 		$this->db->select("CONCAT(emp.name,' ', emp.lastname) AS recommended_by");
-		$this->db->from('leaves');
-		$this->db->join('employees e', 'leaves.employee = e.id');
-		$this->db->join('employees AS emp', 'leaves.recommender = emp.id');
-		$this->db->where('leaves.id', $id);
+		$this->db->from('emp_special_request');
+		$this->db->join('employees e', 'emp_special_request.employee = e.id');
+		$this->db->join('employees AS emp', 'emp_special_request.recommender = emp.id');
+		$this->db->where('emp_special_request.id', $id);
 		$leave = $this->db->get()->row();
 		$data['leave'] = $leave;
 
@@ -63,7 +71,7 @@ class Special extends CI_Controller
 		if($id!=null)
 		{
 			$this->db->where('id', $id);
-			$this->db->update('leaves', array('status'=>'RECOMMENDED', 'recommender'=>$_SESSION['Id']));
+			$this->db->update('emp_special_request', array('status'=>'RECOMMENDED', 'recommender'=>$_SESSION['Id']));
 		}
 	}
 	public function approve($id = null)
@@ -71,7 +79,7 @@ class Special extends CI_Controller
 		if($id!=null)
 		{
 			$this->db->where('id', $id);
-			$this->db->update('leaves', array('status'=>'APPROVED', 'approver'=>$_SESSION['Id']));
+			$this->db->update('emp_special_request', array('status'=>'APPROVED', 'approver'=>$_SESSION['Id']));
 		}
 	}
 }

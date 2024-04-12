@@ -104,7 +104,7 @@ $this->load->model('PerformanceModel');
 
 
 			<li class="nav-item">
-				<a class="nav-link active" href="<?php echo base_url();?>leaves">
+				<a class="nav-link active" href="<?php echo base_url();?>specialrequest">
 					<i class="fa fa-calendar-check-o"></i>
 					<span class="menu-label">SPECIAL REQUEST</span>
 				</a>

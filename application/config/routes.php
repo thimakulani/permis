@@ -83,14 +83,17 @@ $route['position/(:any)'] = 'position/$1';
 $route['districts'] = 'districts/index';
 $route['districts/(:any)'] = 'districts/$1';
 
-$route['leaves/(:any)'] = 'leaves/$1';
-$route['leaves'] = 'leaves/index';
+$route['emp_special_request/(:any)'] = 'emp_special_request/$1';
+$route['emp_special_request'] = 'emp_special_request/index';
 
 $route['pmd_officials/(:any)'] = 'pmd_officials/$1';
 $route['pmd_officials'] = 'pmd_officials/index';
 
 $route['special/(:any)'] = 'special/$1';
 $route['special'] = 'special/index';
+
+$route['specialrequest/(:any)'] = 'specialrequest/$1';
+$route['specialrequest'] = 'specialrequest/index';
 
 $route['settings'] = 'settings/index';
 $route['contracts'] = 'contracts/index';

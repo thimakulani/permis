@@ -1,6 +1,6 @@
 <?php
 
-class Leave extends CI_Model
+class SpecialRequestModel extends CI_Model
 {
 	public function __construct()
 	{
@@ -16,12 +16,15 @@ class Leave extends CI_Model
 
 	public function create_leave($data)
 	{
-		$this->db->insert('leaves', $data);
+		$this->db->insert('special_request', $data);
 	}
-
-	public function my_leaves($Id)
+	public function insertRequest($data) {
+		// Insert data into the 'special_request' table
+		$this->db->insert('special_request', $data);
+	}
+	public function my_special_request($Id)
 	{
 		$this->db->where('employee', $Id);
-		return $this->db->get('leaves')->result_array();
+		return $this->db->get('special_request')->result_array();
 	}
 }

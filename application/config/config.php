@@ -153,7 +153,7 @@ $config['composer_autoload'] = FCPATH.'vendor/autoload.php';
 | As a security measure you are STRONGLY encouraged to restrict URLs to
 | as few characters as possible.  By default only these are allowed: a-z 0-9~%.:_-
 |
-| Leave blank to allow all characters -- but only if you are insane.
+| SpecialRequestModel blank to allow all characters -- but only if you are insane.
 |
 | The configured value is actually a regular expression character group
 | and it will be executed as: ! preg_match('/^[<permitted_uri_chars>]+$/i
@@ -233,7 +233,7 @@ $config['log_threshold'] = 0;
 | Error Logging Directory Path
 |--------------------------------------------------------------------------
 |
-| Leave this BLANK unless you would like to set something other than the default
+| SpecialRequestModel this BLANK unless you would like to set something other than the default
 | application/logs/ directory. Use a full server path with trailing slash.
 |
 */
@@ -281,7 +281,7 @@ $config['log_date_format'] = 'Y-m-d H:i:s';
 | Error Views Directory Path
 |--------------------------------------------------------------------------
 |
-| Leave this BLANK unless you would like to set something other than the default
+| SpecialRequestModel this BLANK unless you would like to set something other than the default
 | application/views/errors/ directory.  Use a full server path with trailing slash.
 |
 */
@@ -292,7 +292,7 @@ $config['error_views_path'] = '';
 | Cache Directory Path
 |--------------------------------------------------------------------------
 |
-| Leave this BLANK unless you would like to set something other than the default
+| SpecialRequestModel this BLANK unless you would like to set something other than the default
 | application/cache/ directory.  Use a full server path with trailing slash.
 |
 */

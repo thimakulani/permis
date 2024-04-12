@@ -152,5 +152,18 @@ ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
 ALTER TABLE work_plan
 ADD COLUMN is_deleted BOOLEAN DEFAULT FALSE;
 
+CREATE TABLE `special_request` (
+  `id` int(11) NOT NULL,
+  `attachment` varchar(200) DEFAULT NULL,
+  `comment` varchar(2000) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `employee` int(11) DEFAULT NULL,
+  `recommended_by` int(11) DEFAULT NULL,
+  `approved_by` int(11) DEFAULT NULL,
+  `request_type` varchar(200) DEFAULT NULL,
+  `period` varchar(100) DEFAULT NULL,
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+)
 
 
