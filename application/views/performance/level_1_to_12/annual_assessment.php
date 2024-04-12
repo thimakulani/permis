@@ -69,8 +69,16 @@
 
 				<?php
 				$counter = 0;
-				foreach ($performance_plan as $m) {
-					$counter = $counter + $m['outcome_weight'];
+				$temp_counter = 0;
+				foreach ($performance_plan as $m) 
+				{
+					$temp_counter = $temp_counter + $m['outcome_weight'];
+
+					if($counter + $m['outcome_weight'] <= 100)
+					{
+						$counter = $counter + $m['outcome_weight'];
+					}
+						
 
 
 					?>
@@ -96,7 +104,12 @@
 							</td>
 							<?php if($user_submission != 1) { ?>
 								<td>
-									<input type="submit" value="update" class="btn-sm btn-info"/>
+									<?php if($temp_counter <=100) { ?>
+										<input style="justify-content:flex" type="submit" value="update" class="btn-sm btn-info"/>
+									<?php } ?>
+									<?php if($temp_counter > 100) { ?>
+										<a href="#" style="margin:5px" class="btn-sm btn-danger delete-row" data-id="<?php echo $m['id']; ?>">X</a>
+									<?php } ?>
 								</td>
 							<?php } ?>
 						</tr>
@@ -164,7 +177,7 @@
 					<label for="not_agree">DO NOT AGREE WITH ASSESSMENT (If in disagreement please provide and attach written reasons)</label><br>
 				</td>
 				<td>
-					<h5>I acknowledge that I have discussed the official’s performance with him / her and that the assessment is a true reflection of his / her performance of the period:</h5>
+					<h5>I acknowledge that I have discussed the official`s performance with him / her and that the assessment is a true reflection of his / her performance of the period:</h5>
 				</td>
 			</tr>
 			<tr>
@@ -224,23 +237,32 @@
 </script>
 
 
-<!--
-<?php
-/*if (isset($user_submission->status)) {
-	*/?>
-	<?php /*if ($user_submission->status == 'REJECTED') {
-		*/?>
-		<div class="card">
-			<div class="card-body">
-				<form class="form-inline" method="post"
-					  action="<?php /*echo base_url() */?>performance/sup_update_status_correction/<?php /*echo $submission_id; */?>">
-					<input type="submit" class="btn-sm btn-primary m-2"/>
-				</form>
-			</div>
-		</div>
-	<?php /*} */?>
---><?php /*}
-*/?>
-
-<br/>
-
+<script>
+    $(document).ready(function(){
+        $(".delete-row").click(function(e){
+            e.preventDefault(); // Prevent default anchor behavior
+            
+            var rowId = $(this).data("id"); // Get the ID of the row to delete
+            var confirmation = confirm("Are you sure you want to delete this row?");
+            
+            if (confirmation) {
+                $.ajax({
+                    url: "<?php echo base_url('performance/remove_key_r') ?>/", // URL to your PHP script that handles deletion
+                    method: "POST",
+                    data: { id: rowId }, // Data to send to the server
+                    success: function(response) {
+                        // If the deletion was successful, remove the row from the table
+						Swal.fire({
+							icon: 'success',
+							title: 'Success!',
+							text: 'Successfully removed',
+							onClose: () => {
+								location.reload();
+							}
+						});
+                    }
+                });
+            }
+        });
+    });
+</script>

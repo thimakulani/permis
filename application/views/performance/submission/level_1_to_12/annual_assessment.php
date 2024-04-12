@@ -122,9 +122,17 @@
 									type: 'POST',
 									url: '<?php echo base_url() ?>performance/update_sup_performance_ann/<?php echo $m['id']; ?>/<?php echo $data->id; ?>/<?php echo $data->emp_id; ?>',
 									data: $('#update_pp<?php echo $m['id']?>').serialize(), // serialize the form data
-									success: function (response) {
-										location.reload();
-										$('#response').html(response); // display the response on the page
+									success: function (response) 
+									{
+										Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Successfully updated',
+											onClose: () => {
+												location.reload();
+											}
+										});
+										
 									}
 								});
 							});
@@ -219,7 +227,7 @@
 <br/>
 
 <form method="post" action="<?php echo base_url() ?>performance/submit_performance_mid/7">
-	<input type="hidden" name="template_name" value="MID YEAR ASSESSMENT">
+	<input type="hidden" name="template_name" value="ANNUAL YEAR ASSESSMENT">
 	<div>
 		<div class="card"><H2>AGREEMENT ASSESSMENT</H2>      <br>
 			<table class="table table-bordered">
@@ -268,7 +276,7 @@
 	<?php if($submission_row->status == 'PENDING'){ ?>
 
 		<div class="card-body">
-			<form class="form-inline"  method="post" action="<?php echo base_url()?>performance/sup_update_status/<?php echo $submission_id ?>">
+			<form class="form-inline" id="statusForm"  method="post" action="<?php echo base_url()?>performance/sup_update_status/<?php echo $submission_id ?>">
 				<select name="action_option" id="action" onchange="optionChange()" class="form-control">
 					<option class="form-control select" value="APPROVED" >APPROVE</option>
 					<option value="REJECTED" >REJECT</option>
@@ -279,6 +287,46 @@
 		</div>
 	<?php }?>
 </div>
+
+<script>
+    $(document).ready(function(){
+        $('#submitBtn').click(function(e){
+            e.preventDefault(); // Prevent default form submission
+            
+            // Serialize form data
+            var formData = $('#statusForm').serialize();
+            
+            // Send AJAX request
+            $.ajax({
+                url: $('#statusForm').attr('action'),
+                type: 'post',
+                data: formData,
+                success: function(response){
+					Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Successfully approved',
+											onClose: () => {
+												location.reload();
+											}
+										});
+                },
+                error: function(xhr, status, error){
+                    // Handle errors
+                    Swal.fire({
+											icon: 'error',
+											title: 'Error!',
+											text: 'Something went wrong',
+											
+										});
+                    // You can display an error message or perform other actions here
+                }
+            });
+        });
+    });
+</script>
+
+
 
 <?php
 if ($_SESSION['Role'] == 6 ) {

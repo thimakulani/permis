@@ -75,8 +75,10 @@
 				$counter = 0;
 				foreach ($performance_plan as $m)
 				{
-					$counter = $counter + $m['outcome_weight'];
-					?>
+					if(($counter + $m['outcome_weight']) <= 100)
+					{
+						$counter = $counter + $m['outcome_weight'];
+					 ?>
 					<tr>
 						<td>
 							<?php echo $m['key_responsibility'] ?>
@@ -103,7 +105,7 @@
 							<?php echo $m['performance_report_ann'] ?>
 						</td>
 					</tr>
-				<?php } ?>
+				<?php } } ?>
 				<tr>
 					<td>SUB-TOTAL:</td>
 					<td></td>
