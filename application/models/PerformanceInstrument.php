@@ -29,7 +29,7 @@ class PerformanceInstrument extends CI_Model
 	{
 		$this->db->where('employee', $id);
 		$this->db->where('period', $period);
-		$this->db->where('template_name', $template_name);
+		//$this->db->where('template_name', $template_name);
 		return $this->db->get('individual_performance')->result_array();
 	}
 	public function remove_individual_performance($id)

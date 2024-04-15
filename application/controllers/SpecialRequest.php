@@ -60,10 +60,9 @@ class SpecialRequest extends CI_Controller
 		$attachment = '';
 		if($this->upload->do_upload('attachment')){
 			$output = $this->upload->data();
-
 			$file_name = $output['file_name'];
-			$file_path = $output['file_path'];
-			$attachment = $file_path.$file_name;
+			//$file_path = $output['file_path'];
+			$attachment = $file_name;
 		}
 		$data = array(
 			'attachment' => $attachment,
@@ -74,7 +73,6 @@ class SpecialRequest extends CI_Controller
 			'period' => $this->input->post('period')
 		);
 		$this->db->insert('special_request', $data);
-		echo "Request submitted successfully!";
 	}
 	public function create_leave()
 	{
@@ -96,14 +94,21 @@ class SpecialRequest extends CI_Controller
 
 			if($this->form_validation->run())
 			{
-				echo $this->input->post('attachment');
-				//$attachment = '';
-				if($this->upload->do_upload('attachment')){
+				//echo $this->input->post('attachment');
+				$attachment = '';
+				if ($this->upload->do_upload('attachment')) {
 					$output = $this->upload->data();
 
-					$file_name = $output['file_name'];
-					$file_path = $output['file_path'];
-					$attachment = $file_path.$file_name;
+					// Get the full path of the uploaded file
+					$full_path = $output['full_path'];
+
+					// Extract the file name from the full path
+					$file_name = basename($full_path);
+
+					// Assign the file name to the $attachment variable
+					$attachment = $file_name;
+
+
 				}
 				$data = array(
 					'start_date'=>$this->input->post('start_date'),
@@ -114,7 +119,7 @@ class SpecialRequest extends CI_Controller
 					'attachment'=>$attachment,
 				);
 				$this->db->insert('emp_special_request', $data);
-				redirect('emp_special_request');
+				//redirect('emp_special_request');
 			}
 		}
 		//$this->db->where('supervisorid', $_SESSION['Id']);
@@ -125,8 +130,9 @@ class SpecialRequest extends CI_Controller
 	}
 	public function process_download($name)
 	{
+		echo $name;
 		$this->load->helper('download');
-		$data = file_get_contents(base_url('upload/'.$name));
+		$data = file_get_contents(base_url('uploads/'.$name));
 		force_download($name, $data);
 	}
 

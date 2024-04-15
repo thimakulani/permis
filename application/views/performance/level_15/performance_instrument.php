@@ -953,8 +953,6 @@
 	<form method="post" action="<?php echo base_url() ?>performance/submit_performance_ddg/200">
 		<br/>
 		<div class="card">
-
-
 			<div class="card-body">
 				<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT">
 			</div>

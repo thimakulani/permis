@@ -43,7 +43,13 @@
 							<td><?php echo $request['request_type']; ?></td>
 							<td><?php echo $request['period']; ?></td>
 							<td><?php echo $request['status']; ?></td>
-							<td><?php echo $request['attachment']; ?></td>
+							<td>
+								<?php if(!empty($request['attachment'])) {
+									?>
+									<a class="btn btn-info" href="<?php echo base_url()?>specialrequest/process_download/<?php echo $request['attachment'] ?>" > DOWNLOAD</a>
+									<?php
+								} else{ echo 'NO ATTACHMENT';} ?>
+							</td>
 						</tr>
 					<?php endforeach; ?>
 					</tbody>

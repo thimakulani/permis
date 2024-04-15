@@ -10,42 +10,42 @@
 
 <dl class="row">
 	<dt class="col-sm-2">
-		SMS member's name
+		SMS MEMBER'S NAME
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->Name.' '. $emp->LastName; ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Persal number
+		PERSAL NUMBER
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->Persal ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Supervisor's name
+		SUPERVISOR'S NAME
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->S_Name ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Branch name
+		BRANCH NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->b_name ?>
+	</dd>
+
+	<dt class="col-sm-2">
+		PROVINCE (IF APPLICABLE)
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo '' ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Province (if applicable)
-	</dt>
-	<dd class="col-sm-10">
-		<?php echo '' ?>
-	</dd>
-
-	<dt class="col-sm-2">
-		Job title
+		JOB TITLE
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->JobTitle ?>

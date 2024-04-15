@@ -198,7 +198,8 @@ class Performance extends CI_Controller
 				$form_data['kra'] = $mid->get_kra($_SESSION['Id'], $period, '');
 				$form_data['work_plan'] = $mid->get_work_plan($_SESSION['Id'], $period,'');
 				$form_data['organisational_performance'] = $mid->get_organisational_performance($_SESSION['Id'], $period, '');
-				$form_data['personal_development_plan'] = $mid->get_competencies_personal_development_plan($_SESSION['Id'], $period, '');
+				//$form_data['personal_development_plan'] = $mid->get_competencies_personal_development_plan($_SESSION['Id'], $period, '');
+				$form_data['personal_development_plan'] = $mid->get_competencies_personal_generic_management_competencies($_SESSION['Id'], $period, '');
 
 				$this->load->view("performance/level_15/mid_year_assessment", $form_data);
 			}
@@ -238,10 +239,11 @@ class Performance extends CI_Controller
 			elseif ($user->SalaryLevel == 15)
 			{
 				$p_i = new PerformanceInstrument();
+				$ann = new AnnualAssessment();
 				$form_data['individual_performance'] = $p_i->get_individual_performance($_SESSION['Id'], $period, '');
 				$form_data['generic_management_competencies'] = $p_i->get_generic_management_competencies($_SESSION['Id'], $period, '');
 				$form_data['work_plan'] = $p_i->get_work_plan($_SESSION['Id'], $period, '');
-				//$p_data['kra'] = $p_i->get_kra($_SESSION['Id'], $period, $template_p_i);
+				$form_data['auditor_general_opinion_and_findings'] = $ann->get_auditor_general_opinion_and_findings($_SESSION['Id'], $period, '');
 				$form_data['personal_developmental_plan'] = $p_i->get_personal_developmental_plan($_SESSION['Id'], $period, '');
 				$this->load->view("performance/level_15/annual_assessment", $form_data);
 			}
@@ -1592,19 +1594,14 @@ class Performance extends CI_Controller
 		if(!isset($id) && !isset($submission_id)){
 			$id = $this->uri->segment(3); //emp id
 			$submission_id = $this->uri->segment(4); //submitted id
-
 		}
 
-
-		//$mou_ann = new OperationalAnnualModel();
-		//$mou = new OperationalMemoModel();
 		$submission = new PerformanceModel();
 
 		$emp = new EmployeeModel();
 		$form_data['emp'] = $emp->get_profile($id);
 		$submission_row = $submission->get_user_submission($submission_id);
 		$form_data['submission_id'] = $submission_id;
-
 
 		$init = new Initialization();
 		$form_data['initialization'] = $init->get_initializations($id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
@@ -1670,7 +1667,7 @@ class Performance extends CI_Controller
 				$form_data['data'] = $submission_row;
 				$form_data['work_plan'] = $ann->get_work_plan($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$form_data['kra'] = $ann->get_kra($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
-				$form_data['gmc_personal_development_plan'] = $ann->get_generic_management_competencies_personal_development_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				$form_data['personal_development_plan'] = $ann->get_generic_management_competencies_personal_development_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$this->load->view("performance/submission/level_13_and_14/annual_assessment",$form_data);
 			}
 			if ($submission_row->template_name == 'MID YEAR ASSESSMENT') {
@@ -2669,6 +2666,51 @@ class Performance extends CI_Controller
 		$this->template($type);
 	}
 
+	public function submit_performance_annual()
+	{
+		$perf = new PerformanceModel();
+
+		$check = $perf->validate_submission_ddg_ann($_POST['period'], $_POST['template_name']);
+		if ($check > 0) {
+			http_response_code(405);
+			echo json_encode(array('error' => true, 'message' => 'YOU ALREADY SUBMITTED YOUR PERFORMANCE FOR THIS FINANCIAL YEAR'));
+			return;
+		}
+
+		// Make sure the required data is present before insertion
+		if(!isset($_POST['period']) || !isset($_POST['template_name']) || !isset($_POST['emp_comment'])) {
+			http_response_code(400);
+			echo json_encode(array('error' => true, 'message' => 'Missing required data'));
+			return;
+		}
+
+		$emp = new EmployeeModel();
+		$user = $emp->get_single_user($_SESSION['Id']);
+		$data = array(
+			'supervisor' => $user->SupervisorId,
+			'employee' => $_SESSION['Id'],
+			'date_captured' => date('Y-m-d'),
+			'period' => $_POST['period'],
+			'status' => 'PENDING',
+			'status_final' => 'PENDING',
+			'sup_comment' => '',
+			'emp_comment' => $_POST['emp_comment'],
+			'pmd_comment' => NULL,
+			'template_name' => $_POST['template_name'],
+			'agree' => '',
+			'reason' => '',
+		);
+
+		// Call the model function to insert data
+		$result = $perf->submit_to_manager_ddg_ann($data);
+
+		if($result) {
+			echo json_encode(array('success' => true, 'message' => 'Performance submitted successfully'));
+		} else {
+			echo json_encode(array('error' => true, 'message' => 'Failed to submit performance'));
+		}
+	}
+
 	public function submit_performance_ddg_ann($type)
 	{
 
@@ -2706,7 +2748,6 @@ class Performance extends CI_Controller
 			'reason' => $this->input->post('reason'),
 		);
 		$perf->submit_to_manager_ddg_ann_performance($data);
-		$this->template($type);
 	}
 
 /*	public function add_factor($type)
@@ -2869,7 +2910,7 @@ class Performance extends CI_Controller
 				'performance_measures_target'=>$this->input->post('performance_measures_target'),
 				'progress_review_comment'=>$this->input->post('progress_review_comment'),
 				'progress'=>$this->input->post('progress'),
-				'period'=>$period,
+				'period'=>$this->input->post('period'),
 				'template_name'=>$this->input->post('template_name'),
 				'employee'=>$_SESSION['Id'],
 			);
@@ -2884,9 +2925,7 @@ class Performance extends CI_Controller
 	public function add_competencies_personal_development_plan($type)
 	{
 
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
+
 		$this->form_validation->set_rules('core_management_competencies','','required');
 		$this->form_validation->set_rules('process_competencies','','required');
 		$this->form_validation->set_rules('other_developmental_areas_identified','','required');
@@ -2896,7 +2935,7 @@ class Performance extends CI_Controller
 				'core_management_competencies'=>$this->input->post('core_management_competencies'),
 				'process_competencies'=>$this->input->post('process_competencies'),
 				'other_developmental_areas_identified'=>$this->input->post('other_developmental_areas_identified'),
-				'period'=>$period,
+				'period'=>$this->input->post('period'),
 				'template_name'=>$this->input->post('template_name'),
 				'employee'=>$_SESSION['Id'],
 			);
@@ -3291,7 +3330,25 @@ class Performance extends CI_Controller
 			}
 		}
 	}
+	public function update_work_plan_mid($id)
+	{
+		$this->form_validation->set_rules('actual_achievement', '', 'required');
+		$this->form_validation->set_rules('sms_rating', '', 'required');
+		$mid = new MidYearAssessment();
+		//echo $this->input->post('job_holder_rating') . $this->input->post('par_score') . $this->input->post('performance_report');
+		$data = array(
+			'actual_achievement'=>$this->input->post('actual_achievement'),
+			'sms_rating'=>$this->input->post('sms_rating'),
+			//'performance_report'=>$this->input->post('performance_report'),
+		);
 
+		if($this->form_validation->run())
+		{
+			//echo '<script type="text/javascript">toastr.success("YOU ALREADY SUBMITTED YOUR PERFORMANCE FOR THIS FINANCIAL YEAR")</script>';
+			$mid->update_work_plan($id, $data);
+		}
+		//$this->template($type);
+	}
 	public function update_work_plan($id, $type)
 	{
 		//$this->form_validation->set_rules('actual_achievement', '', 'required');
@@ -3334,6 +3391,27 @@ class Performance extends CI_Controller
 		}
 		$this->view_submission($emp_id, $s_id);
 	}
+	public function sup_update_work_plan_ann($id)
+	{
+		$this->form_validation->set_rules('supervisor_rating_ann', '', 'required');
+		$this->form_validation->set_rules('agreed_rating_ann', '', 'required');
+		$this->form_validation->set_rules('moderated_rating_ann', '', 'required');
+		$mid = new MidYearAssessment();
+		//echo $this->input->post('job_holder_rating') . $this->input->post('par_score') . $this->input->post('performance_report');
+		$data = array(
+			'supervisor_rating_ann'=>$this->input->post('supervisor_rating_ann'),
+			'agreed_rating_ann'=>$this->input->post('agreed_rating_ann'),
+			'moderated_rating_ann'=>$this->input->post('moderated_rating_ann'),
+			//'performance_report'=>$this->input->post('performance_report'),
+		);
+
+		if($this->form_validation->run())
+		{
+			//echo '<script type="text/javascript">toastr.success("YOU ALREADY SUBMITTED YOUR PERFORMANCE FOR THIS FINANCIAL YEAR")</script>';
+			$mid->update_work_plan($id, $data);
+		}
+		//$this->view_submission($emp_id, $s_id);
+	}
 	public function update_mod_work_plan($id, $type)
 	{
 		$this->form_validation->set_rules('moderated_rating', '', 'required');
@@ -3371,6 +3449,40 @@ class Performance extends CI_Controller
 		}
 		$this->template($type);
 	}
+
+	public function update_annual($id)
+	{
+		if ($this->input->server('REQUEST_METHOD') === 'POST') {
+			$this->form_validation->set_rules('actual_achievement_ann', '', 'required');
+			$this->form_validation->set_rules('sms_rating_ann', '', 'required');
+			$ann = new AnnualAssessment();
+			//echo $this->input->post('job_holder_rating') . $this->input->post('par_score') . $this->input->post('performance_report');
+			$data = array(
+				'sms_rating_ann' => $this->input->post('sms_rating_ann'),
+				'actual_achievement_ann' => $this->input->post('actual_achievement_ann'),
+				//'performance_report'=>$this->input->post('performance_report'),
+			);
+
+			if ($this->form_validation->run()) {
+				//echo '<script type="text/javascript">toastr.success("YOU ALREADY SUBMITTED YOUR PERFORMANCE FOR THIS FINANCIAL YEAR")</script>';
+				$success = $ann->update_work_plan_ann($id, $data);
+				if ($success) {
+					// Return success response
+					$response = array('status' => 'success', 'message' => 'Update successful');
+				} else {
+					// Return error response
+					$response = array('status' => 'error', 'message' => 'Update failed');
+				}
+				// Convert the response to JSON and output it
+				$this->output->set_content_type('application/json')->set_output(json_encode($response));
+				return;
+			}
+		}
+		show_error('Method Not Allowed', 405);
+	}
+
+
+
 	public function update_annual_work_plan($id, $type)
 	{
 		$this->form_validation->set_rules('evaluated_score', '', 'required');
@@ -3515,6 +3627,32 @@ class Performance extends CI_Controller
 			);
 			$init->add_initialization($data);
 		}
+	}
+	public function add_auditor_general_opinion_and_findings_annual()
+	{
+
+		$this->form_validation->set_rules('ag_weight', '', 'required');
+		$this->form_validation->set_rules('ag_assessment_score', '', 'required');
+		$this->form_validation->set_rules('app_weight', '', 'required');
+		$this->form_validation->set_rules('num_planned_targets', '', 'required');
+		$this->form_validation->set_rules('targets_achieved', '', 'required');
+		if($this->form_validation->run())
+		{
+			$data = array(
+				'ag_weight'=>$this->input->post('ag_weight'),
+				'ag_assessment_score'=>$this->input->post('ag_assessment_score'),
+				'app_weight'=>$this->input->post('app_weight'),
+				'num_planned_targets'=>$this->input->post('num_planned_targets'),
+				'targets_achieved'=>$this->input->post('targets_achieved'),
+				'period'=>$this->input->post('period'),
+				'template_name'=>$this->input->post('template_name'),
+				'employee'=>$_SESSION['Id'],
+			);
+			$ann = new AnnualAssessment();
+			$ann->add_auditor_general_opinion_and_findings($data);
+
+		}
+
 	}
 	public function add_auditor_general_opinion_and_findings($type)
 	{

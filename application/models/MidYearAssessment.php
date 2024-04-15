@@ -45,7 +45,13 @@ class MidYearAssessment extends CI_Model
 	{
 		$this->db->where('employee', $Id);
 		$this->db->where('period', $period);
-		return $this->db->get('competencies_personal_development_plan')->result_array();
+		return $this->db->get('personal_developmental_plan')->result_array();
+	}
+	public function get_competencies_personal_generic_management_competencies($Id,$period, $template_name)
+	{
+		$this->db->where('employee', $Id);
+		$this->db->where('period', $period);
+		return $this->db->get('generic_management_competencies')->result_array();
 	}
 	public function add_competencies_personal_development_plan(array $data)
 	{

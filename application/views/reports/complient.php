@@ -49,15 +49,16 @@
 						</select>
 
 						<label for="status">STATUS</label>
-						<select class="select form-control-sm form-control" name="status" id="status">
+						<select class="select form-control-sm form-control" name="status" id="status" onchange="OnStatusChange()">
 							<option selected disabled value="-1">--SELECT STATUS--</option>
 							<option value="A" <?php if(isset($_POST['status']) && $_POST['status'] == 'A') echo 'selected' ?>>APPROVED BY SUPERVISORS</option>
 							<option value="B" <?php if(isset($_POST['status']) && $_POST['status'] == 'B') echo 'selected' ?>>AWAITING PMDS APPROVAL</option>
 							<option value="C" <?php if(isset($_POST['status']) && $_POST['status'] == 'C') echo 'selected' ?>>APPROVED BY PMDS</option>
+
 						</select>
 
 						<label for="salary_level">SALARY LEVEL</label>
-						<select class="select form-control-sm form-control" name="salary_level" id="salary_level">
+						<select class="select form-control-sm form-control" name="salary_level" id="salary_level" onchange="OnSalaryLevelChange()">
 							<option selected disabled value="-1">--SELECT SALARY LEVEL--</option>
 							<option value="A" <?php if(isset($_POST['salary_level']) && $_POST['salary_level'] == 'A') echo 'selected' ?>>LEVEL 1 TO 12</option>
 							<option value="B" <?php if(isset($_POST['salary_level']) && $_POST['salary_level'] == 'B') echo 'selected' ?>>LEVEL 13 TO 16</option>
@@ -80,8 +81,10 @@
 		<div style="margin:auto">
 			<div style="text-align: center;">
 				<p class="m-2"><strong>CO-OPERATIVE GOVERNANCE, HUMAN SETTLEMENTS AND TRADITIONAL AFFAIRS:LIMPOPO</strong></p>
-				<p class="m-2"><strong>CONTRACT TYPE: <label id="lbl_contract_type"></label> FINANCIAL YEAR: <label id="lbl_financial_year"><?= isset($_POST['financial_year']) ? $_POST['financial_year'] : '' ?></label> </strong></p>
-				<p class="m-2"><strong>VALID PERIOD: COMPLIANCE</strong></p>
+				<p class="m-2"><strong>CONTRACT TYPE: <label id="lbl_contract_type"></label>  </strong></p>
+				<p class="m-2"><strong>FINANCIAL YEAR: <label id="lbl_financial_year"><?= isset($_POST['financial_year']) ? $_POST['financial_year'] : '' ?></label><strong></p>
+				<p class="m-2"><strong>COMPLIANCE STATUS: <label id="lbl_status">SUBMITTED</label> </strong></p>
+				<p class="m-2"><strong>SALARY LEVEL: <label id="lbl_salary_level"></label> </strong></p>
 			</div>
 		</div>
 		<div>
@@ -125,6 +128,30 @@
 </div>
 
 <script>
+	function OnSalaryLevelChange() {
+		var lbl = document.getElementById('lbl_salary_level');
+		if (document.getElementById('salary_level').value === 'A') {
+            lbl.innerHTML = 'LEVEL 1 TO 12';
+        } else {
+            lbl.innerHTML = 'LEVEL 13 TO 16';
+        }
+
+	}
+
+	function OnStatusChange() {
+		var lbl = document.getElementById('lbl_status');
+		//lbl.innerText = document.getElementById('status').value;
+		if('A' === document.getElementById('status').value) {
+			lbl.innerText = 'APPROVED BY SUPERVISORS';
+		}
+		else if('B' === document.getElementById('status').value) {
+            lbl.innerText = 'AWAITING PMDS APPROVAL';
+        }
+		else if('C' === document.getElementById('status').value) {
+            lbl.innerText = 'APPROVED BY PMDS';
+        }
+	}
+
 	function SelectedContract() {
 		var lbl = document.getElementById('lbl_contract_type');
 		lbl.innerText = document.getElementById('contract_type').value;

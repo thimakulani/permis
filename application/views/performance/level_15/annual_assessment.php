@@ -1,102 +1,71 @@
 <div>
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/performance_capture" >BACK</a>
 </div>
-
-<div style="text-align: center;">
+<br />
+<div class="alert alert-info" style="text-align: center;">
 	<h4>
 		ANNUAL PERFORMANCE ASSESSMENT TEMPLATE FOR DEPUTY DIRECTOR-GENERAL
 	</h4>
 </div>
-<div class="table-responsive">
-	<table class="table table-sm">
-		<thead style="background-color: #fbd4b4">
-		<tr>
-			<th>
-				NAME OF THE SMS MEMBER
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
-				JOB TITLE
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-		</tr>
-		<tr>
-			<th>
-				PERSAL NUMBER
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
-				PERFORMANCE CYCLE
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-		</tr>
-		<tr>
-			<th>
-				NAME OF THE SUPERVISOR
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
-				PERIOD UNDER REVIEW
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-		</tr>
-		<tr>
-			<th>
-				NAME OF DEPARTMENT
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
+<dl class="row alert alert-info">
+	<dt class="col-sm-2">
+		SMS MEMBER'S NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->Name . ' ' . $emp->LastName; ?>
+	</dd>
 
-			</th>
-			<th>
+	<dt class="col-sm-2">
+		PERSAL NUMBER
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->Persal ?>
+	</dd>
 
-			</th>
-		</tr>
-		<tr>
-			<th>
-				PROVINCE (IF APPLICABLE)
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
+	<dt class="col-sm-2">
+		SUPERVISOR'S NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->S_Name ?>
+	</dd>
 
-			</th>
-			<th>
+	<dt class="col-sm-2">
+		BRANCH NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->b_name ?>
+	</dd>
 
-			</th>
-		</tr>
-		</thead>
-	</table>
-</div>
+	<dt class="col-sm-2">
+		PROVINCE (IF APPLICABLE)
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo '' ?>
+	</dd>
+
+	<dt class="col-sm-2">
+		JOB TITLE
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->JobTitle ?>
+	</dd>
+</dl>
 
 
 
 <!-- COPY FROM HERE -->
+<div class="alert alert-info">
+
 
 <h4>EMPLOYEE PERFORMANCE: KEY RESULT AREAS (KRAs)</h4>
-<?php foreach ($kra as $_kra){ ?>
+<?php foreach ($individual_performance as $_kra){ ?>
 
 	<div class="card">
 		<h4 class="card-header">
-			KRA: <?php echo $_kra['name']; ?>
+			KRA: <?php echo $_kra['key_results_area']; ?>
 		</h4>
 		<div class="table table-responsive table-sm">
-			<table class="table table-striped projects">
+			<table class="table table-striped">
 				<thead style="background-color: #fbd4b4">
 				<tr>
 					<th>ACTIVITIES</th>
@@ -105,35 +74,64 @@
 					<th>SMS RATING</th>
 					<th>SUPERVISOR RATING</th>
 					<th>AGREED RATING</th>
-					<th>MODERATED  RATING</th>
-					<th></th>
+					<th>MODERATED RATING</th>
+					<?php if($user_submission === 0) {?>
+						<th></th>
+					<?php }?>
 				</tr>
 				</thead>
 				<tbody>
 
-				<?php
-				//$emp_perf = array();
-				foreach ($work_plan as $work)
-				{
-					if($work['kra_id'] == $_kra['id'])
-					{
-					?>
-
-						<form method="post" action="<?php echo base_url() ?>performance/update_annual_moderated_work_plan/<?php echo $work['id'] ?>/300">
+				<?php foreach ($work_plan as $work) {
+					if ($work['kra_id'] == $_kra['id']) { ?>
+						<form id="update_form_data_<?php echo $work['id'] ?>" method="post" action="<?php echo base_url() ?>performance/update_annual/<?php echo $work['id'] ?>" class="work-plan-form">
 							<tr>
-								<th> <input class="form-control" disabled value="<?php echo $work['key_activities']; ?>" /> </th>
-								<th> <input class="form-control" disabled value="<?php echo $work['indicator_target']; ?>" /> </th>
-								<th> <input class="form-control" disabled value="<?php echo $work['actual_achievement']; ?>" /> </th>
-								<th> <input class="form-control" disabled value="<?php echo $work['sms_rating']; ?>" /> </th>
-								<th> <input class="form-control" disabled value="<?php echo $work['supervisor_rating']; ?>" /> </th>
-								<th> <input class="form-control" disabled value="<?php echo $work['agreed_rating']; ?>" /> </th>
-								<th> <input class="form-control" type="number" name="moderated_rating" value="<?php echo $work['moderated_rating']; ?>" /> </th>
-								<th> <input type="submit" class="btn-sm btn-info" value="Update" /></th>
+								<th><?php echo $work['key_activities']; ?></th>
+								<th><?php echo $work['indicator_target']; ?></th>
+								<th><input class="form-control actual_achievement_ann" name="actual_achievement_ann" value="<?php echo $work['actual_achievement_ann']; ?>" /></th>
+								<th><input class="form-control sms_rating_ann" type="number" name="sms_rating_ann" min="1" max="4" value="<?php echo $work['sms_rating_ann']; ?>" /></th>
+								<th></th>
+								<th></th>
+								<th></th>
+								<?php if($user_submission === 0) {?>
+									<th><input type="submit" class="btn-sm btn-info submit-btn" value="Update" /></th>
+								<?php } ?>
 							</tr>
 						</form>
+						<script>
+							$(document).ready(function () {
+								$('#update_form_data_<?php echo $work['id'] ?>').submit(function (e) {
+									e.preventDefault(); // prevent the form from submitting normally
+									$.ajax({
+										type: 'POST',
+										url: '<?php echo base_url() ?>performance/update_annual',
+										data: $('#update_form_data_<?php echo $work['id'] ?>').serialize(), // serialize the form data
+										success: function (response) {
+											Swal.fire({
+												icon: 'success',
+												title: 'Success!',
+												text: 'Changes saved successfully!',
+												onClose: () => {
+													location.reload();
+												}
+											});
+										},
+										error: function(xhr, status, error) {
+											// Handle error response with SweetAlert2
+											Swal.fire({
+												icon: 'error',
+												title: 'Error!',
+												text: `An error occurred. Please try again later. ${error}`,
+											});
+										}
+									});
+								});
+							});
 
-				<?php
-					}
+						</script>
+
+
+					<?php }
 				} ?>
 				</tbody>
 			</table>
@@ -141,13 +139,20 @@
 	</div>
 
 <?php } ?>
+
+</div>
+
 <br />
 
-<form class="card" method="post" action="<?php echo base_url() ?>performance/add_auditor_general_opinion_and_findings/300">
+
+
+
+<form id="auditorForm" class="card" method="post">
 	<h4 class="card-header">AUDITOR GENERAL OPINION AND FINDINGS AND ORGANISATIONAL PERFORMANCE</h4>
 	<input type="hidden" name="template_name" value="ANNUAL ASSESSMENT">
 	<div class="row card-body">
 		<div class="col table-responsive">
+			<input type="hidden" name="period" value="<?php echo $period; ?>" />
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -198,33 +203,119 @@
 	</div>
 </form>
 
+<script>
+	$(document).ready(function(){
+		// Attach submit event handler to the form
+		$('#auditorForm').submit(function(event){
+			// Prevent default form submission
+			event.preventDefault();
+
+			// Serialize form data
+			var formData = $(this).serialize();
+
+			// Send AJAX request
+			$.ajax({
+				url: '<?php echo base_url() ?>performance/add_auditor_general_opinion_and_findings_annual', // Replace with your endpoint URL
+				method: 'POST',
+				data: formData,
+				success: function(response){
+					// Handle success response
+					Swal.fire({
+						icon: 'success',
+						title: 'Success!',
+						text: 'Findings have been successfully submitted!',
+						onClose: () => {
+							location.reload();
+						}
+					});
+				},
+				error: function(xhr, status, error){
+					// Handle error
+					console.error(xhr.responseText);
+				}
+			});
+		});
+	});
+</script>
+
+
+
 <br />
-<form method="post" action="<?php echo base_url() ?>performance/submit_performance_ddg_ann/300">
+
+<form id="performanceForm" method="post">
 	<br/>
 	<div class="card">
 		<div class="card-body">
+			<input type="hidden" name="period" class="form-control" value="<?php echo $period; ?>" />
 			<div class="form-group">
 				<label>
 					Comment by the DDG on his/her performance
 				</label>
-				<textarea class="form-control" name="emp_comment" ></textarea>
-
+				<textarea class="form-control" name="emp_comment"></textarea>
 			</div>
 			<br />
-
 			<div class="form-group">
 				<label>
 					Comment by the Head of Department
 				</label>
-				<textarea class="form-control" name="sup_comment" ></textarea>
-
+				<textarea class="form-control" disabled name="sup_comment"></textarea>
 			</div>
 			<br />
 		</div>
 		<input type="hidden" name="template_name" value="ANNUAL ASSESSMENT">
 		<div class="card-footer">
-			<input type="submit" class="btn btn-info" value="SUBMIT TO SUPERVISOR"/>
+			<?php if($user_submission === 0) {?>
+				<button type="button" id="submitPerformance" class="btn btn-info">SUBMIT TO SUPERVISOR</button>
+			<?php } ?>
 		</div>
-
 	</div>
 </form>
+
+<script>
+	$(document).ready(function() {
+		$('#submitPerformance').click(function() {
+			// Serialize the form data
+			var formData = $('#performanceForm').serialize();
+
+			//alert($('#performanceForm').attr('action'));
+			// Perform AJAX request
+			$.ajax({
+				type: 'POST',
+				url: "<?php echo base_url() ?>performance/submit_performance_annual",
+				data: formData,
+				//dataType: 'json', // Expect JSON response
+				success: function(response) {
+					// Handle success response
+
+					if(response.error){
+						Swal.fire({
+							icon: 'error',
+							title: 'Error!',
+							text: response.message,
+
+						});
+					} else {
+						Swal.fire({
+							icon: 'success',
+							title: 'Success!',
+							text: response.message,
+							onClose: () => {
+								location.reload();
+							}
+						});
+					}
+
+				},
+				error: function(xhr, status, error) {
+
+					Swal.fire({
+						icon: 'success',
+						title: 'success!',
+						text: 'Successfully Submitted!',
+					});
+				}
+			});
+		});
+	});
+</script>
+

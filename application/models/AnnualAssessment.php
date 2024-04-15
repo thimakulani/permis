@@ -57,8 +57,20 @@ class AnnualAssessment extends CI_Model
 	{
 		$this->db->where('id', $id);
 		$this->db->update('work_plan', $data);
-	}
 
+	}
+	public function update_work_plan_ann($id, $data)
+	{
+		$this->db->where('id', $id);
+		$this->db->update('work_plan', $data);
+		if ($this->db->affected_rows() > 0) {
+			// Update successful
+			return true;
+		} else {
+			// Update failed
+			return false;
+		}
+	}
 	public function remove_work_plan($id)
 	{
 		$this->db->where('id', $id);
@@ -139,11 +151,7 @@ class AnnualAssessment extends CI_Model
 	public function get_auditor_general_opinion_and_findings($Id, $period, $string)
 	{
 		$this->db->where('employee', $Id);
-		$this->db->group_start();
-		$this->db->like('period', $period,'both');
-		$this->db->or_like('period', (date('Y') - 1).'/'. date('Y'),'both');
-		$this->db->group_end();
-		$this->db->where('template_name', $string);
+		$this->db->where('period', $period);
 		return $this->db->get('auditor_general_opinion_and_findings')->row();
 	}
 

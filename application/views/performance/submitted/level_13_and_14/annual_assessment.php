@@ -6,7 +6,7 @@
 foreach ($kra as $_kra){
 	?>   <div class="card">
 		<h4 class="card-header">
-			KRA NO <?php echo $kra_couter; ?> : <?php echo $_kra['name']; ?>
+			KRA NO <?php echo $kra_couter; ?> : <?php echo $_kra['key_results_area']; ?>
 		</h4>
 		<div class="table table-responsive table-sm">
 			<table class="table table-striped projects">
@@ -85,9 +85,9 @@ foreach ($kra as $_kra){
 			foreach ($gmc_personal_development_plan as $g) {?>
 
 					<tr>
-						<td><input class="form-control-sm" disabled  type="text" value="<?php echo $g['core_management'];?>" /></td>
-						<td><input class="form-control-sm" disabled  type="text" value="<?php echo $g['process_competencies'];?>" /></td>
-						<td><input class="form-control-sm" disabled  type="text" value="<?php echo $g['dev_required'];?>" /></td>
+						<td><?php echo $g['core_management'];?></td>
+						<td><?php echo $g['process_competencies'];?></td>
+						<td><?php echo $g['dev_required'];?></td>
 						
 					</tr>
 

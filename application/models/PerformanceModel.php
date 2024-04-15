@@ -496,8 +496,13 @@ class PerformanceModel extends CI_Model
 	public function submit_to_manager_ddg_ann_performance(array $data)
 	{
 		$this->db->insert('performance_assessment', $data);
-	}
 
+	}
+	public function submit_to_manager_ddg_ann(array $data)
+	{
+		return $this->db->insert('performance_assessment', $data);
+
+	}
 	public function validate_submission_hod($period, $t_name)
 	{
 		$this->db->where('employee', $_SESSION['Id']);

@@ -6,42 +6,42 @@
 </div>
 <dl class="row">
 	<dt class="col-sm-2">
-		SMS member's name
+		SMS MEMBER'S NAME
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->Name . ' ' . $emp->LastName; ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Persal number
+		PERSAL NUMBER
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->Persal ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Supervisor's name
+		SUPERVISOR'S NAME
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->S_Name ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Branch name
+		BRANCH NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->b_name ?>
+	</dd>
+
+	<dt class="col-sm-2">
+		PROVINCE (IF APPLICABLE)
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo '' ?>
 	</dd>
 
 	<dt class="col-sm-2">
-		Province (if applicable)
-	</dt>
-	<dd class="col-sm-10">
-		<?php echo '' ?>
-	</dd>
-
-	<dt class="col-sm-2">
-		Job title
+		JOB TITLE
 	</dt>
 	<dd class="col-sm-10">
 		<?php echo $emp->JobTitle ?>
@@ -56,7 +56,7 @@ $kra_counter = 1;
 foreach ($kra as $_kra) { ?>
 	<div class="card">
 		<h4 class="card-header">
-			KRA NO <?php echo $kra_counter; ?> : <?php echo $_kra['name']?>
+			KRA NO <?php echo $kra_counter; ?> : <?php echo $_kra['key_results_area']?>
 		</h4>
 		<div class="table table-responsive table-sm">
 			<table class="table table-striped projects">
@@ -78,11 +78,10 @@ foreach ($kra as $_kra) { ?>
 				foreach ($work_plan as $work)
 				{
 					if($_kra['id'] === $work['kra_id']) {?>
-						<form enctype="multipart/form-data"
-							  action="<?php echo base_url(); ?>performance/update_work_plan/<?php echo $work['id'];?>/100" method="post">
+						<form enctype="multipart/form-data" id="update_form_data_<?php echo $work['id'] ?>" method="post">
 							<tr>
-								<th> <input class="form-control" type="text" disabled value="<?php echo $work['key_activities'] ?>" /> </th>
-								<th> <input class="form-control" type="text" disabled value="<?php echo $work['indicator_target'] ?>" /></th>
+								<th> <?php echo $work['key_activities'] ?> </th>
+								<th> <?php echo $work['indicator_target'] ?></th>
 								<th> <input class="form-control" type="text" name="actual_achievement" value="<?php echo $work['actual_achievement'] ?>" /></th>
 								<th> <input class="form-control"  type="number" name="sms_rating" min="1" max="4" value="<?php echo $work['sms_rating'] ?>" /></th>
 								<th> <input class="form-control" type="text" disabled value="<?php echo $work['supervisor_rating'] ?>" /></th>
@@ -91,6 +90,37 @@ foreach ($kra as $_kra) { ?>
 							</tr>
 						</form>
 
+						<script>
+							$(document).ready(function () {
+								$('#update_form_data_<?php echo $work['id'] ?>').submit(function (e) {
+									e.preventDefault(); // prevent the form from submitting normally
+									$.ajax({
+										type: 'POST',
+										url: '<?php echo base_url() ?>performance/update_work_plan_mid/<?php echo $work['id'] ?>',
+										data: $('#update_form_data_<?php echo $work['id'] ?>').serialize(), // serialize the form data
+										success: function (response) {
+											Swal.fire({
+												icon: 'success',
+												title: 'Success!',
+												text: 'Changes saved successfully!',
+												onClose: () => {
+													location.reload();
+												}
+											});
+										},
+										error: function(xhr, status, error) {
+											// Handle error response with SweetAlert2
+											Swal.fire({
+												icon: 'error',
+												title: 'Error!',
+												text: `An error occurred. Please try again later. ${error}`,
+											});
+										}
+									});
+								});
+							});
+
+						</script>
 
 
 					<?php } ?>
@@ -101,10 +131,11 @@ foreach ($kra as $_kra) { ?>
 		</div>
 	</div>
 
+
 <?php } ?>
 <!-- UNTIL HERE -->
 
-
+<!--
 <div class="card">
 	<h4 class="card-header">
 		ORGANISATIONAL PERFORMANCE
@@ -129,19 +160,20 @@ foreach ($kra as $_kra) { ?>
 			<tbody>
 
 			<?php
-
-			foreach ($organisational_performance as $perf) { ?>
+/*
+			foreach ($organisational_performance as $perf) { */?>
 				<tr>
-					<th> <input class="form-control" value="<?php echo $perf['targeted_objectives']; ?>" /> </th>
-					<th> <input class="form-control" value="<?php echo $perf['performance_measures_target']; ?>" /> </th>
-					<th> <input class="form-control" value="<?php echo $perf['progress']; ?>" /> </th>
-					<th> <input class="form-control" value="<?php echo $perf['progress_review_comment']; ?>" /> </th>
+					<th> <input class="form-control" value="<?php /*echo $perf['targeted_objectives']; */?>" /> </th>
+					<th> <input class="form-control" value="<?php /*echo $perf['performance_measures_target']; */?>" /> </th>
+					<th> <input class="form-control" value="<?php /*echo $perf['progress']; */?>" /> </th>
+					<th> <input class="form-control" value="<?php /*echo $perf['progress_review_comment']; */?>" /> </th>
 					<th></th>
 				</tr>
 
-			<?php } ?>
-			<form enctype="multipart/form-data" action="<?php  echo base_url();?>performance/add_organisational_performance/100" method="post">
+			<?php /*} */?>
+			<form id="form_op" enctype="multipart/form-data" action="<?php /* echo base_url();*/?>performance/add_organisational_performance/100" method="post">
 				<input type="hidden" name="template_name" value="MID YEAR ASSESSMENT">
+				<input type="hidden" name="period" value="<?php /*echo $period;*/?>" >
 				<tr>
 					<td>
 						<input type="text" name="targeted_objectives" class="form-control">
@@ -160,11 +192,51 @@ foreach ($kra as $_kra) { ?>
 					</td>
 				</tr>
 			</form>
+
 			</tbody>
 		</table>
 	</div>
 </div>
-<div class="card">
+<script>
+	$(document).ready(function() {
+		$('#form_op').submit(function(event) {
+			// Prevent default form submission
+			event.preventDefault();
+
+			// Serialize the form data
+			var formData = $(this).serialize();
+
+			// Send AJAX request
+			$.ajax({
+				type: 'POST',
+				url: $(this).attr('action'),
+				data: formData,
+				success: function(response) {
+					// Handle success response
+					if (response.success) {
+						// Update UI or show success message
+						alert('Competencies and personal development plan added successfully!');
+						// Optionally, you can reset the form or update UI based on the response
+						// $('#formCPCD')[0].reset();
+						// Update UI or perform other actions
+					} else {
+						// Show error message if addition failed
+						alert('Failed to add competencies and personal development plan.');
+					}
+				},
+				error: function(xhr, status, error) {
+					// Handle error response
+					location.reload();
+				}
+			});
+		});
+	});
+
+</script>
+-->
+
+
+<!--<div class="card">
 	<h4 class="card-header">
 		COMPETENCIES: PERSONAL DEVELOPMENT PLAN
 	</h4>
@@ -185,21 +257,22 @@ foreach ($kra as $_kra) { ?>
 			<tbody>
 
 			<?php
-			$emp_perf = array();
-			foreach ($personal_development_plan as $perf) { ?>
+/*			$emp_perf = array();
+			foreach ($personal_development_plan as $perf) { */?>
 
 				<tr>
-					<th><input type="text" value="<?php echo $perf['core_management_competencies'] ?>" class="form-control"></th>
-					<th><input type="text" value="<?php echo $perf['process_competencies'] ?>" class="form-control"></th>
-					<th><input type="text" value="<?php echo $perf['other_developmental_areas_identified'] ?>" class="form-control"></th>
+					<th><input type="text" value="<?php /*echo $perf['competencies'] */?>" class="form-control"></th>
+					<th><input type="text" value="<?php /*echo $perf['process_competencies'] */?>" class="form-control"></th>
+					<th><input type="text" value="<?php /*echo $perf['other_developmental_areas_identified'] */?>" class="form-control"></th>
 					<th></th>
 				</tr>
 
-			<?php } ?>
+			<?php /*} */?>
 
 
-			<form enctype="multipart/form-data" action="<?php echo base_url();?>performance/add_competencies_personal_development_plan/100" method="post">
+			<form id="form_pdp" enctype="multipart/form-data" action="<?php /*echo base_url();*/?>performance/add_competencies_personal_development_plan/100" method="post">
 				<input type="hidden" value="MID YEAR ASSESSMENT" name="template_name">
+				<input type="hidden" name="period" value="<?php /*echo $period;*/?>" >
 				<tr>
 					<td>
 						<input type="text" name="core_management_competencies" class="form-control">
@@ -216,11 +289,51 @@ foreach ($kra as $_kra) { ?>
 					</td>
 				</tr>
 			</form>
+
+			<script>
+				$(document).ready(function() {
+					$('#form_pdp').submit(function(event) {
+						// Prevent default form submission
+						event.preventDefault();
+
+						// Serialize the form data
+						var formData = $(this).serialize();
+
+						// Send AJAX request
+						$.ajax({
+							type: 'POST',
+							url: $(this).attr('action'),
+							data: formData,
+							dataType: 'json', // Expect JSON response
+							success: function(response) {
+								// Handle success response
+								if (response.success) {
+									// Update UI or show success message
+									alert('Competencies and personal development plan added successfully!');
+									// Optionally, you can reset the form or update UI based on the response
+									// $('#formCPCD')[0].reset();
+									// Update UI or perform other actions
+								} else {
+									// Show error message if addition failed
+									alert('Failed to add competencies and personal development plan.');
+								}
+							},
+							error: function(xhr, status, error) {
+								// Handle error response
+								location.reload();
+							}
+						});
+					});
+				});
+
+			</script>
+
+
 			</tbody>
 		</table>
 	</div>
 </div>
-<div>
+<div>-->
 
 
 	<div class="form-group">
@@ -234,12 +347,8 @@ foreach ($kra as $_kra) { ?>
 </div>
 <br />
 <form method="post" action="<?php echo base_url() ?>performance/submit_performance_dir_mid_ddg/100">
-
-
 	<br/>
 	<div class="card">
-
-
 		<div class="card-body">
 			<input value="MID YEAR ASSESSMENT" type="hidden" name="template_name"/>
 		</div>

@@ -7,84 +7,51 @@
 		ANNUAL PERFORMANCE ASSESSMENT TEMPLATE FOR DEPUTY DIRECTOR-GENERAL
 	</h4>
 </div>
-<div class="table-responsive">
-	<table class="table table-sm">
-		<thead style="background-color: #fbd4b4">
-		<tr>
-			<th>
-				Name of the SMS member
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
-				Job title
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Persal Number
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
-				Performance cycle
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Name of the Supervisor
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
-				Period under review
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Name of Department
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
+<div>
+	<dl class="row">
+		<dt class="col-sm-2">
+			SMS MEMBER'S NAME
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->Name . ' ' . $emp->LastName; ?>
+		</dd>
 
-			</th>
-			<th>
+		<dt class="col-sm-2">
+			PERSAL NUMBER
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->Persal ?>
+		</dd>
 
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Province (if applicable)
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
+		<dt class="col-sm-2">
+			SUPERVISOR'S NAME
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->S_Name ?>
+		</dd>
 
-			</th>
-			<th>
+		<dt class="col-sm-2">
+			BRANCH NAME
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->b_name ?>
+		</dd>
 
-			</th>
-		</tr>
-		</thead>
-	</table>
+		<dt class="col-sm-2">
+			PROVINCE (IF APPLICABLE)
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo '' ?>
+		</dd>
+
+		<dt class="col-sm-2">
+			JOB TITLE
+		</dt>
+		<dd class="col-sm-10">
+			<?php echo $emp->JobTitle ?>
+		</dd>
+	</dl>
 </div>
-
-
 
 <!-- COPY FROM HERE -->
 
@@ -93,7 +60,7 @@
 
 	<div class="card">
 		<h4 class="card-header">
-			KRA: <?php echo $_kra['name']; ?>
+			KRA: <?php echo $_kra['key_results_area']; ?>
 		</h4>
 		<div class="table table-responsive table-sm">
 			<table class="table table-striped projects">
@@ -119,18 +86,48 @@
 					{
 						?>
 
-						<form method="post" action="<?php echo base_url() ?>performance/sup_update_work_plan/<?php echo $work['id']; ?>/<?php echo $data->id; ?>/<?php echo $data->emp_id; ?>">
+						<form id="update_wp<?php echo $work['id'] ?>" method="post" >
 							<tr>
-								<th> <input class="form-control" disabled value="<?php echo $work['key_activities']; ?>" /> </th>
-								<th> <input class="form-control" disabled value="<?php echo $work['indicator_target']; ?>" /> </th>
-								<th> <input class="form-control" disabled value="<?php echo $work['actual_achievement']; ?>" /> </th>
-								<th> <input class="form-control" disabled value="<?php echo $work['sms_rating']; ?>" /> </th>
-								<th> <input class="form-control" min="1" max="4" type="number" required name="supervisor_rating" value="<?php echo $work['supervisor_rating']; ?>" /> </th>
-								<th> <input class="form-control"  min="1" max="4" type="number" required name="agreed_rating" value="<?php echo $work['agreed_rating']; ?>" /> </th>
-								<th> <input class="form-control"  min="1" max="4" type="number" required name="moderated_rating" value="<?php echo $work['moderated_rating']; ?>" /> </th>
+								<th> <?php echo $work['key_activities']; ?></th>
+								<th> <?php echo $work['indicator_target']; ?></th>
+								<th> <?php echo $work['actual_achievement_ann']; ?> </th>
+								<th> <?php echo $work['sms_rating_ann']; ?> </th>
+								<th> <input class="form-control" min="1" max="4" type="number" required name="supervisor_rating_ann" value="<?php echo $work['supervisor_rating_ann']; ?>" /> </th>
+								<th> <input class="form-control"  min="1" max="4" type="number" required name="agreed_rating_ann" value="<?php echo $work['agreed_rating_ann']; ?>" /> </th>
+								<th> <input class="form-control"  min="1" max="4" type="number" required name="moderated_rating_ann" value="<?php echo $work['moderated_rating_ann']; ?>" /> </th>
 								<th> <input type="submit" class="btn-sm btn-info" value="Update" /></th>
 							</tr>
 						</form>
+
+						<script>
+							$(document).ready(function () {
+								$('#update_wp<?php echo $work['id'] ?>').submit(function (e) {
+
+									e.preventDefault(); // prevent the form from submitting normally
+									$.ajax({
+										type: 'POST',
+										url: '<?php echo base_url() ?>performance/sup_update_work_plan_ann/<?php echo $work['id'];?>',
+										//url: '<?php echo base_url() ?>performance/sup_update_work_plan/<?php echo $work['id'];?>/10   $id, $s_id, $emp_id',
+										//$id, $s_id, $emp_id
+										data: $('#update_wp<?php echo $work['id'] ?>').serialize(), // serialize the form data
+										success: function (response) {
+
+											//$('#response').html(response); // display the response on the page
+											Swal.fire({
+												icon: 'success',
+												title: 'Success',
+												text: 'Successfully Updated',
+												onClose: () => {
+													location.reload();
+												}
+											});
+
+										}
+									});
+								});
+							});
+
+						</script>
 
 						<?php
 					}
@@ -143,7 +140,7 @@
 <?php } ?>
 <br />
 
-<form class="card" method="post" action="<?php echo base_url() ?>performance/add_auditor_general_opinion_and_findings/300">
+<!--<form class="card" method="post" action="<?php /*echo base_url() */?>performance/add_auditor_general_opinion_and_findings/300">
 	<h4 class="card-header">AUDITOR GENERAL OPINION AND FINDINGS AND ORGANISATIONAL PERFORMANCE</h4>
 	<input type="hidden" name="template_name" value="ANNUAL ASSESSMENT">
 	<div class="row card-body">
@@ -159,12 +156,12 @@
 				</thead>
 				<tbody>
 				<tr>
-					<td>AG Weighting <input class="form-control" required type="number" value="<?php if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->ag_weight ?>" name="ag_weight" ></td>
-					<td>AG assessment score (rating 0-3) <input required min="1" max="3" value="<?php if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->ag_assessment_score ?>" name="ag_assessment_score" class="form-control" type="number"> </td>
+					<td>AG Weighting <input class="form-control" required type="number" value="<?php /*if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->ag_weight */?>" name="ag_weight" ></td>
+					<td>AG assessment score (rating 0-3) <input required min="1" max="3" value="<?php /*if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->ag_assessment_score */?>" name="ag_assessment_score" class="form-control" type="number"> </td>
 				</tr>
 				<tr>
 					<td>Weighted Score/rating</td>
-					<td><input class="form-control" value="<?php if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->ag_weight/$auditor_general_opinion_and_findings->ag_assessment_score; ?>" type="number"></td>
+					<td><input class="form-control" value="<?php /*if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->ag_weight/$auditor_general_opinion_and_findings->ag_assessment_score; */?>" type="number"></td>
 				</tr>
 				</tbody>
 			</table>
@@ -181,10 +178,10 @@
 				</thead>
 				<tbody>
 				<tr>
-					<td>APP Weighting <input required value="<?php if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->app_weight ?>" name="app_weight" class="form-control" type="number"></td>
+					<td>APP Weighting <input required value="<?php /*if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->app_weight */?>" name="app_weight" class="form-control" type="number"></td>
 					<td>
-						Number of Planned Targets <input required value="<?php if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->num_planned_targets ?>" name="num_planned_targets" class="form-control" type="number">
-						Targets Achieved <input required value="<?php if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->targets_achieved ?>" name="targets_achieved" class="form-control" type="number">
+						Number of Planned Targets <input required value="<?php /*if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->num_planned_targets */?>" name="num_planned_targets" class="form-control" type="number">
+						Targets Achieved <input required value="<?php /*if(isset($auditor_general_opinion_and_findings)) echo $auditor_general_opinion_and_findings->targets_achieved */?>" name="targets_achieved" class="form-control" type="number">
 					</td>
 				</tr>
 				</tbody>
@@ -192,11 +189,11 @@
 		</div>
 	</div>
 	<div class="card-footer">
-		<?php if(!isset($auditor_general_opinion_and_findings)) { ?>
+		<?php /*if(!isset($auditor_general_opinion_and_findings)) { */?>
 			<input type="submit" class="btn-sm btn-success" value="Save">
-		<?php } ?>
+		<?php /*} */?>
 	</div>
-</form>
+</form>-->
 <br />
 <div class="card">
 	<div class="card-body">

@@ -1,71 +1,78 @@
-<?php $period = $submission_row->period;
-
-?>
 <div>
-	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/submitted_performance">BACK</a>
+	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/performance_capture">BACK</a>
 </div>
+<div style="text-align: center;">
 
-<div>
-
-	<h1 style="font-weight: bold" align="center">FORMAL PERFORMANCE ASSESSMENT</h1>
-	<h4 style="font-weight: bold" align="center">PERFORMANCE PERIOD: <?php echo $period; ?></h4>
-	<h4 style="font-weight: bold" align="center">COMMENTS BY JOBHOLDER</h4>
-	<p style="font-weight: bold">(To be completed by the jobholder, prior to the assessment process. If the space
-		provided is insufficient, the comments can be included as an attachment)</p>
-
-	<ul>
-		<li>During this performance assessment period, my major achievements / accomplishments as they relate to my
-			Performance Agreement were:
-		</li>
-		<li>During this performance assessment period, I have achieved / accomplished the following, which was/were not
-			part of my Performance Agreement:
-		</li>
-		<li>During this performance assessment period, I was less successful in the following areas, which formed part
-			of my Performance Agreement, for the reasons stated
-		</li>
-	</ul>
-
+	<h4>CHIEF DIRECTOR AND DIRECTOR PERFORMANCE MID-YEAR REVIEW TEMPLATE</h4>
 
 </div>
-<div class="card">
-	<div class="card-header">
-	</div>
-	<div class="card-body p-0">
-		<div class="table-responsive">
+<?php $is_valid = false; ?>
+
+<dl class="row">
+	<dt class="col-sm-2">
+		SMS MEMBER'S NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->Name.' '. $emp->LastName; ?>
+	</dd>
+
+	<dt class="col-sm-2">
+		PERSAL NUMBER
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->Persal ?>
+	</dd>
+
+	<dt class="col-sm-2">
+		SUPERVISOR'S NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->S_Name ?>
+	</dd>
+
+	<dt class="col-sm-2">
+		BRANCH NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->b_name ?>
+	</dd>
+
+	<dt class="col-sm-2">
+		PROVINCE (IF APPLICABLE)
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo '' ?>
+	</dd>
+
+	<dt class="col-sm-2">
+		JOB TITLE
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->JobTitle ?>
+	</dd>
+</dl>
+<br/>
+
+
+
+<h4>EMPLOYEE PERFORMANCE: KEY RESULT AREAS (KRAs)</h4>
+<?php foreach ($kra as $_kra){
+	?>
+	<div class="card">
+		<h4 class="card-header">
+			KRA: <?php echo $_kra['key_results_area']; ?>
+		</h4>
+		<div class="table table-responsive table-sm">
 			<table class="table table-striped projects">
-				<thead>
+				<thead style="background-color: #c1d59a">
 				<tr>
-					<th>
-						KEY RESULTS
-
-					</th>
-					<th>
-						GAFS
-						(Generic
-						Assessment
-						Factors)
-					</th>
-
-					<th class="text-center">
-						WEIGHT
-						OF
-						OUTCOME (in %)
-					</th>
-					<th>
-						JOBHOLDERS RATING 1 - 4
-					</th>
-					<th>
-						SUPERVISORS RATING 1 - 4
-					</th>
-					<th>
-						AGREED RATE
-					</th>
-					<th>
-						PAR SCORE
-					</th>
-					<th>
-						PERFORMANCE REPORT
-					</th>
+					<th>ACTIVITIES</th>
+					<th>TARGET</th>
+					<th>ACTUAL ACHIEVEMENT/EVIDENCE</th>
+					<th>SMS RATING</th>
+					<th>SUPERVISOR RATING</th>
+					<th>AGREED RATING</th>
+					<th>MODERATED RATING</th>
 					<th></th>
 				</tr>
 				</thead>
@@ -73,270 +80,253 @@
 
 				<?php
 
-				$counter = 0;
-				$kraScore = 0;
-				$track_update = 0;
-				foreach ($performance_plan as $m) {
-					$counter = $counter + $m['outcome_weight'];
-					$kraScore += $m['par_score'];
-					?>
-					<form id="update_pp<?php echo $m['id']; ?>" method="post"
-						  action="<?php echo base_url() ?>performance/update_sup_performance/<?php echo $m['id']; ?>/<?php echo $data->id; ?>/<?php echo $data->emp_id; ?>">
-						<tr>
-							<td>
-								<?php echo $m['key_responsibility'] ?>
-							</td>
-							<td>
-								<?php echo $m['gafs'] ?>
-							</td>
+				foreach ($work_plan as $work){ ?>
+					<?php if($work['kra_id'] == $_kra['id'])
+					{
+						if(!isset($work['supervisor_rating']))
+						{
+							$is_valid = false;
+						}
+						?>
 
-							<td><input class="form-control weight" disabled type="text"
-									   value="<?php echo $m['outcome_weight'] ?>"/></td>
+						<form id="update_wp<?php echo $work['id'] ?>" enctype="multipart/form-data"  method="post">
+							<input type="hidden" name="template_name" value="MID YEAR ASSESSMENT" />
+							<tr>
+								<td><?php echo $work['key_activities'] ?></td>
+								<td><?php echo $work['target_date'] ?></td>
+								<td><?php echo $work['actual_achievement_ann'] ?></td>
+								<td style="text-align: center;"><?php echo $work['sms_rating_ann'] ?></td>
+								<td><input type="number" min="1" max="4" name="supervisor_rating_ann" required value="<?php echo $work['supervisor_rating_ann'] ?>" class="form-control"></td>
+								<td><input type="number" min="1" max="4" name="agreed_rating_ann" required value="<?php echo $work['agreed_rating_ann'] ?>" class="form-control"></td>
+								<td><input type="number" min="1" max="4" name="moderated_rating_ann" required value="<?php echo $work['moderated_rating_ann'] ?>" class="form-control"></td>
+								<td><input type="submit" value="update" class="btn-sm btn-info" /></td>
+							</tr>
+						</form>
 
-							<td><input class="form-control" disabled type="number" name="job_holder_rating" value="<?php echo $m['job_holder_rating']?>"/></td>
+						<script>
+							$(document).ready(function () {
+								$('#update_wp<?php echo $work['id'] ?>').submit(function (e) {
 
-							<td><input class="form-control" required type="number" min="1" max="4" name="supervisor_rating" value="<?php echo $m['supervisor_rating'] ?>"/></td>
-							<td>
-								<input class="form-control rate" required type="text" name="agreed_rating" value="<?php echo $m['agreed_rating'] ?>"/>
-							</td>
-							<td><input class="form-control par" required name="par_score" value="<?php echo $m['par_score'] ?>"/></td>
-							<td><textarea class="form-control" name="performance_report" disabled > <?php if(isset($m['performance_report'])) echo $m['performance_report'] ?></textarea></td>
+									e.preventDefault(); // prevent the form from submitting normally
+									$.ajax({
+										type: 'POST',
+										url: '<?php echo base_url() ?>performance/sup_update_work_plan_ann/<?php echo $work['id'];?>',
+										//url: '<?php echo base_url() ?>performance/sup_update_work_plan/<?php echo $work['id'];?>/10   $id, $s_id, $emp_id',
+										//$id, $s_id, $emp_id
+										data: $('#update_wp<?php echo $work['id'] ?>').serialize(), // serialize the form data
+										success: function (response) {
 
-							<td><button type="button" class="btn-info process">par</button></td>
-							<td>
-								<?php // if($track_update==0) {?>
-								<input type="submit" value="update" class="btn-sm btn-info"/>
-								<?php // }?>
-							</td>
+											//$('#response').html(response); // display the response on the page
+											Swal.fire({
+												icon: 'success',
+												title: 'Success',
+												text: 'Successfully Updated',
+												onClose: () => {
+													location.reload();
+												}
+											});
 
-						</tr>
-					</form>
-
-					<script>
-						$(document).ready(function () {
-							$('#update_pp<?php echo $m['id']; ?>').submit(function (e) {
-								e.preventDefault(); // prevent the form from submitting normally
-								$.ajax({
-									type: 'POST',
-									url: '<?php echo base_url() ?>performance/update_sup_performance/<?php echo $m['id']; ?>/<?php echo $data->id; ?>/<?php echo $data->emp_id; ?>',
-									data: $('#update_pp<?php echo $m['id']?>').serialize(), // serialize the form data
-									success: function (response) {
-										location.reload();
-										$('#response').html(response); // display the response on the page
-									}
+										}
+									});
 								});
 							});
-						});
 
-					</script>
+						</script>
 
-
-
-					<?php
-					$track_update++;
-				} ?>
-
-
-
-				</tbody>
-
-			</table>
-			<?php echo '<h5 style="margin: 5px"> Sub-Total: ' . $counter . '</h5>' ?>
-
-
-		</div>
-	</div>
-
-
-</div>
-
-<br/>
-<h1>MID YEAR PERFORMANCE OUTCOME</h1>
-<form class="table-responsive" method="post" action="<?php base_url() ?>performance/add_factor/7">
-	<input value="MID YEAR ASSESSMENT" type="hidden" name="template_name"/>
-	<table class="table table-bordered projects">
-		<thead>
-		<tr>
-			<th>
-				FACTOR
-
-			</th>
-			<th>
-				(A) SUB-TOTAL
-			</th>
-
-			<th class="text-center">
-				(B) % OF ASSESSMENT
-			</th>
-			<th>
-				(A x B) TOTAL SCORE
-			</th>
-			<th></th>
-		</tr>
-
-		</thead>
-		<tbody>
-		<tr>
-			<td>
-				SECTION A: KEY RESULTS AREAS ACHIEVED
-			</td>
-			<td><input disabled type="number" id="val_a" name="sub_total_a" value="<?php echo $counter ?>" required class="form-control"/></td>
-			<td><input type="number" id="val_b" name="of_assessment" value="<?php if (isset($factor->of_assessment)) {
-					echo $factor->of_assessment;
-				} ?>" required class="form-control"/></td>
-			<td><input type="number" id="val_total"
-					   value="<?php if (isset($factor->of_assessment) && isset($factor->sub_total_a)) {
-						   echo $factor->of_assessment * $factor->sub_total_a;
-					   } ?>" disabled class="form-control"/></td>
-
-		</tr>
-
-		<tr>
-			<td colspan="3">
-				SCORE IN PERCENTAGE (C / 3 x 100%) <strong>DO NOT ROUND OFF<strong>
-			</td>
-
-			<td><input type="number" disabled id="total_c" value="<?php echo ($kraScore / 3) * 100?>" class="form-control"/></td>
-		</tr>
-
-		<tr>
-			<td colspan="3">
-				(C) SCORE
-			</td>
-			<td><input disabled type="number" id="val_c" name="c_score" value="<?php echo $kraScore ?>" required class="form-control"/></td>
-			<th><input class="btn-sm btn-info" type="submit" value="SAVE"/></th>
-		</tr>
-
-		</tbody>
-	</table>
-
-</form>
-<br/>
-
-
-<br/>
-
-<form method="post" action="<?php echo base_url() ?>performance/submit_performance_mid/7">
-	<input type="hidden" name="template_name" value="MID YEAR ASSESSMENT">
-	<div>
-		<div class="card"><H2>AGREEMENT ASSESSMENT</H2>      <br>
-			<table class="table table-bordered">
-				<thead style="background: #939ba7">
-				<th> JOBHOLDER</th>
-				<th> SUPERVISOR</th>
-				</thead>
-				<tbody>
-				<tr>
-					<td>
-						<h5>I acknowledge that my supervisor and I have discussed the performance and I:</h5>
-						<br>
-						<input type="radio" checked name="option" value="yes">
-						<label for="agree"> AGREE WITH THE ASSESSMENT</label>
-						<br> <br>
-						<input type="radio" name="option" value="no">
-						<label for="not_agree"> DO NOT AGREE WITH ASSESSMENT (If in disagreement please provide and
-							attach written reasons) </label><br>
-					</td>
-					<td>
-						<h5>I acknowledge that I have discussed the official’s performance with him / her and that the
-							assessment is a true reflection of his / her performance of the period:</h5>
-					</td>
-				</tr>
-				<tr>
-					<td><input placeholder="Reason If you Disagree" class="form-control" name="reason" type="text"/>
-					</td>
-					<td><p>To put the date(period)</p></td>
-				</tr>
-				<tr>
-					<td><p>I acknowledge that my supervisor and I have discussed the performance and I</p></td>
-					<td><input placeholder="Comments" class="form-control" name="sup_comment" disabled type="text"/>
-					</td>
-				</tr>
+					<?php } ?>
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
 	</div>
 
-	<br/>
-</form>
 
 
-<br/>
+	<br>
+
+<?php } ?>
+
+<?php ?>
 <div class="card">
-	<?php if($submission_row->status == 'PENDING'){ ?>
+	<div class="card-header">
+		<h5>COMPETENCIES: PERSONAL DEVELOPMENT PLAN</h5>
+	</div>
+
+	<div class="card-body table-responsive">
+
+		<table class="table table-striped projects">
+			<thead style="background-color: #c1d59a">
+			<tr>
+				<th>
+					CORE MANAGEMENT COMPETENCIES(CMCs)
+
+				</th>
+				<th>
+					PROCESS COMPETENCIES(PCs)
+				</th>
+				<th>
+					DEV REQUIRED(CMCs)
+				</th>
+				<th>
+					DEV REQUIRED(PCs)
+				</th>
+
+
+			</tr>
+			</thead>
+			<tbody>
+
+			<?php
+
+			foreach ($personal_development_plan as $gmcWork) {
+				echo '
+							<tr>
+								<td>' . $gmcWork['core_management'] . '</td>
+								<td>' . $gmcWork['process_competencies'] . '</td>
+								<td>' . $gmcWork['dev_required_cmcs'] . '</td>
+								<td>' . $gmcWork['dev_required_pcs'] . '</td>
+
+
+								
+								
+
+							</tr>
+							';
+			}
+
+
+			/*			echo '
+
+										<form id="add_gmc" method="post" action="' . base_url() . 'performance/add_generic_management_competencies/10">
+											<input type="hidden" name="template_name" value="MID YEAR ASSESSMENT" />
+											<tr>
+												<td><input class="form-control" name="core_management" required  type="text" /></td>
+												<td><input class="form-control" name="process_competencies" required  type="text" /></td>
+												<td>
+													<select name="dev_required_cmcs" class="form-control select">
+													<option value="YES">YES</option>
+													<option value="NO">NO</option>
+													</select>
+												</td>
+												<td>
+													<select name="dev_required_pcs" class="form-control select">
+													<option value="YES">YES</option>
+													<option value="NO">NO</option>
+													</select>
+												</td>
+												<td><input class="btn-sm btn-info" type="submit" value="ADD"/></td>
+											</tr>
+										</form>
+									';
+						*/
+			?>
+			<script>
+				$(document).ready(function () {
+					$('#add_gmc').submit(function (e) {
+						e.preventDefault(); // prevent the form from submitting normally
+						$.ajax({
+							type: 'POST',
+							url: '<?php echo base_url() ?>performance/add_generic_management_competencies/10',
+							data: $('#add_gmc').serialize(), // serialize the form data
+							success: function (response) {
+								location.reload();
+								$('#response').html(response); // display the response on the page
+							}
+						});
+					});
+				});
+
+			</script>
+
+			</tbody>
+
+		</table>
+
+	</div>
+</div>
+<br/>
+<!--<form method="post" action="<?php /*echo base_url() */?>performance/submit_performance_dir_mid/10">
+	<br/>
+	<div class="card">
+		<div class="card-body">
+			<div class="form-group">
+				<label>
+					Comment by the SMS member  on his/her performance <?php /*//print_r($data) */?>
+				</label>
+				<textarea class="form-control" disabled >
+					<?php /*if (!empty($data)) {
+						echo $data->emp_comment;
+					} */?> </textarea>
+
+			</div>
+			<br />
+
+			<div class="form-group">
+				<label>
+					Comment by the Supervisor
+				</label>
+				<textarea disabled class="form-control" name="supervisor_comment" ></textarea>
+
+			</div>
+			<br />
+		</div>
+		<input value="MID YEAR ASSESSMENT" type="hidden" name="template_name"/>
+		<div class="card-footer">
+			<input type="submit" class="btn btn-info" value="SUBMIT TO PMD"/>
+		</div>
+
+	</div>
+</form>-->
+<br />
+<div class="card">
+	<?php if($data->status == 'PENDING'){ ?>
 
 		<div class="card-body">
-			<form class="form-inline"  method="post" action="<?php echo base_url()?>performance/sup_update_status/<?php echo $submission_id ?>">
+			<form  method="post" action="<?php echo base_url()?>performance/sup_update_status/<?php echo $submission_id ?>">
+
+				<div class="form-group">
+					<label>
+						Comment by the SMS member  on his/her performance <?php //print_r($data) ?>
+					</label>
+					<div class="alert alert-info" disabled >
+					<?php if (!empty($data)) {
+						echo $data->emp_comment;
+					} ?> </div>
+
+				</div>
+				<br />
+
+				<div class="form-group">
+					<label>
+						Comment by the Supervisor
+					</label>
+					<textarea class="form-control" name="supervisor_comment" ></textarea>
+
+				</div>
+
 				<select name="action_option" id="action" onchange="optionChange()" class="form-control">
 					<option class="form-control select" value="APPROVED" >APPROVE</option>
 					<option value="REJECTED" >REJECT</option>
 				</select>
-				<input type="submit" class="btn-sm btn-primary m-2" />
-				<input type="text" placeholder="REASON..." style="display: none" id="comment" name="comment" class="form-control w-100">
+				<br />
+				<input type="text" placeholder="REASON..." style="display: none;" id="comment" name="comment" class="form-control w-100">
+				<input type="submit" <?php if(!$is_valid) echo 'disable'?> class="btn-sm btn-primary m-2" />
+
 			</form>
 		</div>
 	<?php }?>
 </div>
 
-
-
 <script>
-
 	const e = document.getElementById("action");
 	function optionChange() {
 		if(e.value === 'APPROVED')
 		{
 			document.getElementById("comment").style = "display:none";
-
 		}
 		if(e.value === 'REJECTED')
 		{
 			document.getElementById("comment").style = "display:block";
-
 		}
 	}
-
-
-
-	function CalTotC() {
-		let val_c = document.getElementById('val_c').value;
-		if (val_c.length >= 1) {
-			document.getElementById('total_c').value = val_c / 3 * 100;
-		} else {
-			alert('(C) SCORE IS REQUIRED');
-		}
-	}
-
-
-	function CalTot() {
-		let val_a = document.getElementById('val_a').value;
-		let val_b = document.getElementById('val_b').value;
-
-		if (val_a.length >= 1 && val_b.length >= 1) {
-			let tot = val_a * val_b;
-			document.getElementById('val_total').value = tot;
-		} else {
-			alert('PLEASE PROVIDE THE VALUE OF (A) SUB-TOTAL OR (B) % OF ASSESSMENT');
-		}
-
-	}
-
-	document.addEventListener('click', function (event) {
-		if (event.target.classList.contains('process')){
-			let row = event.target.closest('tr');
-			let weight = row.querySelector('.weight').value;
-			let rate = row.querySelector('.rate').value;
-			let parInput = row.querySelector('.par');
-
-			if (weight.length > 0 && rate.length >0)
-			{
-				let product = weight* rate/100;
-				parInput.value = product;
-			}
-			else{
-				alert('Provide all required values')
-			}
-		}
-	})
-
 </script>
