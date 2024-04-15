@@ -73,10 +73,10 @@
 				$counter = 0;
 				foreach ($performance_plan as $m)
 				{
-					$counter = $counter + $m['outcome_weight'];
-
-					if($counter >= 0)
+					
+					if(($counter + $m['outcome_weight']) <= 100)
 					{
+						$counter = $counter + $m['outcome_weight'];
 					 ?>
 								<tr>
 									<td>

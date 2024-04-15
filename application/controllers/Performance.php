@@ -3242,8 +3242,20 @@ class Performance extends CI_Controller
 	public function remove_key_responsibility($type, $id)
 	{
 
-		$mid= new PerformanceInstrument();
-		$mid->remove_key_responsibility($id);
+		
+			
+			$mid= new PerformanceInstrument();
+			$mid->remove_key_responsibility($id);
+		
+		//$this->template($type);
+	}
+	public function remove_key_r()
+	{
+		if(isset($_POST['id'])) {
+			$id = $_POST['id'];
+			$mid= new PerformanceInstrument();
+			$mid->remove_key_responsibility($id);
+		}
 		//$this->template($type);
 	}
 	public function remove_duties($type, $id)
