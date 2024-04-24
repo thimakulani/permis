@@ -61,8 +61,10 @@ if($emp != null)
 	<div style="display: flex; justify-content: space-between">
     <h4>PART 1: POST SUMMARY</h4>
     <form id="previousYearForm" method="post" action="<?php echo base_url() ?>performance/load_previous">
+	<?php if($user_submission != 1) { ?>
         <input type="hidden" name="period" value="<?php echo $period ?>" />
         <input id="submitButton" class="btn btn-info" type="button" value="USE PREVIOUS YEAR MOU" />
+	<?php } ?>
     </form>
 </div>
 
