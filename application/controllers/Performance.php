@@ -1819,9 +1819,14 @@ class Performance extends CI_Controller
 				$this->load->view("performance/permis_submission/level_1_to_12/annual_assessment",$form_data);
 			}
 			if ($submission_row->template_name == 'MID YEAR ASSESSMENT') {
-				$op = new  MidYearAssessment();
-				//$form_data['data'] = $submission_row;
-				//$perf = new PerformanceInstrument();
+				$period = $submission_row->period;
+				$p_i = new PerformanceInstrument();
+				$ann = new AnnualAssessment();
+				$form_data['individual_performance'] = $p_i->get_individual_performance($submission_row->emp_id, $submission_row->period, '');
+				$form_data['generic_management_competencies'] = $p_i->get_generic_management_competencies($submission_row->emp_id, $period, '');
+				$form_data['work_plan'] = $p_i->get_work_plan($_SESSION['Id'], $period, '');
+				$form_data['auditor_general_opinion_and_findings'] = $ann->get_auditor_general_opinion_and_findings($submission_row->emp_id, $period, '');
+				$form_data['personal_developmental_plan'] = $p_i->get_personal_developmental_plan($submission_row->emp_id, $period, '');
 				$form_data['data'] = $submission_row;
 				$form_data['performance_plan'] = $op->get_performance_plan($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$this->load->view("performance/permis_submission/level_1_to_12/mid_year_assessment",$form_data);
