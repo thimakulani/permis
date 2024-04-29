@@ -14,7 +14,7 @@ class Performance extends CI_Controller
 		$this->load->model('MidYearAssessment');
 		//$this->load->model('OperationalMemoModel');
 		$this->load->model('OperationalMidYearModel');
-		$this->load->model('OperationalAnnualModel');
+		//$this->load->model('OperationalAnnualModel');
 		$this->load->model('DirectorMouIndividualModel');
 		$this->load->model('DirectorMouGmcModel');
 		$this->load->model('DirectorMouWorkplanModel');
@@ -145,7 +145,6 @@ class Performance extends CI_Controller
 
 			if($user->SalaryLevel <= 12)
 			{
-
 				$form_data['performance_plan'] = $perf->get_performance_plan($id, $period, '');
 				$form_data['personal_developmental_training'] = $perf->get_personal_developmental_training($id, $period, '');
 				$form_data['duties'] = $perf->get_duties($id, $period, '');
@@ -527,14 +526,14 @@ class Performance extends CI_Controller
 
 	public function op_ann_mou($type)
 	{
-		$this->form_validation->set_rules('kra', '', 'required');
+		/*$this->form_validation->set_rules('kra', '', 'required');
 		$this->form_validation->set_rules('gafs', '', 'required');
 		$this->form_validation->set_rules('jobholder_rating', '', 'required');
 		$this->form_validation->set_rules('supervisor_decision', '', 'required');
 		$this->form_validation->set_rules('par', '', 'required');
 		$this->form_validation->set_rules('performance_report', '', 'required');
 
-		$mou_ann = new OperationalAnnualModel();
+		//$mou_ann = new OperationalAnnualModel();
 
 		if ($this->form_validation->run() == TRUE) {
 			$year = date('Y');
@@ -557,7 +556,7 @@ class Performance extends CI_Controller
 			$this->template($type);
 		} else {
 			$this->template($type);
-		}
+		}*/
 
 	}
 
@@ -1135,6 +1134,7 @@ class Performance extends CI_Controller
 		$branch = null;
 		$financial_year = null;
 		$contract_type = null;
+		$status = null;
 		if(isset($_POST['filter_branch']))
 		{
 			$branch = $this->input->post('branch');
@@ -1143,6 +1143,9 @@ class Performance extends CI_Controller
 			$_SESSION['branch'] = $this->input->post('branch');
 			$_SESSION['contract_type'] = $this->input->post('contract_type');
 			$_SESSION['financial_year'] = $this->input->post('financial_year');
+			$_SESSION['status'] = $this->input->post('status');
+			/*echo $_SESSION['status'] ;
+			return;*/
 		}
 		else{
 			if(isset($_SESSION['branch']))
@@ -1157,10 +1160,15 @@ class Performance extends CI_Controller
 			{
 				$contract_type = $_SESSION['contract_type'];
 			}
+			if(isset($_SESSION['status']))
+			{
+				$contract_type = $_SESSION['status'];
+			}
 		}
+
 		$perf = new PerformanceModel();
 		$br = $this->db->get('branch')->result_array();
-		$data['performance'] = $perf->get_submissions($branch, $contract_type, $financial_year);
+		$data['performance'] = $perf->get_submissions($branch, $contract_type, $financial_year, $status);
 		$data['branch'] = $br;
 		$this->load->view("templates/header");
 		$this->load->view("performance/permis_official_submissions", $data);
@@ -1777,7 +1785,7 @@ class Performance extends CI_Controller
 
 
 
-		$mou_ann = new OperationalAnnualModel();
+		//$mou_ann = new OperationalAnnualModel();
 		//$mou = new OperationalMemoModel();
 		$submission = new PerformanceModel();
 
@@ -1802,20 +1810,19 @@ class Performance extends CI_Controller
 				$perf = new PerformanceInstrument();
 				//$form_data['emp'] = $emp->get_profile($_SESSION['Id']);
 				$form_data['data'] = $submission_row;
-				$form_data['performance_plan'] = $perf->get_performance_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				$form_data['personal_developmental_training'] = $perf->get_personal_developmental_training($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				$form_data['submission_row'] = $submission_row;
 				$form_data['duties'] = $perf->get_duties($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$form_data['duty_reason'] = $perf->get_duty_reason($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				//$form_data['key_responsibility'] = $perf->get_key_responsibility($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				//$form_data['mou'] = $mou->get_op_mou($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				//$form_data['mou'] = $mou->get_op_mou($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				$form_data['performance_plan'] = $perf->get_performance_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				$form_data['personal_developmental_training'] = $perf->get_personal_developmental_training($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$this->load->view("performance/permis_submission/level_1_to_12/performance_instrument",$form_data);
 			}
 			if ($submission_row->template_name == 'ANNUAL ASSESSMENT') {
-				$op = new  MidYearAssessment();
+				$perf = new PerformanceInstrument();
+				$form_data['performance_plan'] = $perf->get_performance_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				$form_data['personal_developmental_training'] = $perf->get_personal_developmental_training($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				$form_data['submission_row'] = $submission_row;
 				//$form_data['operational_memorandum'] = $op->get_operational_memorandum($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
-				$form_data['mou'] = $mou_ann->get_op_ann_mou($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
+				//$form_data['mou'] = $mou_ann->get_op_ann_mou($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$this->load->view("performance/permis_submission/level_1_to_12/annual_assessment",$form_data);
 			}
 			if ($submission_row->template_name == 'MID YEAR ASSESSMENT') {
@@ -1828,7 +1835,7 @@ class Performance extends CI_Controller
 				$form_data['auditor_general_opinion_and_findings'] = $ann->get_auditor_general_opinion_and_findings($submission_row->emp_id, $period, '');
 				$form_data['personal_developmental_plan'] = $p_i->get_personal_developmental_plan($submission_row->emp_id, $period, '');
 				$form_data['data'] = $submission_row;
-				$form_data['performance_plan'] = $op->get_performance_plan($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
+				$form_data['performance_plan'] = $ann->get_performance_plan($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$this->load->view("performance/permis_submission/level_1_to_12/mid_year_assessment",$form_data);
 			}
 			$this->load->view("templates/footer");
@@ -2170,9 +2177,7 @@ class Performance extends CI_Controller
 	public function submit_performance_mou($type)
 	{
 		$perf = new PerformanceModel();
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
+
 		$t_name = $this->input->post('template_name');
 		$check = $perf->validate_submission($period,$t_name);
 		if ($check > 0)
@@ -3025,18 +3030,15 @@ class Performance extends CI_Controller
 	}
 	public function add_key_responsibility($type)
 	{
-//		id	employee	period	template_name	description
 
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
+
 		$this->form_validation->set_rules('description','','required');
 		if($this->form_validation->run())
 		{
 			$data = array(
 				'key_responsibility'=>$this->input->post('description'),
-				'period'=>$period,
 				'template_name'=>$this->input->post('template_name'),
+				'period'=>$this->input->post('period'),
 				'employee'=>$_SESSION['Id'],
 			);
 			$mid = new PerformanceInstrument();
@@ -3051,16 +3053,14 @@ class Performance extends CI_Controller
 	{
 //		id	employee	period	template_name	description
 
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
+
 		$this->form_validation->set_rules('description','','required');
 		if($this->form_validation->run())
 		{
 			$data = array(
 				'description'=>$this->input->post('description'),
-				'period'=>$period,
 				'template_name'=>$this->input->post('template_name'),
+				'period'=>$this->input->post('period'),
 				'employee'=>$_SESSION['Id'],
 			);
 			$mid = new PerformanceInstrument();
@@ -3075,16 +3075,14 @@ class Performance extends CI_Controller
 	{
 //		id	employee	period	template_name	description
 
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
+
 		$this->form_validation->set_rules('description','','required');
 		if($this->form_validation->run())
 		{
 			$data = array(
 				'description'=>$this->input->post('description'),
-				'period'=>$period,
 				'template_name'=>$this->input->post('template_name'),
+				'period'=>$this->input->post('period'),
 				'employee'=>$_SESSION['Id'],
 			);
 			$mid = new PerformanceInstrument();
@@ -3197,9 +3195,7 @@ class Performance extends CI_Controller
 	}
 	public function add_personal_developmental_training($type)
 	{
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
+
 		$this->form_validation->set_rules('development_required', '', 'required');
 		$this->form_validation->set_rules('training_type', '', 'required');
 		//$this->form_validation->set_rules('reason', '', 'required');
@@ -3213,7 +3209,7 @@ class Performance extends CI_Controller
 				'reason'=>$this->input->post('reason'),
 				'time_frame'=>$this->input->post('time_frame'),
 				'progress'=>$this->input->post('progress'),
-				'period'=>$period,
+				'period'=>$this->input->post('period'),
 				'template_name'=>$this->input->post('template_name'),
 				'employee'=>$_SESSION['Id'],
 			);
@@ -3630,16 +3626,16 @@ class Performance extends CI_Controller
 		$this->form_validation->set_rules('initials','','required');
 		if($this->form_validation->run())
 		{
-			$year = date('Y');
+			/*$year = date('Y');
 			$next_year = $year + 1;
-			$period = $year .'/'.$next_year;
+			$period = $year .'/'.$next_year;*/
 			//	id	initials	template_name	table_name	employee
 			$data =  array(
 				'table_name'=>$this->input->post('description'),
 				'template_name'=>$this->input->post('template_name'),
 				'initials'=>$this->input->post('initials'),
 				'employee'=>$_SESSION['Id'],
-				'period'=>$period,
+				'period'=>$this->input->post('period'),
 
 			);
 			$init->add_initialization($data);

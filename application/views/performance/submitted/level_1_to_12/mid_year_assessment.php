@@ -1,4 +1,5 @@
-<?php $period = $submission_row->period;
+<?php
+	$period = $submission_row->period;
 ?>
 <div>
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance">BACK</a>

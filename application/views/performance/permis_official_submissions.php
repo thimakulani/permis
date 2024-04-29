@@ -51,7 +51,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							<?php endforeach; ?>
 						</select>
 					</label>
-					<input type="submit" name="filter_branch" value="FILTER BRANCH" class="btn-sm btn-info" />
+					<label for="status">STATUS
+						<select class="select form-control-sm form-control" name="status" id="status">
+							<option value="-1" selected disabled>-STATUS-</option>
+							<option <?php if(isset($_POST['status']) && $_POST['status'] == 'PENDING') echo 'selected' ?> value="PENDING" >PENDING</option>
+							<option <?php if(isset($_POST['status']) && $_POST['status'] == 'APPROVED') echo 'selected' ?> value="APPROVED" >APPROVED</option>
+						</select>
+					</label>
+					<input type="submit" name="filter_branch" value="FILTER" class="btn-sm btn-info" />
 				</div>
 			</form>
 		</div>
@@ -79,7 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					<td><?= $perf['S_Name'] ?></td>
 					<td><?= $perf['date_captured'] ?></td>
 					<td><?= $perf['template_name'] ?></td>
-					<td><?= $perf['Status_Final'] ?></td>
+					<td><?= $perf['status_final'] ?></td>
 					<td>
 						<a class="btn-sm btn-primary" href="<?= base_url('performance/permis_view_submission/'.$perf['emp_id'].'/'.$perf['id']) ?>"><i class="fas fa-folder"></i>View</a> |
 					</td>

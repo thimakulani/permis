@@ -311,18 +311,23 @@ class PerformanceModel extends CI_Model
 		return $results->row();
 	}
 
-	public function get_submissions($branch, $contract_type, $financial_year )
+	public function get_submissions($branch, $contract_type, $financial_year, $status )
 	{
 		
-		$this->db->select('performance_assessment.id, performance_assessment.status, performance_assessment.date_captured, performance_assessment.Status_Final, performance_assessment.template_name');
+		$this->db->select('performance_assessment.id, performance_assessment.status, performance_assessment.date_captured, performance_assessment.status_final, performance_assessment.template_name');
 		$this->db->select("Concat(emp.Name, ' ' , emp.LastName) as E_Name, emp.Persal, emp.Id as emp_id");
 		$this->db->select("Concat(sup.Name, ' ' , sup.LastName) as S_Name");
-		$this->db->join('employees as emp', 'performance_assessment.employee = emp.Id');
-		$this->db->join('employees as sup', 'performance_assessment.supervisor = sup.Id');
-		$this->db->where('performance_assessment.status', 'APPROVED');
+		$this->db->join('employees as emp', 'performance_assessment.employee = emp.Id', 'left');
+		$this->db->join('employees as sup', 'performance_assessment.supervisor = sup.Id', 'left');
+
+
 		if($branch !== null)
 		{
 			$this->db->where('emp.branch', $branch);
+		}
+		if($status !== null)
+		{
+			$this->db->where('performance_assessment.final_status', $status);
 		}
 		if($contract_type !== null)
 		{

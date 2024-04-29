@@ -168,6 +168,7 @@ if($emp != null)
 		<?php if($user_submission != 1) { ?>
 			<form id="add_key_resp" action="<?php echo base_url() ?>performance/add_key_responsibility/6" method="post">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
+				<input type="hidden" value="<?php echo $period; ?>" name="period">
 
 				<div class="input-group input-group-sm">
 					<input type="text" name="description" required class="form-control">
@@ -290,6 +291,7 @@ if($emp != null)
 		<?php if($user_submission != 1) { ?>
 		<form id="add_duty" action="<?php echo base_url() ?>performance/add_duties/6" method="post">
 			<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
+			<input type="hidden" value="<?php echo $period; ?>" name="period">
 			<div class="input-group input-group-sm">
 				<input type="text" name="description" required class="form-control">
 				<span class="input-group-append">
@@ -401,6 +403,7 @@ if($emp != null)
 		<?php if($user_submission != 1) { ?>
 		<form id="add_duty_reason" action="<?php echo base_url() ?>performance/add_duty_reason/6" method="post">
 			<input id="rd" type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
+			<input type="hidden" value="<?php echo $period; ?>" name="period">
 			<div class="input-group input-group-sm">
 				<input type="text" name="description" required class="form-control">
 				<span class="input-group-append">
@@ -467,6 +470,7 @@ if($emp != null)
 			<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization">
 				<input type="hidden" value="PART 1" name="description">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
+				<input type="hidden" value="<?php echo $period; ?>" name="period">
 				<div style="text-align: right;" class="form-inline justify-content-end">
 					<input type="text" name="initials" <?php if(!empty($initialization->initials)){echo 'disabled'; } ?> value="<?php if(!empty($initialization)){echo $initialization->initials;} ?>" class="form-control-sm" placeholder="INITIALIZATION">
 					<?php if(empty($initialization)) { ?>
@@ -832,6 +836,7 @@ if($emp != null)
 
 		<form id="initialize_part_2" method="post" >
 			<input type="hidden" value="PART 1" name="description">
+			<input type="hidden" value="<?php echo $period; ?>" name="period">
 			<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
 			<div style="text-align: right;" class="form-inline justify-content-end">
 				<input type="text" name="initials" <?php if(!empty($initialization->initials)){echo 'disabled'; } ?> value="<?php if(!empty($initialization)){echo $initialization->initials;} ?>" class="form-control-sm" placeholder="INITIALIZATION">
@@ -1114,6 +1119,7 @@ if($emp != null)
 			<?php if($user_submission != 1) { ?>
 			<form id="add_personal_developmental_training" method="post" action="<?php echo base_url(); ?>performance/add_personal_developmental_training/6">
 				<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+				<input type="hidden" value="<?php echo $period; ?>" name="period">
 				<tr>
 					<td><input class="form-control" name="development_required" required type="text"/></td>
 					<td><input class="form-control" name="training_type" required type="text"/></td>
@@ -1176,6 +1182,7 @@ if($emp != null)
 			<form id="initialize_part_3" method="post">
 				<input type="hidden" value="PART 1" name="description">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
+				<input type="hidden" value="<?php echo $period; ?>" name="period">
 				<div style="text-align: right;" class="form-inline justify-content-end">
 					<input type="text" name="initials" <?php if(!empty($initialization->initials)){echo 'disabled'; } ?> value="<?php if(!empty($initialization)){echo $initialization->initials;} ?>" class="form-control-sm" placeholder="INITIALIZATION">
 					<?php if(empty($initialization)) { ?>
@@ -1293,6 +1300,7 @@ if($emp != null)
 
 			<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization">
 				<input type="hidden" value="PART 1" name="description">
+				<input type="hidden" value="<?php echo $period; ?>" name="period">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
 				<div style="text-align: right;" class="form-inline justify-content-end">
 					<input type="text" name="initials" <?php if(!empty($initialization->initials)){echo 'disabled'; } ?> value="<?php if(!empty($initialization)){echo $initialization->initials;} ?>" class="form-control-sm" placeholder="INITIALIZATION">
@@ -1372,6 +1380,7 @@ if($emp != null)
 			<form id="initialize_part_5" method="post">
 				<input type="hidden" value="PART 1" name="description">
 				<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
+				<input type="hidden" value="<?php echo $period; ?>" name="period">
 				<div style="text-align: right;" class="form-inline justify-content-end">
 					<input type="text" name="initials" <?php if(!empty($initialization->initials)){echo 'disabled'; } ?> value="<?php if(!empty($initialization)){echo $initialization->initials;} ?>" class="form-control-sm" placeholder="INITIALIZATION">
 					<?php if(empty($initialization)) { ?>
@@ -1406,6 +1415,7 @@ if($emp != null)
 
 	<form id="form_submit_mou" action="<?php echo base_url() ?>performance/submit_performance_mou/6" method="post">
 		<br/>
+		<input type="hidden" value="<?php echo $period; ?>" name="period">
 		<div class="card">
 			<div class="card-body">
 				<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
