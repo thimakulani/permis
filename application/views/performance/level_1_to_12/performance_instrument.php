@@ -1413,9 +1413,9 @@ if($emp != null)
 
 <?php if ($user_submission != 1){ ?>
 
-	<form id="form_submit_mou" action="<?php echo base_url() ?>performance/submit_performance_mou/6" method="post">
+	<form id="form_submit_mou" action="<?php echo base_url() ?>performance/submit_performance_mou" method="post">
 		<br/>
-		<input type="hidden" value="<?php echo $period; ?>" name="period">
+		<input type="hidden" value="<?php echo $period; ?>" name="period"> 
 		<div class="card">
 			<div class="card-body">
 				<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>

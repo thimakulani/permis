@@ -2174,11 +2174,12 @@ class Performance extends CI_Controller
 		$this->template($type);
 	}
 	//submissions
-	public function submit_performance_mou($type)
+	public function submit_performance_mou()
 	{
 		$perf = new PerformanceModel();
 
 		$t_name = $this->input->post('template_name');
+		$period = $this->input->post('period');
 		$check = $perf->validate_submission($period,$t_name);
 		if ($check > 0)
 		{
@@ -2188,7 +2189,7 @@ class Performance extends CI_Controller
 			$toaster = new Toastr();
 			$toaster->warning("YOU ALREADY SUBMITTED YOUR PERFORMANCE FOR THIS FINANCIAL YEAR");
 			$this->load->view('flush');
-			$this->template($type);
+			$this->load_template(1, $period);
 			return;
 		}
 
