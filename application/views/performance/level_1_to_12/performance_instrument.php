@@ -42,6 +42,63 @@
 <div>
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/performance_capture">BACK</a>
 </div>
+
+<div class="alert alert-info">
+		<dl class="row">
+			<dt class="col-sm-2">
+				SMS MEMBER'S NAME
+			</dt>
+			<dd class="col-sm-10">
+				<?php if (isset($emp)) {
+					echo $emp->Name . ' ' . $emp->LastName;
+				} ?>
+			</dd>
+
+			<dt class="col-sm-2">
+				PERSAL NUMBER
+			</dt>
+			<dd class="col-sm-10">
+				<?php if (isset($emp)) {
+					echo $emp->Persal;
+				} ?>
+			</dd>
+
+			<dt class="col-sm-2">
+				SUPERVISOR'S NAME
+			</dt>
+			<dd class="col-sm-10">
+				<?php if (isset($emp)) {
+					echo $emp->S_Name;
+				} ?>
+			</dd>
+
+			<dt class="col-sm-2">
+				BRANCH NAME
+			</dt>
+			<dd class="col-sm-10">
+				<?php if (isset($emp)) {
+					echo $emp->b_name;
+				} ?>
+			</dd>
+
+			<dt class="col-sm-2">
+				PROVINCE (IF APPLICABLE)
+			</dt>
+			<dd class="col-sm-10">
+				<?php echo '' ?>
+			</dd>
+
+			<dt class="col-sm-2">
+				JOB TITLE
+			</dt>
+			<dd class="col-sm-10">
+				<?php if (isset($emp)) {
+					echo $emp->JobTitle;
+				} ?>
+			</dd>
+		</dl>
+	</div>
+
 <div style="text-align: center;">
 
 	<h1 style="font-weight: bold" >FORMAL PERFORMANCE AGREEMENT</h1>
