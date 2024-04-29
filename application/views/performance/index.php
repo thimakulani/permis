@@ -120,7 +120,7 @@
 											<?php }
 
 
-											if($perf['template_name'] == 'MID YEAR ASSESSMENT' && $perf['status'] == 'REJECTED' || $perf['status_final'] == 'REJECTED'){ ?>
+											else if($perf['template_name'] == 'MID YEAR ASSESSMENT' && $perf['status'] == 'REJECTED' || $perf['status_final'] == 'REJECTED'){ ?>
 												| <a href="<?php echo base_url() ?>performance/edit_submission_mid/<?php echo +$perf['id'] ?>" class="btn-sm btn-danger" >
 													<i class="fas fa-edit"></i>
 													Edit
@@ -128,7 +128,7 @@
 											<?php }
 
 
-											if($perf['template_name'] == 'ANNUAL ASSESSMENT' && $perf['status'] == 'REJECTED' || $perf['status_final'] == 'REJECTED'){ ?>
+											else if($perf['template_name'] == 'ANNUAL ASSESSMENT' && $perf['status'] == 'REJECTED' || $perf['status_final'] == 'REJECTED'){ ?>
 												| <a href="<?php echo base_url() ?>performance/edit_submission_ann/<?php echo +$perf['id'] ?>" class="btn-sm btn-danger" >
 													<i class="fas fa-edit"></i>
 													Edit
