@@ -1385,15 +1385,14 @@ class Performance extends CI_Controller
 	public function edit_submission($sub_id)
 	{
 		$e = new EmployeeModel();
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
+		
 		$emp = $e->get_profile($_SESSION['Id']);
 		$perf = new PerformanceModel();
 		$submission = $perf->get_specific_submission($sub_id);
 
 		$form_data['submission'] = $submission;
-		$form_data['period'] = $period;
+		$form_data['period'] = $submission->period;
+		$period = $submission->period;
 		$form_data['emp'] = $emp;
 		//$form_data['sub_id'] = $sub_id;
 		$init = new Initialization();

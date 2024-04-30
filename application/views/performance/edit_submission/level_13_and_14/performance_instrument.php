@@ -343,6 +343,7 @@
 						</div>
 						<form id="add_individual_performance_" method="post" >
 							<input class="form-control" type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT" />
+							<input class="form-control" type="hidden" name="period" value="<?php echo $period ?>" />
 							<div class="modal-body">
 								<div class="form-group">
 									<label class="control-label">KEY RESULTS AREA</label>
@@ -612,6 +613,7 @@
 									</div>
 									<form id="add_work<?php echo $_kra['id'] ?>" method="post">
 										<div class="modal-body">
+											<input class="form-control" type="hidden" name="period" value="<?php echo $period; ?>"/>
 											<input type="hidden" name="kra_id" value="<?php echo $_kra['id'] ?>"/>
 											<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
 											<div class="form-group">
@@ -890,6 +892,7 @@
 									</button>
 								</div>
 								<form id="update_personal_developmental_plan<?php echo $work['id']?>" method="post">
+								<input class="form-control" type="hidden" name="period" value="<?php echo $period; ?>"/>
 									<div class="modal-body">
 										<div class="form-group">
 											<label class="control-label">DEVELOPMENTAL AREAS</label>
@@ -956,6 +959,7 @@
 	<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization/6">
 		<input type="hidden" value="PART 1" name="description">
 		<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
+		<input class="form-control" type="hidden" name="period" value="<?php echo $period; ?>"/>
 		<div style="text-align: right;" class="form-inline justify-content-end">
 			<input type="text" name="initials" <?php if(!empty($initialization->initials)){echo 'disabled'; } ?> value="<?php if(!empty($initialization)){echo $initialization->initials;} ?>" class="form-control-sm" placeholder="INITIALIZATION">
 			<?php if(empty($initialization)) { ?>
@@ -1013,7 +1017,9 @@
 			</div>
 			<form id="add_gmcpdp" method="post" >
 				<div class="modal-body">
+					
 					<input class="form-control" type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
+					<input class="form-control" type="hidden" name="period" value="<?php echo $period; ?>"/>
 					<div class="form-group">
 						<label class="control-label">CORE MANAGEMENT COMPETENCIES</label>
 						<input class="form-control" required name="core_management"/>
@@ -1059,6 +1065,7 @@
 			</div>
 			<form id="add_pdp_" method="post">
 				<div class="modal-body">
+					<input class="form-control" type="hidden" name="period" value="<?php echo $period; ?>"/>
 					<input class="form-control" type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
 					<div class="form-group">
 						<label class="control-label">DEVELOPMENTAL AREAS</label>
