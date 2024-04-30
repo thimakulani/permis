@@ -151,6 +151,7 @@
 									  >
 									<div class="modal-body">
 										<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+										<input value="<?php echo $period; ?>" type="hidden" name="period"/>
 										<div class="form-group">
 											<label class="control-label">KEY RESULTS AREA</label>
 											<input class="form-control" name="key_results_area" value="<?php echo $m['key_results_area']?>" required type="text"/>
@@ -272,6 +273,7 @@
 					<?php if($counter !=100) { ?>
 						<form id="add_i_p" method="post">
 						<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
+							<input value="<?php echo $period; ?>" type="hidden" name="period"/>
 						<tr>
 							<td><input class="form-control" name="key_results_area" required type="text"/></td>
 							<td>
@@ -323,13 +325,13 @@
 					$('#add_i_p').submit(function (e) {
 						e.preventDefault();
 						var tot_weight = 0;
-						tot_weight = <?php echo $counter ?> ;
+						tot_weight = <?php echo $counter ?>;
 						var sub_total = tot_weight + Number(selected_weight.value);
 						if(sub_total <= 100) {
 							e.preventDefault(); // prevent the form from submitting normally
 							$.ajax({
 								type: 'POST',
-								url: '<?php echo base_url();?>performance/add_individual_performance/9',
+								url: '<?php echo base_url();?>performance/add_individual_performance',
 								data: $('#add_i_p').serialize(), // serialize the form data
 								success: function (response) {
 									location.reload();
@@ -495,8 +497,9 @@
 
 				<?php if($user_submission < 1){ ?>
 
-					<form id="add_gmcpdp" method="post" action="<?php echo base_url() ?>performance/add_generic_management_competencies_personal_development_plan/9">
+					<form id="add_gmcpdp" method="post" action="<?php echo base_url() ?>performance/add_generic_management_competencies_personal_development_plan">
 						<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT" />
+						<input value="<?php echo $period; ?>" type="hidden" name="period"/>
 						<tr>
 							<td><input class="form-control" name="core_management" required  type="text" /></td>
 							<td><input class="form-control" name="process_competencies" required  type="text" /></td>
@@ -517,7 +520,7 @@
 							e.preventDefault(); // prevent the form from submitting normally
 							$.ajax({
 								type: 'POST',
-								url: '<?php echo base_url();?>performance/add_generic_management_competencies_personal_development_plan/9',
+								url: '<?php echo base_url();?>performance/add_generic_management_competencies_personal_development_plan',
 								data: $('#add_gmcpdp').serialize(), // serialize the form data
 								success: function (response) {
 									location.reload();
@@ -729,6 +732,7 @@
 						<form id="add_work<?php echo $_kra['id'] ?>" method="post">
 							<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
 							<input type="hidden" name="kra_id" value="<?php echo $_kra['id'] ?>"/>
+							<input value="<?php echo $period; ?>" type="hidden" name="period" />
 							<tr>
 								<?php if($row_counter==0){ ?>
 									<td><?php echo $_kra['key_results_area']; ?></td>
@@ -918,8 +922,9 @@
 
 				<?php if($user_submission < 1){ ?>
 					<form id="add_pdp" method="post"
-						  action="<?php echo base_url() ?>performance/add_personal_developmental_plan/9">
+						  >
 						<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
+						<input value="<?php echo $period; ?>" type="hidden" name="period"/>
 						<tr>
 							<td><input class="form-control" name="developmental_areas" required type="text"/></td>
 							<td><input class="form-control" name="types_of_interventions" type="text" required/></td>
@@ -934,7 +939,7 @@
 							e.preventDefault(); // prevent the form from submitting normally
 							$.ajax({
 								type: 'POST',
-								url: '<?php echo base_url() ?>performance/add_personal_developmental_plan/9',
+								url: '<?php echo base_url() ?>performance/add_personal_developmental_plan',
 								data: $('#add_pdp').serialize(), // serialize the form data
 								success: function (response) {
 									location.reload();
@@ -959,6 +964,7 @@
 <div>
 	<form id="initialize_part_1" method="post" action="<?php echo base_url() ?>performance/initialization/6">
 		<input type="hidden" value="PART 1" name="description">
+		<input value="<?php echo $period; ?>" type="hidden" name="period"/>
 		<input type="hidden" value="PERFORMANCE INSTRUMENT" name="template_name">
 		<div style="text-align: right;" class="form-inline justify-content-end">
 			<input type="text" name="initials" <?php if(!empty($initialization->initials)){echo 'disabled'; } ?> value="<?php if(!empty($initialization)){echo $initialization->initials;} ?>" class="form-control-sm" placeholder="INITIALIZATION">
@@ -987,14 +993,15 @@
 </div>
 <br />
 <?php if($user_submission < 1){ ?>
-	<form method="post" action="<?php echo base_url() ?>performance/submit_performance_dir/9">
+	<form method="post" action="<?php echo base_url() ?>performance/submit_performance_dir">
 		<br/>
 		<div class="card">
 			<div class="card-body">
 				<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+				<input value="<?php echo $period; ?>" type="hidden" name="period"/>
 			</div>
 			<div class="card-footer">
-				<input type="submit" <?php if(!isset($initialization) || $counter != 100){ echo 'disabled';} ?> class="btn btn-info" value="SUBMIT TO SUPERVISOR"/>
+				<input type="submit" <?php if($counter != 100){ echo 'disabled';} ?> class="btn btn-info" value="SUBMIT TO SUPERVISOR"/>
 
 			</div>
 
@@ -1016,6 +1023,7 @@
 			<form id="add_kra" method="post" action="<?php echo base_url() ?>performance/add_kra_name/9">
 				<div class="modal-body">
 					<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+					<input value="<?php echo $period; ?>" type="hidden" name="period"/>
 					<div class="form-group">
 						<label class="control-label">KEY RESULT AREA</label>
 						<input class="form-control" name="kra_name"/>

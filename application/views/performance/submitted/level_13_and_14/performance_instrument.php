@@ -163,7 +163,7 @@
 						e.preventDefault(); // prevent the form from submitting normally
 						$.ajax({
 							type: 'POST',
-							url: '<?php echo base_url();?>performance/add_individual_performance/9',
+							url: '<?php echo base_url();?>performance/add_individual_performance',
 							data: $('#add_i_p').serialize(), // serialize the form data
 							success: function (response) {
 								location.reload();
@@ -251,7 +251,7 @@
 							e.preventDefault(); // prevent the form from submitting normally
 							$.ajax({
 								type: 'POST',
-								url: '<?php echo base_url();?>performance/add_generic_management_competencies_personal_development_plan/9',
+								url: '<?php echo base_url();?>performance/add_generic_management_competencies_personal_development_plan',
 								data: $('#add_gmcpdp').serialize(), // serialize the form data
 								success: function (response) {
 									location.reload();
@@ -461,7 +461,7 @@
 							e.preventDefault(); // prevent the form from submitting normally
 							$.ajax({
 								type: 'POST',
-								url: '<?php echo base_url() ?>performance/add_personal_developmental_plan/9',
+								url: '<?php echo base_url() ?>performance/add_personal_developmental_plan',
 								data: $('#add_pdp').serialize(), // serialize the form data
 								success: function (response) {
 									location.reload();

@@ -228,8 +228,9 @@
 
 
 		<?php if($user_submission != 1){ ?>
-			<form id="individual_performance" method="post" action="<?php echo base_url() ?>performance/add_individual_performance/500">
+			<form id="individual_performance" method="post" action="<?php echo base_url() ?>performance/add_individual_performance">
 				<input name="template_name" value="PERFORMANCE INSTRUMENT" type="hidden"/>
+				<input name="period" value="<?php echo $period; ?>" type="hidden"/>
 				<tr>
 					<td><input name="key_results_area" class="form-control" type="text"/></td>
 					<td>
@@ -256,7 +257,7 @@
 						e.preventDefault(); // prevent the form from submitting normally
 						$.ajax({
 							type: 'POST',
-							url: '<?php echo base_url();?>performance/add_individual_performance/500',
+							url: '<?php echo base_url();?>performance/add_individual_performance',
 							data: $('#individual_performance').serialize(), // serialize the form data
 							success: function (response) {
 								location.reload();
@@ -316,7 +317,7 @@
 				</tr>
 			<?php }?>
 			<?php if($user_submission != 1){ ?>
-				<form method="post" action="<?php echo base_url() ?>performance/add_generic_management_competencies_personal_development_plan/500">
+				<form method="post" action="<?php echo base_url() ?>performance/add_generic_management_competencies_personal_development_plan">
 					<input name="template_name"   value="PERFORMANCE INSTRUMENT" type="hidden" />
 					<tr>
 						<td><input class="form-control" name="core_management" required  type="text" /></td>
@@ -756,7 +757,7 @@
 					</tr>
 				<?php } ?>
 				<?php if($user_submission != 1){ ?>
-					<form id="add_pdp" method="post" action="<?php echo base_url() ?>performance/add_personal_developmental_plan/500">
+					<form id="add_pdp" method="post" action="<?php echo base_url() ?>performance/add_personal_developmental_plan">
 						<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT">
 						<tr>
 							<td><input class="form-control" name="developmental_areas" required type="text-area"/></td>
@@ -771,7 +772,7 @@
 									e.preventDefault(); // prevent the form from submitting normally
 									$.ajax({
 										type: 'POST',
-										url: '<?php echo base_url();?>performance/add_personal_developmental_plan/500',
+										url: '<?php echo base_url();?>performance/add_personal_developmental_plan',
 										data: $('#add_pdp').serialize(), // serialize the form data
 										success: function (response) {
 											location.reload();

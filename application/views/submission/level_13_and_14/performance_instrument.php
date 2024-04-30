@@ -413,7 +413,7 @@
 
 </div>
 <br>
-<form method="post" action="<?php echo base_url() ?>performance/submit_performance_dir/9">
+<form method="post" action="<?php echo base_url() ?>performance/submit_performance_dir">
 
 
 	<br/>

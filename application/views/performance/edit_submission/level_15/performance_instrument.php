@@ -308,7 +308,7 @@
 
 				?>
 	<!--	<?php /*if($user_submission != 1){ */?>
-		<form id="add_ip" method="post" action="<?php /*echo base_url() */?>performance/add_individual_performance/200">
+		<form id="add_ip" method="post" action="<?php /*echo base_url() */?>performance/add_individual_performance">
 			<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
 			<tr>
 				<td><input class="form-control" type="text" name="key_results_area"/></td>
@@ -327,7 +327,7 @@
 					e.preventDefault(); // prevent the form from submitting normally
 					$.ajax({
 						type: 'POST',
-						url: '<?php echo base_url();?>performance/add_individual_performance/200',
+						url: '<?php echo base_url();?>performance/add_individual_performance',
 						data: $('#add_ip').serialize(), // serialize the form data
 						success: function (response) {
 							location.reload();
@@ -922,7 +922,7 @@
 					</tr>
 				<?php } ?>
 				<?php /*if($user_submission != 1){ */?><!--
-				<form id="add_pdp" method="post" action="<?php /*echo base_url() */?>performance/add_personal_developmental_plan/200">
+				<form id="add_pdp" method="post" action="<?php /*echo base_url() */?>performance/add_personal_developmental_plan">
 					<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT">
 					<tr>
 						<td><input class="form-control" name="developmental_areas" required type="text"/></td>
@@ -938,7 +938,7 @@
 							e.preventDefault(); // prevent the form from submitting normally
 							$.ajax({
 								type: 'POST',
-								url: '<?php echo base_url();?>performance/add_personal_developmental_plan/200',
+								url: '<?php echo base_url();?>performance/add_personal_developmental_plan',
 								data: $('#add_pdp').serialize(), // serialize the form data
 								success: function (response) {
 									location.reload();
@@ -1190,7 +1190,7 @@
 			e.preventDefault(); // prevent the form from submitting normally
 			$.ajax({
 				type: 'POST',
-				url: '<?php echo base_url();?>performance/add_individual_performance/9',
+				url: '<?php echo base_url();?>performance/add_individual_performance',
 				data: $('#add_individual_performance_').serialize(), // serialize the form data
 				success: function (response) {
 					location.reload();
@@ -1228,7 +1228,7 @@
 			e.preventDefault(); // prevent the form from submitting normally
 			$.ajax({
 				type: 'POST',
-				url: '<?php echo base_url() ?>performance/add_personal_developmental_plan/9',
+				url: '<?php echo base_url() ?>performance/add_personal_developmental_plan',
 				data: $('#add_pdp_').serialize(), // serialize the form data
 				success: function (response) {
 					location.reload();

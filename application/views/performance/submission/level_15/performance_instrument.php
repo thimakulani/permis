@@ -139,7 +139,7 @@
 					e.preventDefault(); // prevent the form from submitting normally
 					$.ajax({
 						type: 'POST',
-						url: '<?php echo base_url();?>performance/add_individual_performance/200',
+						url: '<?php echo base_url();?>performance/add_individual_performance',
 						data: $('#add_ip').serialize(), // serialize the form data
 						success: function (response) {
 							location.reload();
@@ -439,7 +439,7 @@
 							e.preventDefault(); // prevent the form from submitting normally
 							$.ajax({
 								type: 'POST',
-								url: '<?php echo base_url();?>performance/add_personal_developmental_plan/200',
+								url: '<?php echo base_url();?>performance/add_personal_developmental_plan',
 								data: $('#add_pdp').serialize(), // serialize the form data
 								success: function (response) {
 									location.reload();

@@ -195,7 +195,7 @@ $is_valid = true;
 	</div>
 
 <!--	<div class="card-body">
-		<form method="post" action="<?php /*= base_url() */?>performance/add_generic_management_competencies_personal_development_plan/11">
+		<form method="post" action="<?php /*= base_url() */?>performance/add_generic_management_competencies_personal_development_plan">
 			<input type="hidden" name="template_name" value="ANNUAL ASSESSMENT">
 			<div class="form-row">
 				<div class="col">

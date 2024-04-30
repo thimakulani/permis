@@ -661,7 +661,7 @@ class Performance extends CI_Controller
 			$this->db->update('personal_developmental_plan', $data);
 		}
 	}
-	public function add_personal_developmental_plan($type)
+	public function add_personal_developmental_plan()
 	{
 		////id	developmental_areas	types_of_interventions	target_date	template_name	employee	period
 		$this->form_validation->set_rules('developmental_areas', '', 'required');
@@ -672,23 +672,17 @@ class Performance extends CI_Controller
 		$p_i = new PerformanceInstrument();
 
 		if($this->form_validation->run()) {
-			$year = date('Y');
-			$next_year = $year + 1;
-			$period = $year .'/'.$next_year;
 
 			$data = array('developmental_areas' => $this->input->post('developmental_areas'),
 				'types_of_interventions' => $this->input->post('types_of_interventions'),
 				'target_date' => $this->input->post('target_date'),
 				'employee' => $_SESSION['Id'],
 				'template_name' => $this->input->post('template_name'),
-				'period' => $period,
+				'period' => $this->input->post('period'),
 
 			);
 			$p_i->add_personal_developmental_plan($data);
 
-			$this->template($type);
-		} else {
-			$this->template($type);
 		}
 
 	}
@@ -1457,7 +1451,7 @@ class Performance extends CI_Controller
 		$perf = new PerformanceModel();
 		$submission = $perf->get_specific_submission($sub_id);
 		$form_data['submission'] = $submission;
-		$form_data['user_submission'] = $perf->user_submission($_SESSION['Id'], $submission->period, 'MID YEAR ASSESSMENT');
+		//$form_data['user_submission'] = $perf->user_submission($_SESSION['Id'], $submission->period, 'ANNUAL ASSESSMENT');
 
 
 
@@ -2060,19 +2054,18 @@ class Performance extends CI_Controller
 		$p_i->remove_individual_performance($id);
 		$this->template($type);
 	}
-	public function add_individual_performance( $type)
+	public function add_individual_performance()
 	{
 
 		$p_i = new PerformanceInstrument();
 		$this->form_validation->set_rules('key_results_area', '', 'required');
 		$this->form_validation->set_rules('batho_pele_principles', '', 'required');
 		$this->form_validation->set_rules('weight_of_outcome', '', 'required');
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
+
 
 
 		$template_name = $this->input->post('template_name');
+		$period = $this->input->post('period');
 
 		if ($this->form_validation->run()) {
 
@@ -2087,7 +2080,6 @@ class Performance extends CI_Controller
 			);
 			$p_i->add_individual_performance($data);
 		}
-		$this->template($type);
 	}
 
 
@@ -2132,11 +2124,10 @@ class Performance extends CI_Controller
 		}
 		$this->template($type);
 	}
-	public function add_generic_management_competencies_personal_development_plan($type)
+	public function add_generic_management_competencies_personal_development_plan()
 	{
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
+
+		$period = $this->input->post('period');
 		$p_i = new PerformanceInstrument();
 		$this->form_validation->set_rules('core_management', '', 'required');
 		$this->form_validation->set_rules('process_competencies', '', 'required');
@@ -2224,20 +2215,19 @@ class Performance extends CI_Controller
 	}
 
 
-	public function submit_performance_dir($type)
+	public function submit_performance_dir()
 	{
 
 		$perf = new PerformanceModel();
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
+		$period = $this->input->post('period');
+		$dash_period = str_replace("/", "-", $period);
 		$check = $perf->validate_submission($period, $this->input->post('template_name'));
 		if ($check > 0) {
 			$this->load->view('flush');
 			$toaster = new Toastr();
 			$toaster->warning("YOU ALREADY SUBMITTED YOUR PERFORMANCE FOR THIS FINANCIAL YEAR");
 			$this->load->view('flush');
-			$this->template($type);
+			$this->load_template(1,$dash_period);
 			return;
 		}
 
@@ -2264,7 +2254,8 @@ class Performance extends CI_Controller
 			$this->acknowledge_message();
 		}
 
-		$this->template($type);
+		$this->load_template(1, $dash_period);
+
 	}
 
 	public function submit_performance_ddg($type)
@@ -2844,9 +2835,7 @@ class Performance extends CI_Controller
 		//target_date	indicator_target	resource_required	enabling_condition
 		//template_name	period
 		if ($this->form_validation->run()) {
-			$year = date('Y');
-			$next_year = $year + 1;
-			$period = $year . '/' . $next_year;
+			$period =  $this->input->post('period');
 
 			// Initialize the data array with common fields
 			$data = array(
