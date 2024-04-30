@@ -3,6 +3,7 @@
 	<a class="btn-sm btn-info" href="<?php echo base_url() ?>performance/performance_capture">BACK</a>
 </div>
 <h2 style="text-align: center;">PERFORMANCE AGREEMENT FOR DEPUTY DIRECTOR-GENERAL</h2>
+<div class="alert alert-info">
 <dl class="row" style="margin: 20px">
 	<dt class="col-sm-2">
 		SMS MEMBER'S NAME
@@ -54,6 +55,7 @@
 		} ?>
 	</dd>
 </dl>
+</div>
 <br/>
 <?php if (1 == 2) {
 	?>
@@ -257,6 +259,7 @@
 		<?php if ($user_submission != 1) { ?>
 			<form id="add_ip" method="post" action="<?php echo base_url() ?>performance/add_individual_performance">
 				<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
+				<input type="hidden" name="period" value="<?php echo $period ?>"/>
 				<tr>
 					<td><input class="form-control" type="text" name="key_results_area"/></td>
 					<td><input class="form-control" type="text" name="batho_pele_principles"/></td>
@@ -278,8 +281,14 @@
 						url: '<?php echo base_url();?>performance/add_individual_performance',
 						data: $('#add_ip').serialize(), // serialize the form data
 						success: function (response) {
-							location.reload();
-							$('#response').html(response); // display the response on the page
+							Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Added successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										}); // display the response on the page
 						}
 					});
 				});
@@ -395,8 +404,14 @@
 									url: '<?php echo base_url() ?>performance/update_generic_management_competencies/<?php echo $gmcWork['id'] ?>',
 									data: $('#gmc_form_<?php echo $gmcWork['id']?>').serialize(), // serialize the form data
 									success: function (response) {
-										location.reload();
-										$('#response').html(response); // display the response on the page
+										Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Updated successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										}); // display the response on the page
 									},
 									error: function(xhr, status, error) {
 										// Handle error
@@ -420,8 +435,14 @@
 								type: 'DELETE',
 								//data: {id: rowId},
 								success: function (response) {
-									// remove the row from the table
-									location.reload();
+									Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Deleted successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										});
 								},
 								error: function (xhr, status, error) {
 									console.log(error);
@@ -435,6 +456,7 @@
 
 					<form id="add_gmc" method="post">
 						<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT">
+						<input type="hidden" name="period" value="<?php echo $period ?>"/>
 						<tr>
 							<td><input class="form-control" name="core_management" required type="text"/></td>
 							<td><input class="form-control" name="process_competencies" required type="text"/></td>
@@ -459,8 +481,14 @@
 								url: '<?php echo base_url();?>performance/add_generic_management_competencies/200',
 								data: $('#add_gmc').serialize(), // serialize the form data
 								success: function (response) {
-									location.reload();
-									$('#response').html(response); // display the response on the page
+									Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Added successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										}); // display the response on the page
 								}
 							});
 						});
@@ -627,8 +655,14 @@
 										url: '<?php echo base_url() ?>performance/update_work_plans/<?php echo $work['id'] ?>',
 										data: $('#work_plan_form_<?php echo $work['id']?>').serialize(), // serialize the form data
 										success: function (response) {
-											location.reload();
-											$('#response').html(response); // display the response on the page
+											Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Updated successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										}); // display the response on the page
 										},
 										error: function(xhr, status, error) {
 											// Handle error
@@ -653,7 +687,14 @@
 										//data: {id: rowId},
 										success: function (response) {
 											// remove the row from the table
-											location.reload();
+											Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'ADeleted successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										});
 										},
 										error: function (xhr, status, error) {
 											console.log(error);
@@ -673,6 +714,8 @@
 
 				<form id="add_wp<?php echo $_kra['id'] ?>" method="post">
 					<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT"/>
+					<input type="hidden" name="period" value="<?php echo $period; ?>"/>
+					
 					<input type="hidden" name="kra_id" value="<?php echo $_kra['id']; ?>"/>
 					<?php if ($user_submission != 1) { ?>
 						<tr>
@@ -702,14 +745,21 @@
 					$(document).ready(function () {
 						$('#add_wp<?php echo $_kra['id']?>').submit(function (e) {
 							e.preventDefault(); // prevent the form from submitting normally
+							
 							$.ajax({
 								type: 'POST',
 								url: '<?php echo base_url();?>performance/add_work_plan',
 								data: $('#add_wp<?php echo $_kra['id']?>').serialize(), // serialize the form data
 								success: function (response)
 								{
-									location.reload();
-									$('#response').html(response); // display the response on the page
+									Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Added saved successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										});
 								}
 							});
 						});
@@ -795,6 +845,7 @@
 								<form id="dev_plan_form<?php echo $work['id'] ?>" >
 									<div class="modal-body">
 										<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+										
 										<div class="form-group">
 											<label class="control-label">DEVELOPMENTAL AREAS</label>
 											<input class="form-control" name="developmental_areas" value="<?php echo $work['developmental_areas']?>" required type="text"/>
@@ -832,8 +883,14 @@
 									url: '<?php echo base_url() ?>performance/update_personal_developmental_plan/<?php echo $work['id'] ?>',
 									data: $('#dev_plan_form<?php echo $work['id']?>').serialize(), // serialize the form data
 									success: function (response) {
-										location.reload();
-										$('#response').html(response); // display the response on the page
+										Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Updated successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										});// display the response on the page
 									},
 									error: function(xhr, status, error) {
 										// Handle error
@@ -858,8 +915,14 @@
 									type: 'DELETE',
 									//data: {id: rowId},
 									success: function (response) {
-										// remove the row from the table
-										location.reload();
+										Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Deleted successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										});
 									},
 									error: function (xhr, status, error) {
 										console.log(error);
@@ -879,6 +942,7 @@
 					<form id="add_pdp" method="post"
 						  action="<?php echo base_url() ?>performance/add_personal_developmental_plan">
 						<input type="hidden" name="template_name" value="PERFORMANCE INSTRUMENT">
+						<input type="hidden" name="period" value="<?php echo $period ?>"/>
 						<tr>
 							<td><input class="form-control" name="developmental_areas" required type="text"/></td>
 							<td><input class="form-control" name="types_of_interventions" type="text" required/></td>
@@ -891,13 +955,20 @@
 					$(document).ready(function () {
 						$('#add_pdp').submit(function (e) {
 							e.preventDefault(); // prevent the form from submitting normally
+							
 							$.ajax({
 								type: 'POST',
 								url: '<?php echo base_url();?>performance/add_personal_developmental_plan',
 								data: $('#add_pdp').serialize(), // serialize the form data
 								success: function (response) {
-									location.reload();
-									$('#response').html(response); // display the response on the page
+									Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Added successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										});// display the response on the page
 								}
 							});
 						});
@@ -939,8 +1010,14 @@
 					url: '<?php echo base_url() ?>performance/initialization',
 					data: $('#initialize_part_1').serialize(), // serialize the form data
 					success: function (response) {
-						location.reload();
-						$('#response').html(response); // display the response on the page
+						Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Added successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										}); // display the response on the page
 					}
 				});
 			});
@@ -1003,8 +1080,14 @@
 				url: '<?php echo base_url();?>performance/add_kra_name/200',
 				data: $('#add_kra').serialize(), // serialize the form data
 				success: function (response) {
-					location.reload();
-					$('#response').html(response); // display the response on the page
+					Swal.fire({
+											icon: 'success',
+											title: 'Success!',
+											text: 'Added successfully!',
+											onClose: () => {
+												location.reload();
+											}
+										});// display the response on the page
 				}
 			});
 		});

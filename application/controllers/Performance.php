@@ -949,7 +949,7 @@ class Performance extends CI_Controller
 				'dev_required_pcs' => $this->input->post('dev_required_pcs'),
 				'dev_required' => $this->input->post('dev_required'),
 				'employee' => $_SESSION['Id'],
-				'period' => $period,
+				'period' => $this->input->post('period'),
 				'template_name' => $this->input->post('template_name'),
 			);
 			$gmcWorkplan->add_generic_management_competencies($data);
