@@ -971,14 +971,15 @@
 	</script>
 </div>
 
-
-<form method="post" action="<?php echo base_url() ?>performance/submit_performance_hod/500">
+<?php if ($user_submission != 1){ ?>
+<form method="post" action="<?php echo base_url() ?>performance/submit_performance_hod">
 	<br/>
 	<div class="card">
 
 
 		<div class="card-body">
 			<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+			<input value="<?php echo $period ?>" type="hidden" name="period"/>
 		</div>
 		<div class="card-footer">
 			<input type="submit" class="btn btn-info" value="SUBMIT TO SUPERVISOR"/>
@@ -987,7 +988,7 @@
 	</div>
 </form>
 <br>
-
+<?php } ?>
 
 <div class="modal fade" id="add_kra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 	 aria-hidden="true">

@@ -2299,34 +2299,17 @@ class Performance extends CI_Controller
 		$this->template($type);
 	}
 
-	public function submit_performance_hod($type)
+	public function submit_performance_hod()
 	{
 
 		$perf = new PerformanceModel();
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
-
-		$check = $perf->validate_submission_hod($period, $this->input->post('template_name'));
-		if ($check > 0) {
-			//echo '<script type="text/javascript">toastr.success("YOU ALREADY SUBMITTED YOUR PERFORMANCE FOR THIS FINANCIAL YEAR")</script>';
-			$this->load->view('flush');
-			$toaster = new Toastr();
-			$toaster->warning("YOU ALREADY SUBMITTED YOUR PERFORMANCE FOR THIS FINANCIAL YEAR");
-			$this->load->view('flush');
-			$this->load->view('flush');
-			$this->template($type);
-			return;
-		}
-
-
 		$emp = new EmployeeModel();
 		$user = $emp->get_single_user($_SESSION['Id']);
 		$data = array(
 			'supervisor' => $user->SupervisorId,
 			'employee' => $_SESSION['Id'],
 			'date_captured' => date('Y-m-d'),
-			'period' => $period,
+			'period' => $this->input->post('period'),
 			'status' => 'PENDING',
 			'status_final' => 'PENDING',
 			'sup_comment' => '',
