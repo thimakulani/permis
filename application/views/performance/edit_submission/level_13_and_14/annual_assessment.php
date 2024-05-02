@@ -310,7 +310,7 @@
 
 	</div>
 </form>-->
-<form method="post" action="<?php echo base_url() ?>performance/submit_performance_dir_mid/10">
+
 	<br/>
 	<div class="card">
 		<div class="card-body">
@@ -331,7 +331,6 @@
 			</div>
 			<br />
 		</div>
-		<input value="MID YEAR ASSESSMENT" type="hidden" name="template_name"/>
 		<?php if($submission->status == 'REJECTED' || $submission->status_final == 'REJECTED') { ?>
 			<form action="<?php echo base_url() ?>performance/resubmit_changes/<?php  echo $submission->id ?>" method="post">
 				<br/>
@@ -348,7 +347,6 @@
 
 		<?php } ?>
 	</div>
-</form>
 <br>
 
 

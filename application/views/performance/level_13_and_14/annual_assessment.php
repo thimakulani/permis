@@ -47,7 +47,7 @@ $is_valid = true;
 		BRANCH NAME
 	</dt>
 	<dd class="col-sm-10">
-		<?php echo '' ?>
+		<?php $emp->b_name; ?>
 	</dd>
 
 	<dt class="col-sm-2">

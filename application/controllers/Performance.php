@@ -1253,6 +1253,7 @@ class Performance extends CI_Controller
 				$p_data['initialization'] = $init->get_initializations($id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
 				$p_data['kra'] = $p_i->get_individual_performance($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$p_data['work_plan'] = $ann->get_work_plan($submission_row->emp_id, $submission_row->period, 'PERFORMANCE INSTRUMENT');
+				$p_data['devplan'] = $p_i->get_personal_developmental_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$p_data['gmc_personal_development_plan'] = $ann->get_generic_management_competencies_personal_development_plan($submission_row->emp_id, $submission_row->period, $submission_row->template_name);
 				$this->load->view("performance/submitted/level_13_and_14/annual_assessment",$p_data);
 			}
@@ -1459,7 +1460,7 @@ class Performance extends CI_Controller
 		$form_data['emp'] = $emp;
 		//$form_data['sub_id'] = $sub_id;
 		$init = new Initialization();
-		$form_data['initialization'] = $init->get_initializations($emp->id, $submission->period, 'MID YEAR ASSESSMENT');
+		$form_data['initialization'] = $init->get_initializations($emp->id, $submission->period, 'ANNUAL ASSESSMENT');
 
 		$template = 'ANNUAL ASSESSMENT';
 		$this->load->view("templates/header");

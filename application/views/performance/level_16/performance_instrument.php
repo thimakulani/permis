@@ -1015,10 +1015,6 @@
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
 					</div>
 				</div>
-
-
-
-
 			</form>
 		</div>
 	</div>
