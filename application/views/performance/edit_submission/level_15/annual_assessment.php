@@ -7,81 +7,52 @@
 		ANNUAL PERFORMANCE ASSESSMENT TEMPLATE FOR DEPUTY DIRECTOR-GENERAL
 	</h4>
 </div>
-<div class="table-responsive">
-	<table class="table table-sm">
-		<thead style="background-color: #fbd4b4">
-		<tr>
-			<th>
-				Name of the SMS member
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
-				Job title
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Persal Number
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
-				Performance cycle
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Name of the Supervisor
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
-				Period under review
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Name of Department
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
+<div class="alert alert-info">
+<dl class="row">
+	<dt class="col-sm-2">
+		SMS MEMBER'S NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->Name . ' ' . $emp->LastName; ?>
+	</dd>
 
-			</th>
-			<th>
+	<dt class="col-sm-2">
+		PERSAL NUMBER
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->Persal ?>
+	</dd>
 
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Province (if applicable)
-			</th>
-			<th>
-				<input type="text" class="form-control-sm" />
-			</th>
-			<th>
+	<dt class="col-sm-2">
+		SUPERVISOR'S NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->S_Name ?>
+	</dd>
 
-			</th>
-			<th>
+	<dt class="col-sm-2">
+		BRANCH NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->b_name ?>
+	</dd>
 
-			</th>
-		</tr>
-		</thead>
-	</table>
+	<dt class="col-sm-2">
+		PROVINCE (IF APPLICABLE)
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo '' ?>
+	</dd>
+
+	<dt class="col-sm-2">
+		Job title
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->JobTitle ?>
+	</dd>
+</dl>
+</div>
+
 </div>
 
 

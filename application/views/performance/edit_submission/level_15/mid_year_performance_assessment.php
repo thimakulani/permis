@@ -4,6 +4,7 @@
 <div style="text-align: center;">
 	<h2>DDG’s MID-YEAR PERFORMANCE ASSESSMENT TEMPLATE</h2>
 </div>
+<div class="alert alert-info">
 <dl class="row">
 	<dt class="col-sm-2">
 		SMS MEMBER'S NAME
@@ -47,6 +48,7 @@
 		<?php echo $emp->JobTitle ?>
 	</dd>
 </dl>
+</div>
 
 <!-- COPY FROM HERE -->
 

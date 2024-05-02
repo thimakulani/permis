@@ -6,69 +6,52 @@
 </div>
 
 
-<div class="table-responsive">
-	<table class="table table-sm">
-		<thead style="background-color: #8CB2E1FF">
-		<tr>
-			<th>
-				Name of Executive Authority
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-			<th>
-				Province (if applicable)
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Name of Head of Department
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-			<th>
-				Performance cycle
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Persal Number
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-			<th>
-				Mid-Year Review
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-		</tr>
-		<tr>
-			<th>
-				Name of Department
-			</th>
-			<th>
-				<input type="text" class="form-control"/>
-			</th>
-			<th>
+<div class="alert alert-info">
+<dl class="row">
+	<dt class="col-sm-2">
+		SMS MEMBER'S NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->Name . ' ' . $emp->LastName; ?>
+	</dd>
 
-			</th>
-			<th>
+	<dt class="col-sm-2">
+		PERSAL NUMBER
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->Persal ?>
+	</dd>
 
-			</th>
-		</tr>
+	<dt class="col-sm-2">
+		SUPERVISOR'S NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->S_Name ?>
+	</dd>
 
-		</thead>
-	</table>
+	<dt class="col-sm-2">
+		BRANCH NAME
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->b_name ?>
+	</dd>
+
+	<dt class="col-sm-2">
+		PROVINCE (IF APPLICABLE)
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo '' ?>
+	</dd>
+
+	<dt class="col-sm-2">
+		Job title
+	</dt>
+	<dd class="col-sm-10">
+		<?php echo $emp->JobTitle ?>
+	</dd>
+</dl>
 </div>
+
 
 <br />
 <h4>EMPLOYEE PERFORMANCE: KEY RESULT AREAS</h4>

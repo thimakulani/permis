@@ -253,7 +253,6 @@ else if($submission->status_final == 'REJECTED')
 	</div>
 </div>
 <br/>
-<form method="post" action="<?php echo base_url() ?>performance/submit_performance_dir_mid/10">
 	<br/>
 	<div class="card">
 		<div class="card-body">
@@ -292,6 +291,5 @@ else if($submission->status_final == 'REJECTED')
 
 		<?php } ?>
 	</div>
-</form>
 <br>
 
