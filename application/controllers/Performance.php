@@ -1383,13 +1383,14 @@ class Performance extends CI_Controller
 	}
 
 
-	public function edit_submission($submission)
+
+	public function update_assessment($id)
 	{
 		$e = new EmployeeModel();
 		
 		$emp = $e->get_profile($_SESSION['Id']);
 		$perf = new PerformanceModel();
-		//$submission = $perf->get_specific_submission($sub_id);
+		$submission = $perf->get_specific_submission($id);
 
 		$form_data['submission'] = $submission;
 		$form_data['period'] = $submission->period;
@@ -1398,20 +1399,22 @@ class Performance extends CI_Controller
 		//$form_data['sub_id'] = $sub_id;
 		$init = new Initialization();
 		$form_data['initialization'] = $init->get_initializations($emp->id, $period, 'PERFORMANCE INSTRUMENT');
+		$template = '';
 
-		$template = 'PERFORMANCE INSTRUMENT';
 		$this->load->view("templates/header");
-		if($submission->template_name == $template)
+		
+		if($submission->template_name == 'PERFORMANCE INSTRUMENT')
 		{
+			
 			if($emp->SalaryLevel == 13 || $emp->SalaryLevel == 14)
 			{
 				$p_i = new PerformanceInstrument();
 				//$form_data['data'] = $submission_row;
 				//$form_data['kra'] = $p_i->get_kra($emp->id, $period, $template);
-				$form_data['gmc_personal_development_plan'] = $p_i->get_generic_management_competencies_personal_development_plan($emp->id, $period, $template);
-				$form_data['individual_performance'] = $p_i->get_individual_performance($emp->id, $period, $template);
-				$form_data['work_plan'] = $p_i->get_work_plan($emp->id, $period, $template);
-				$form_data['devplan'] = $p_i->get_personal_developmental_plan($emp->id, $period, $template);
+				$form_data['gmc_personal_development_plan'] = $p_i->get_generic_management_competencies_personal_development_plan($emp->id, $period, '');
+				$form_data['individual_performance'] = $p_i->get_individual_performance($emp->id, $period, '');
+				$form_data['work_plan'] = $p_i->get_work_plan($emp->id, $period, '');
+				$form_data['devplan'] = $p_i->get_personal_developmental_plan($emp->id, $period, '');
 				$this->load->view("performance/edit_submission/level_13_and_14/performance_instrument",$form_data);
 			}
 			if($emp->SalaryLevel <= 12)
@@ -1439,115 +1442,7 @@ class Performance extends CI_Controller
 				$this->load->view("performance/edit_submission/level_15/performance_instrument",$form_data);
 			}
 		}
-		$this->load->view("templates/footer");
-	}
-
-	public function edit_submission_ann($submission)
-	{
-		$e = new EmployeeModel();
-		$emp = $e->get_profile($_SESSION['Id']);
-		$perf = new PerformanceModel();
-		//$submission = $perf->get_specific_submission($sub_id);
-		$form_data['submission'] = $submission;
-		//$form_data['user_submission'] = $perf->user_submission($_SESSION['Id'], $submission->period, 'ANNUAL ASSESSMENT');
-
-
-
-
-		$form_data['period'] = $submission->period;
-		$form_data['emp'] = $emp;
-		//$form_data['sub_id'] = $sub_id;
-		$init = new Initialization();
-		$form_data['initialization'] = $init->get_initializations($emp->id, $submission->period, 'ANNUAL ASSESSMENT');
-
-		$template = 'ANNUAL ASSESSMENT';
-		$this->load->view("templates/header");
-
-
-		if($submission->template_name == $template)
-		{
-			if($emp->SalaryLevel == 13 || $emp->SalaryLevel == 14)
-			{
-				$p_i = new PerformanceInstrument();
-				$mid = new MidYearAssessment();
-				$form_data['kra'] = $mid->get_kra($emp->id, $submission->period, $template);
-				$form_data['personal_developmental_plan'] = $p_i->get_generic_management_competencies_personal_development_plan($emp->id, $submission->period, '');
-				$form_data['individual_performance'] = $p_i->get_individual_performance($emp->id, $submission->period, $template);
-				$form_data['work_plan'] = $mid->get_work_plan($emp->id, $submission->period, $template);
-				$form_data['devplan'] = $p_i->get_personal_developmental_plan($emp->id, $submission->period, $template);
-				$this->load->view("performance/edit_submission/level_13_and_14/annual_assessment",$form_data);
-			}
-			if($emp->SalaryLevel <= 12)
-			{
-				$perf = new PerformanceInstrument();
-				$form_data['data'] = $submission;
-				$form_data['performance_plan'] = $perf->get_performance_plan($emp->id, $submission->period, 'PERFORMANCE INSTRUMENT');
-				$form_data['personal_developmental_training'] = $perf->get_personal_developmental_training($emp->id, $submission->period, $template);
-				//$form_data['submission_row'] = $submission_row;
-				$form_data['duties'] = $perf->get_duties($emp->id, $submission->period, $template);
-				$form_data['duty_reason'] = $perf->get_duty_reason($emp->id, $submission->period, $template);
-				//$form_data['key_responsibility'] = $perf->get_key_responsibility($emp->id, $period, $template);
-
-				$this->load->view("performance/edit_submission/level_1_to_12/annual_assessment",$form_data);
-			}
-			if($emp->SalaryLevel == 15)
-			{
-				$p_i = new PerformanceInstrument();
-				$form_data['individual_performance'] = $p_i->get_individual_performance($emp->id, $period, $template);
-				$form_data['generic_management_competencies'] = $p_i->get_generic_management_competencies($emp->id, $period, $template);
-				$form_data['work_plan'] = $p_i->get_work_plan($emp->id, $submission->period, $template);
-				$form_data['personal_developmental_plan'] = $p_i->get_personal_developmental_plan($emp->id, $period, $template);
-
-				$this->load->view("performance/edit_submission/level_15/annual_assessment",$form_data);
-			}
-		}
-		$this->load->view("templates/footer");
-	}
-
-	public function update_assessment($id)
-	{
-		$perf = new PerformanceModel();
-		$submission = $perf->get_specific_submission($id);
-
-		print_r($submission);
-		return;
-		if($submission->template_name == 'PERFORMANCE ASSESSMENT')
-		{
-			$this->edit_submission($submission);
-		}
 		if($submission->template_name == 'MID YEAR ASSESSMENT')
-		{
-			$this->edit_submission_mid($submission);
-		}
-		if($submission->template_name == 'ANNUAL ASSESSMENT')
-		{
-			$this->edit_submission_ann($submission);
-		}
-	}
-
-	public function edit_submission_mid($submission)
-	{
-		$e = new EmployeeModel();
-
-		$emp = $e->get_profile($_SESSION['Id']);
-		$perf = new PerformanceModel();
-		//$submission = $perf->get_specific_submission($sub_id);
-		$form_data['submission'] = $submission;
-		$form_data['user_submission'] = $perf->user_submission($_SESSION['Id'], $submission->period, 'MID YEAR ASSESSMENT');
-
-
-
-
-		$period = $submission->period;
-		$form_data['period'] = $submission->period;
-		$form_data['emp'] = $emp;
-		//$form_data['sub_id'] = $sub_id;
-		$init = new Initialization();
-		$form_data['initialization'] = $init->get_initializations($emp->id, $submission->period, 'MID YEAR ASSESSMENT');
-
-		$template = 'MID YEAR ASSESSMENT';
-		$this->load->view("templates/header");
-		if($submission->template_name == $template)
 		{
 			if($emp->SalaryLevel == 13 || $emp->SalaryLevel == 14)
 			{
@@ -1584,15 +1479,44 @@ class Performance extends CI_Controller
 				$this->load->view("performance/edit_submission/level_15/mid_year_assessment",$form_data);
 			}
 		}
-		$this->load->view("templates/footer");
+		if($submission->template_name == 'ANNUAL ASSESSMENT')
+		{
+			if($emp->SalaryLevel == 13 || $emp->SalaryLevel == 14)
+			{
+				$p_i = new PerformanceInstrument();
+				$mid = new MidYearAssessment();
+				$form_data['kra'] = $mid->get_kra($emp->id, $submission->period, $template);
+				$form_data['personal_developmental_plan'] = $p_i->get_generic_management_competencies_personal_development_plan($emp->id, $submission->period, '');
+				$form_data['individual_performance'] = $p_i->get_individual_performance($emp->id, $submission->period, $template);
+				$form_data['work_plan'] = $mid->get_work_plan($emp->id, $submission->period, $template);
+				$form_data['devplan'] = $p_i->get_personal_developmental_plan($emp->id, $submission->period, $template);
+				$this->load->view("performance/edit_submission/level_13_and_14/annual_assessment",$form_data);
+			}
+			if($emp->SalaryLevel <= 12)
+			{
+				$perf = new PerformanceInstrument();
+				$form_data['data'] = $submission;
+				$form_data['performance_plan'] = $perf->get_performance_plan($emp->id, $submission->period, 'PERFORMANCE INSTRUMENT');
+				$form_data['personal_developmental_training'] = $perf->get_personal_developmental_training($emp->id, $submission->period, $template);
+				//$form_data['submission_row'] = $submission_row;
+				$form_data['duties'] = $perf->get_duties($emp->id, $submission->period, $template);
+				$form_data['duty_reason'] = $perf->get_duty_reason($emp->id, $submission->period, $template);
+				//$form_data['key_responsibility'] = $perf->get_key_responsibility($emp->id, $period, $template);
+
+				$this->load->view("performance/edit_submission/level_1_to_12/annual_assessment",$form_data);
+			}
+			if($emp->SalaryLevel == 15)
+			{
+				$p_i = new PerformanceInstrument();
+				$form_data['individual_performance'] = $p_i->get_individual_performance($emp->id, $$submission->period, $template);
+				$form_data['generic_management_competencies'] = $p_i->get_generic_management_competencies($emp->id, $$submission->period, $template);
+				$form_data['work_plan'] = $p_i->get_work_plan($emp->id, $submission->period, $template);
+				$form_data['personal_developmental_plan'] = $p_i->get_personal_developmental_plan($emp->id, $$submission->period, $template);
+
+				$this->load->view("performance/edit_submission/level_15/annual_assessment",$form_data);
+			}
+		}
 	}
-
-
-
-
-
-
-
 
 	public function resubmit_changes($id)
 	{

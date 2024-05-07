@@ -63,7 +63,63 @@
 	</ul>
 
 </div>
+<div class="alert alert-info">
+		<dl class="row">
+			<dt class="col-sm-2">
+				EMPLOYEE`S NAME
+			</dt>
+			<dd class="col-sm-10">
+				<?php if (isset($emp)) {
+					echo $emp->Name . ' ' . $emp->LastName;
+				} ?>
+			</dd>
+
+			<dt class="col-sm-2">
+				PERSAL NUMBER
+			</dt>
+			<dd class="col-sm-10">
+				<?php if (isset($emp)) {
+					echo $emp->Persal;
+				} ?>
+			</dd>
+
+			<dt class="col-sm-2">
+				SUPERVISOR'S NAME
+			</dt>
+			<dd class="col-sm-10">
+				<?php if (isset($emp)) {
+					echo $emp->S_Name;
+				} ?>
+			</dd>
+
+			<dt class="col-sm-2">
+				BRANCH NAME
+			</dt>
+			<dd class="col-sm-10">
+				<?php if (isset($emp)) {
+					echo $emp->b_name;
+				} ?>
+			</dd>
+
+			<dt class="col-sm-2">
+				PROVINCE (IF APPLICABLE)
+			</dt>
+			<dd class="col-sm-10">
+				<?php echo '' ?>
+			</dd>
+
+			<dt class="col-sm-2">
+				JOB TITLE
+			</dt>
+			<dd class="col-sm-10">
+				<?php if (isset($emp)) {
+					echo $emp->JobTitle;
+				} ?>
+			</dd>
+		</dl>
+	</div>
 <br/>
+
 
 <div class="alert alert-info animated shake">
 
@@ -102,9 +158,12 @@
 			foreach ($performance_plan as $kr) {
 				?>
 				<tr>
-					<td>1.<?php echo $count_key_rows ?></td>
-					<td><?php echo $kr['key_responsibility'] ?></td>
-				</tr>
+						<td style="width: 50px;">1.<?php echo $count_key_rows ?></td>
+						<td style="width: calc(100% - 100px);"><?php echo $kr['key_responsibility'] ?></td>
+						<td style="text-align: right;"> <!-- Apply inline CSS for right alignment -->
+							
+						</td>
+					</tr>
 
 
 				<script>
