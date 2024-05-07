@@ -1383,13 +1383,13 @@ class Performance extends CI_Controller
 	}
 
 
-	public function edit_submission($sub_id)
+	public function edit_submission($submission)
 	{
 		$e = new EmployeeModel();
 		
 		$emp = $e->get_profile($_SESSION['Id']);
 		$perf = new PerformanceModel();
-		$submission = $perf->get_specific_submission($sub_id);
+		//$submission = $perf->get_specific_submission($sub_id);
 
 		$form_data['submission'] = $submission;
 		$form_data['period'] = $submission->period;
@@ -1442,14 +1442,12 @@ class Performance extends CI_Controller
 		$this->load->view("templates/footer");
 	}
 
-	public function edit_submission_ann($sub_id)
+	public function edit_submission_ann($submission)
 	{
 		$e = new EmployeeModel();
-
-
 		$emp = $e->get_profile($_SESSION['Id']);
 		$perf = new PerformanceModel();
-		$submission = $perf->get_specific_submission($sub_id);
+		//$submission = $perf->get_specific_submission($sub_id);
 		$form_data['submission'] = $submission;
 		//$form_data['user_submission'] = $perf->user_submission($_SESSION['Id'], $submission->period, 'ANNUAL ASSESSMENT');
 
@@ -1464,6 +1462,8 @@ class Performance extends CI_Controller
 
 		$template = 'ANNUAL ASSESSMENT';
 		$this->load->view("templates/header");
+
+
 		if($submission->template_name == $template)
 		{
 			if($emp->SalaryLevel == 13 || $emp->SalaryLevel == 14)
@@ -1504,26 +1504,46 @@ class Performance extends CI_Controller
 		$this->load->view("templates/footer");
 	}
 
-	public function edit_submission_mid($sub_id)
+	public function update_assessment($id)
+	{
+		$perf = new PerformanceModel();
+		$submission = $perf->get_specific_submission($id);
+
+		print_r($submission);
+		return;
+		if($submission->template_name == 'PERFORMANCE ASSESSMENT')
+		{
+			$this->edit_submission($submission);
+		}
+		if($submission->template_name == 'MID YEAR ASSESSMENT')
+		{
+			$this->edit_submission_mid($submission);
+		}
+		if($submission->template_name == 'ANNUAL ASSESSMENT')
+		{
+			$this->edit_submission_ann($submission);
+		}
+	}
+
+	public function edit_submission_mid($submission)
 	{
 		$e = new EmployeeModel();
-		$year = date('Y');
-		$next_year = $year + 1;
-		$period = $year .'/'.$next_year;
+
 		$emp = $e->get_profile($_SESSION['Id']);
 		$perf = new PerformanceModel();
-		$submission = $perf->get_specific_submission($sub_id);
+		//$submission = $perf->get_specific_submission($sub_id);
 		$form_data['submission'] = $submission;
 		$form_data['user_submission'] = $perf->user_submission($_SESSION['Id'], $submission->period, 'MID YEAR ASSESSMENT');
 
 
 
 
-		$form_data['period'] = $period;
+		$period = $submission->period;
+		$form_data['period'] = $submission->period;
 		$form_data['emp'] = $emp;
 		//$form_data['sub_id'] = $sub_id;
 		$init = new Initialization();
-		$form_data['initialization'] = $init->get_initializations($emp->id, $period, 'MID YEAR ASSESSMENT');
+		$form_data['initialization'] = $init->get_initializations($emp->id, $submission->period, 'MID YEAR ASSESSMENT');
 
 		$template = 'MID YEAR ASSESSMENT';
 		$this->load->view("templates/header");
