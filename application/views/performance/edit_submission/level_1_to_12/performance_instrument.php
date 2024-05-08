@@ -149,8 +149,7 @@
 		<p>The purpose of the post:</p>
 		<p>The Key Responsibilities of the post:</p>
 		<div style="text-align: right;">
-			<button class="btn-sm btn-primary text-decoration-none" data-toggle="modal" data-target="#add_kra">ADD KEY RESPONSIBILITY</button>
-
+			<button class="btn-sm btn-primary text-decoration-none" data-toggle="modal" data-target="#btn-add_kra">ADD KEY RESPONSIBILITY</button>
 		</div>
 		<table class="table table-borderless">
 			<?php
@@ -161,7 +160,7 @@
 						<td style="width: 50px;">1.<?php echo $count_key_rows ?></td>
 						<td style="width: calc(100% - 100px);"><?php echo $kr['key_responsibility'] ?></td>
 						<td style="text-align: right;"> <!-- Apply inline CSS for right alignment -->
-							
+
 						</td>
 					</tr>
 
@@ -186,12 +185,9 @@
 				<?php $count_key_rows++;
 			} ?>
 
-
-
-
 		</table>
-		
-		<div class="modal fade" id="add_kra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+
+		<div class="modal fade" id="btn-add_kra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 			 aria-hidden="true">
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
@@ -498,8 +494,8 @@
 					<!--
 						Edit dialogue
 					-->
-					
-					
+
+
 					<div class="modal fade" id="remove_performance_plan<?php echo $m['id']; ?>" tabindex="-1" role="dialog"
 						 aria-labelledby="exampleModalLabel"
 						 aria-hidden="true">
@@ -584,13 +580,13 @@
 							});
 						});
 					</script>
-					
-					
-					
-					
-					
 
-				
+
+
+
+
+
+
 
 					<div class="modal fade" id="edit_performance<?php echo $m['id']; ?>" tabindex="-1" role="dialog"
 						 aria-labelledby="exampleModalLabel"
@@ -1312,12 +1308,7 @@
 
 	}
 
-	var sig = $('#sig').signature({syncField: '#signature64', syncFormat: 'PNG'});
-	$('#clear').click(function (e) {
-		e.preventDefault();
-		sig.signature('clear');
-		$("#signature64").val('');
-	});
+
 </script>
 
 

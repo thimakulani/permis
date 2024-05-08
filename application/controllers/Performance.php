@@ -1392,6 +1392,7 @@ class Performance extends CI_Controller
 		$perf = new PerformanceModel();
 		$submission = $perf->get_specific_submission($id);
 
+
 		$form_data['submission'] = $submission;
 		$form_data['period'] = $submission->period;
 		$period = $submission->period;
