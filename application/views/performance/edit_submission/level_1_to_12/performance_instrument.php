@@ -37,6 +37,7 @@
 		height: auto;
 	}
 </style>
+
 <?php //$period// = $_SESSION['period'];
 ?>
 
@@ -135,6 +136,28 @@
 	?>
 
 </div>
+
+<!-- Popup Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Popup Title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<!-- Content goes here -->
+				This is the content of the popup.
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <br />
 <div class="card">
 	<div class="card-header">
@@ -150,6 +173,7 @@
 		<p>The Key Responsibilities of the post:</p>
 		<div style="text-align: right;">
 			<button class="btn-sm btn-primary text-decoration-none" data-toggle="modal" data-target="#btn-add_kra">ADD KEY RESPONSIBILITY</button>
+
 		</div>
 		<table class="table table-borderless">
 			<?php
@@ -200,6 +224,7 @@
 					<form id="add_key_resp" method="post">
 						<div class="modal-body">
 							<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+							<input value="<?php echo $period ?>" type="hidden" name="period"/>
 							<div class="form-group">
 								<label class="control-label">KEY RESPONSIBILITY</label>
 								<input class="form-control" name="description"/>
@@ -224,7 +249,7 @@
 					e.preventDefault(); // prevent the form from submitting normally
 					$.ajax({
 						type: 'POST',
-						url: '<?php echo base_url() ?>performance/add_key_responsibility/6',
+						url: '<?php echo base_url() ?>performance/add_key_new_responsibility',
 						data: $('#add_key_resp').serialize(), // serialize the form data
 						success: function (response) {
 							location.reload();
@@ -1004,6 +1029,7 @@
 					<form id="add_personal_developmental_training" class="modal-body" method="post">
 
 						<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
+						<input value="<?php echo $period;?>" type="hidden" name="period"/>
 						<div class="form-group">
 							<label class="control-label">DEVELOPMENT REQUIRED</label>
 							<input class="form-control"
@@ -1050,13 +1076,26 @@
 
 					$.ajax({
 						type: 'POST',
-						url: '<?php echo base_url(); ?>performance/add_personal_developmental_training/6',
+						url: '<?php echo base_url(); ?>performance/add_personal_developmental_training',
 						data: $('#add_personal_developmental_training').serialize(), // serialize the form data
 						success: function (response) {
+							// Handle success response
+							console.log('Form submitted successfully');
 							Swal.fire({
 								icon: 'success',
-								title: 'Success',
-								text: 'Successfully Added',
+								title: 'Success!',
+								text: 'added successfully',
+								onClose: () => {
+									location.reload();
+								}
+							});
+						},
+						error: function (xhr, status, error) {
+							// Handle error
+							Swal.fire({
+								icon: 'error',
+								title: 'Error!',
+								text: 'Something went wrong',
 								onClose: () => {
 									location.reload();
 								}

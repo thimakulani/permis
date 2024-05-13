@@ -1517,6 +1517,7 @@ class Performance extends CI_Controller
 				$this->load->view("performance/edit_submission/level_15/annual_assessment",$form_data);
 			}
 		}
+		$this->load->view("templates/footer");
 	}
 
 	public function resubmit_changes($id)
@@ -2946,6 +2947,22 @@ class Performance extends CI_Controller
 			$this->template($type);
 		}
 	}
+	public function add_key_new_responsibility()
+	{
+		$this->form_validation->set_rules('description','','required');
+		if($this->form_validation->run())
+		{
+			$data = array(
+				'key_responsibility'=>$this->input->post('description'),
+				'template_name'=>$this->input->post('template_name'),
+				'period'=>$this->input->post('period'),
+				'employee'=>$_SESSION['Id'],
+			);
+			$mid = new PerformanceInstrument();
+			$mid->add_key_responsibility($data);
+			$this->template($type);
+		}
+	}
 	public function add_key_responsibility($type)
 	{
 
@@ -3111,7 +3128,7 @@ class Performance extends CI_Controller
 			$this->template($type);
 		}*/
 	}
-	public function add_personal_developmental_training($type)
+	public function add_personal_developmental_training()
 	{
 
 		$this->form_validation->set_rules('development_required', '', 'required');
@@ -3134,12 +3151,10 @@ class Performance extends CI_Controller
 
 				$mid = new PerformanceInstrument();
 				$mid->add_personal_developmental_training($data);
-				$this->template($type);
-				$_POST = null;
+				//$this->template($type);
+				//$_POST = null;
 		}
-		else {
-		$this->template($type);
-		}
+
 	}
 
 	public function remove_personal_developmental_training()

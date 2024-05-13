@@ -1174,7 +1174,7 @@ if($emp != null)
 			<?php } ?>
 
 			<?php if($user_submission != 1) { ?>
-			<form id="add_personal_developmental_training" method="post" action="<?php echo base_url(); ?>performance/add_personal_developmental_training/6">
+			<form id="add_personal_developmental_training" method="post">
 				<input value="PERFORMANCE INSTRUMENT" type="hidden" name="template_name"/>
 				<input type="hidden" value="<?php echo $period; ?>" name="period">
 				<tr>
@@ -1198,7 +1198,7 @@ if($emp != null)
 						e.preventDefault(); // prevent the form from submitting normally
 						$.ajax({
 							type: 'POST',
-							url: '<?php echo base_url(); ?>performance/add_personal_developmental_training/6',
+							url: '<?php echo base_url(); ?>performance/add_personal_developmental_training',
 							data: $('#add_personal_developmental_training').serialize(), // serialize the form data
 							success: function (response) {
 								// Handle success response
