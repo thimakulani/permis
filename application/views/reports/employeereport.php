@@ -30,6 +30,9 @@
 				<div style="text-align: center;" class="m-2">
 					<img src="<?php echo base_url()?>assets\images\cogstah_img.jpg" style="height: 150px" alt="img" />
 				</div>
+				<div>
+					<strong> TOTAL NUMBER OF EMPLOYEES: <?php echo count($all_users) ?> </strong>
+				</div>
 				<table class="table-sm table-bordered table-hover">
 					<thead>
 					<tr>

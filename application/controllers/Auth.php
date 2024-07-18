@@ -18,7 +18,16 @@ class Auth extends CI_Controller
 		$err['error'] = $error;
         $this->load->view("pages/login", $err);
     }
-    public function login_user()
+	public function login_user()
+	{
+		if($this->input->post('login_type') == 'local'){
+			$this->login_user_local();
+		}
+		else{
+			$this->ldap_user();
+		}
+	}
+    public function ldap_user()
     {
 		$this->form_validation->set_rules('persal', 'Persal', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');

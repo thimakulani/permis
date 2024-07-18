@@ -24,7 +24,7 @@ class Reports extends CI_Controller
 	}
 	public function employeerep()
 	{
-		$y = date('Y');
+		//$y = date('Y');
 
 		$this->db->select("
 						`Employees.Id,
@@ -128,6 +128,38 @@ class Reports extends CI_Controller
 		$data['branch'] = $br;
 		$this->load->view('templates/header');
 		$this->load->view('reports/track', $data);
+		$this->load->view('templates/footer');
+	}
+	public function final_report()
+	{
+		/*<th>Surname</th>
+			<th>Persal Number</th>
+			<th>Submitted Date</th>
+			<th>Mid Year Evaluation</th>
+			<th>End Year Evaluation</th>
+			<th>Average Score</th>
+			<th>PMDS</th>
+			<th>Branch</th>
+			<th>Department</th>*/
+		$this->db->select("employees.id, employees.persal, employees.name, employees.lastname");
+		//mou
+		$this->db->select('p_mou.status, p_mou.status_final, p_mou.date_captured');
+		//mid
+		$this->db->select('p_mid.status as mid_status, p_mid.status_final as mid_status_final');
+		//annual
+		$this->db->select('p_annual.status, p_annual.status_final');
+		$this->db->from('employees');
+		$this->db->join('performance_assessment p_mou', 'employees.id = p_mou.employee', 'left');
+		$this->db->join('performance_assessment p_mid', 'employees.id = p_mid.employee', 'left');
+		$this->db->join('performance_assessment p_annual', 'employees.id = p_annual.employee', 'left');
+		$this->db->where('p_mou.period','2024/2025');
+		$this->db->where('p_mid.period','2024/2025');
+		$this->db->where('p_annual.period','2024/2025');
+		$data['report'] = $this->db->get()->result_array();
+		$br = $this->db->get('branch')->result_array();
+		$data['branch'] = $br;
+		$this->load->view('templates/header');
+		$this->load->view('reports/final_report', $data);
 		$this->load->view('templates/footer');
 	}
 	public function none_compliant()

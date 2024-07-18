@@ -16,6 +16,9 @@
 						</div>
 					</form>
 				</div>
+			<div>
+				<strong> TOTAL NUMBER OF EMPLOYEES: <?php echo count($all_users) ?> </strong>
+			</div>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">

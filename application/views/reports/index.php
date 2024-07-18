@@ -27,6 +27,14 @@
 				<!-- /.info-box -->
 			</div>
 			<div class="col-md-3 col-sm-6 col-12">
+				<a href="<?php echo base_url(); ?>reports/final_report" class="p-4 text-white card text-decoration-none bg-info">
+
+					FINAL REPORT
+					<!-- /.info-box-content -->
+				</a>
+				<!-- /.info-box -->
+			</div>
+			<div class="col-md-3 col-sm-6 col-12">
 				<a href="<?php echo base_url(); ?>reports/track" class="p-4 text-white card text-decoration-none bg-info">
 
 					TRACK
