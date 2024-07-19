@@ -22,6 +22,13 @@ class Reports extends CI_Controller
 		$this->load->view('reports/index');
 		$this->load->view('templates/footer');
 	}
+	public function final_report_type()
+	{
+		$data['title'] = 'REPORTS';
+		$this->load->view('templates/header', $data);
+		$this->load->view('reports/final_report_type');
+		$this->load->view('templates/footer');
+	}
 	public function employeerep()
 	{
 		//$y = date('Y');
@@ -130,7 +137,7 @@ class Reports extends CI_Controller
 		$this->load->view('reports/track', $data);
 		$this->load->view('templates/footer');
 	}
-	public function final_report()
+	public function final_report_mid_year()
 	{
 		/*<th>Surname</th>
 			<th>Persal Number</th>
@@ -159,7 +166,39 @@ class Reports extends CI_Controller
 		$br = $this->db->get('branch')->result_array();
 		$data['branch'] = $br;
 		$this->load->view('templates/header');
-		$this->load->view('reports/final_report', $data);
+		$this->load->view('reports/final_report_mid_year', $data);
+		$this->load->view('templates/footer');
+	}
+	public function final_report_final_year()
+	{
+		/*<th>Surname</th>
+			<th>Persal Number</th>
+			<th>Submitted Date</th>
+			<th>Mid Year Evaluation</th>
+			<th>End Year Evaluation</th>
+			<th>Average Score</th>
+			<th>PMDS</th>
+			<th>Branch</th>
+			<th>Department</th>*/
+		$this->db->select("employees.id, employees.persal, employees.name, employees.lastname");
+		//mou
+		$this->db->select('p_mou.status, p_mou.status_final, p_mou.date_captured');
+		//mid
+		$this->db->select('p_mid.status as mid_status, p_mid.status_final as mid_status_final');
+		//annual
+		$this->db->select('p_annual.status, p_annual.status_final');
+		$this->db->from('employees');
+		$this->db->join('performance_assessment p_mou', 'employees.id = p_mou.employee', 'left');
+		$this->db->join('performance_assessment p_mid', 'employees.id = p_mid.employee', 'left');
+		$this->db->join('performance_assessment p_annual', 'employees.id = p_annual.employee', 'left');
+		$this->db->where('p_mou.period','2024/2025');
+		$this->db->where('p_mid.period','2024/2025');
+		$this->db->where('p_annual.period','2024/2025');
+		$data['report'] = $this->db->get()->result_array();
+		$br = $this->db->get('branch')->result_array();
+		$data['branch'] = $br;
+		$this->load->view('templates/header');
+		$this->load->view('reports/final_report_final_year', $data);
 		$this->load->view('templates/footer');
 	}
 	public function none_compliant()
@@ -173,50 +212,47 @@ class Reports extends CI_Controller
 
 		if(isset($_POST['filter']))
 		{
+
 			//echo $_POST['filter'];
 			$contract_type = $this->input->post('contract_type');
 			$year =$this->input->post('financial_year');
 			$directorate =$this->input->post('directorate');
 			$branch =$this->input->post('branch');
 			$sub_directorate =$this->input->post('sub_directorate');
-			$_users = $emp->get_none_compliant($contract_type, $year, $directorate, $branch, $sub_directorate);
 
-			if($year != null)
-			{
-				$this->db->where('period', $year);
-			}
-			if($contract_type != null)
-			{
-				$this->db->where('template_name', $year);
-			}
-			$assessments = $this->db->get('performance_assessment')->result_array();
-			foreach ($_users as $emp)
-			{
-				$found = false;
-				foreach ($assessments as $assess)
-				{
-					if($assess['employee'] === $emp['Id'])
-					{
-						$found = true;
-						break;
+
+			if(!empty($year)) {
+				if (!empty($contract_type)) {
+
+					$this->db->select("Employees.Id, Employees.Persal, Employees.Name, Employees.LastName, Positions.PositionName as JobTitle, br.name as br_name");
+					$this->db->from('employees');
+					$this->db->join('Positions', 'Employees.JobTitle = Positions.PositionId');
+					$this->db->join('branch br', 'Employees.branch = br.id');
+					$this->db->join('performance_assessment', 'Employees.Id = performance_assessment.employee', 'left');
+					$this->db->where('performance_assessment.employee IS NULL');
+					if ($branch !== null) {
+						$this->db->where('br.id', $branch);
 					}
-				}
-				if(!$found)
-				{
-					$users[] = $emp;
+					$this->db->where('performance_assessment.period', $year);
+					$this->db->where('performance_assessment.template_name', $contract_type);
+
+					$users = $this->db->get()->result_array();
+
+
+					//$users = $emp->get_none_compliant($contract_type, $year, $directorate, $branch, $sub_directorate);
 				}
 			}
+
+
 		}
-		else{
-			$users = $emp->get_none_compliant(null, null, null, null, null);
-		}
+
 		$data['directorates'] = $this->db->get('directorate')->result_array();
 		$data['branch'] = $this->db->get('branch')->result_array();
 
 
 		$data['all_users'] = $users;
-		$this->load->view('templates/header', $data);
-		$this->load->view('reports/employeerep_unsub');
+		$this->load->view('templates/header');
+		$this->load->view('reports/employeerep_unsub', $data);
 		$this->load->view('templates/footer');
 	}
 

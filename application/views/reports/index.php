@@ -1,49 +1,23 @@
+
 <div class="card">
-	<div class="card-body">
-		<div class="row">
-			<div class="col-md-3 col-sm-6 col-12">
-				<a href="<?php echo base_url(); ?>reports/employeerep" class="text-white card p-4 text-decoration-none bg-info">
+	<div class="row card-body">
+
+				<a href="<?php echo base_url(); ?>reports/employeerep" class="btn-lg btn-success text-decoration-none" style="margin: 5px">
 					EMPLOYEES
-					<!-- /.info-box-content -->
 				</a>
-				<!-- /.info-box -->
-			</div>
-			<!-- /.col -->
-			<div class="col-md-3 col-sm-6 col-12">
-				<a href="<?php echo base_url(); ?>reports/none_compliant" class="text-white p-4 card text-decoration-none bg-primary">
 
+				<a href="<?php echo base_url(); ?>reports/none_compliant" class="btn-lg btn-success text-decoration-none" style="margin: 5px">
 					NON-COMPLIANT
-					<!-- /.info-box-content -->
 				</a>
-				<!-- /.info-box -->
-			</div>
-			<!-- /.col -->
-			<div class="col-md-3 col-sm-6 col-12">
-				<a href="<?php echo base_url(); ?>reports/compliant" class="p-4 text-white card text-decoration-none bg-info">
-
+				<a href="<?php echo base_url(); ?>reports/compliant" class="btn-lg btn-success text-decoration-none" style="margin: 5px">
 					COMPLIANT
-					<!-- /.info-box-content -->
 				</a>
-				<!-- /.info-box -->
-			</div>
-			<div class="col-md-3 col-sm-6 col-12">
-				<a href="<?php echo base_url(); ?>reports/final_report" class="p-4 text-white card text-decoration-none bg-info">
-
+				<a href="<?php echo base_url(); ?>reports/final_report_type" class="btn-lg btn-success text-decoration-none" style="margin: 5px">
 					FINAL REPORT
-					<!-- /.info-box-content -->
 				</a>
-				<!-- /.info-box -->
-			</div>
-			<div class="col-md-3 col-sm-6 col-12">
-				<a href="<?php echo base_url(); ?>reports/track" class="p-4 text-white card text-decoration-none bg-info">
-
+				<a href="<?php echo base_url(); ?>reports/track" class="btn-lg btn-success text-decoration-none" style="margin: 5px">
 					TRACK
-					<!-- /.info-box-content -->
 				</a>
-				<!-- /.info-box -->
-			</div>
-
-			<!-- /.col -->
-		</div>
 	</div>
+
 </div>

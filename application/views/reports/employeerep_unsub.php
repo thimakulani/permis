@@ -10,7 +10,7 @@
 				FINANCIAL YEAR
 				<?php $years = range(2023, strftime("%Y", time())); ?>
 				<select class="select form-control-sm form-control" name="financial_year" onchange="SelectedYear()">
-					<option disabled selected value="-1">--SELECT A FINANCIAL YEAR--</option>
+					<option disabled selected value="">--SELECT A FINANCIAL YEAR--</option>
 					<?php foreach ($years as $year) {
 						$selected_year = '';
 						if (isset($_POST['financial_year'])) {
@@ -29,7 +29,7 @@
 			<label>
 				CONTRACT TYPE
 				<select class="select form-control-sm form-control" name="contract_type" onchange="SelectedContract()">
-					<option value="-1" selected disabled>-CONTRACT TYPE-</option>
+					<option value="" selected disabled>-CONTRACT TYPE-</option>
 					<option <?php if (isset($_POST['contract_type'])) if ($_POST['contract_type'] == 'PERFORMANCE INSTRUMENT') echo 'selected' ?>
 						value="PERFORMANCE INSTRUMENT">MEMORANDUM OF UNDERSTANDING
 					</option>

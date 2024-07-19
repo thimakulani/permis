@@ -301,7 +301,7 @@ class EmployeeModel extends CI_Model
 		$this->db->where('performance_assessment.employee IS NULL');
 		//$this->db->where('performance_assessment.period', '2023/2024');
 
-		/*if ($year !== null) {
+		if ($year !== null) {
 			$this->db->where('performance_assessment.period', $year);
 		}
 		if ($contract_type !== null) {
@@ -315,7 +315,7 @@ class EmployeeModel extends CI_Model
 		}
 		if ($sub_directorate !== null) {
 			$this->db->where('Employees.Sub_Directorate', $sub_directorate);
-		}*/
+		}
 		
 		$results =  $this->db->get();
 		return $results->result_array();
