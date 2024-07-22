@@ -80,7 +80,7 @@
 			<div style="text-align: center;">
 				<p class="m-2"><strong>CO-OPERATIVE GOVERNANCE, HUMAN SETTLEMENTS AND TRADITIONAL AFFAIRS:LIMPOPO</strong>
 				</p>
-				<p class="m-2"><strong>CONTRACT TYPE: MEMORANDUM OF UNDERSTANDING FINANCIAL YEAR: 2023/24</strong></p>
+				<p class="m-2"><strong>CONTRACT TYPE: MEMORANDUM OF UNDERSTANDING FINANCIAL YEAR: <label id="lbl_financial_year"><?= isset($_POST['financial_year']) ? $_POST['financial_year'] : '' ?></label> </strong></p>
 				<p class="m-2"><strong>VALID PERIOD: NON-COMPLIANCE</strong></p>
 			</div>
 		</div>
@@ -168,6 +168,10 @@
 		window.print();
 
 		document.body.innerHTML = originalContents;
+	}
+	function SelectedYear() {
+		var lbl = document.getElementById('lbl_financial_year');
+		lbl.innerText = document.getElementById('financial_year').value;
 	}
 </script>
 

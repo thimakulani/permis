@@ -31,6 +31,23 @@
 
 	<?php } ?>
 </section>
+<div class="row">
+	<div class="col-12 col-sm-6 col-md-3">
+		<div class="info-box">
+			<span class="info-box-icon bg-info elevation-1"><i class="fa fa-users" aria-hidden="true"></i></span>
+
+			<div class="info-box-content">
+				<span class="info-box-text">EMPLOYEES</span>
+				<span class="info-box-number"><?php echo $num_emp; ?></span>
+			</div>
+			<!-- /.info-box-content -->
+		</div>
+		<!-- /.info-box -->
+	</div>
+	<!-- /.col -->
+
+	<!-- /.col -->
+</div>
 
 
 

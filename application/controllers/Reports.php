@@ -137,7 +137,7 @@ class Reports extends CI_Controller
 		$this->load->view('reports/track', $data);
 		$this->load->view('templates/footer');
 	}
-	public function final_report_mid_year()
+	public function final_report_branch()
 	{
 		/*<th>Surname</th>
 			<th>Persal Number</th>
@@ -166,10 +166,10 @@ class Reports extends CI_Controller
 		$br = $this->db->get('branch')->result_array();
 		$data['branch'] = $br;
 		$this->load->view('templates/header');
-		$this->load->view('reports/final_report_mid_year', $data);
+		$this->load->view('reports/final_report_branch', $data);
 		$this->load->view('templates/footer');
 	}
-	public function final_report_final_year()
+	public function final_report_departmental()
 	{
 		/*<th>Surname</th>
 			<th>Persal Number</th>
@@ -195,10 +195,11 @@ class Reports extends CI_Controller
 		$this->db->where('p_mid.period','2024/2025');
 		$this->db->where('p_annual.period','2024/2025');
 		$data['report'] = $this->db->get()->result_array();
-		$br = $this->db->get('branch')->result_array();
-		$data['branch'] = $br;
+
+		$directorate = $this->db->get('directorate')->result_array();
+		$data['directorate'] = $directorate;
 		$this->load->view('templates/header');
-		$this->load->view('reports/final_report_final_year', $data);
+		$this->load->view('reports/final_report_departmental', $data);
 		$this->load->view('templates/footer');
 	}
 	public function none_compliant()

@@ -24,13 +24,13 @@
 			</select>
 		</label>
 		<label>
-			BRANCH
-			<select class="select form-control-sm form-control" name="branch">
-				<option value="-1" disabled selected>--SELECT BRANCH--</option>
-				<?php foreach ($branch as $br) { ?>
-					<option <?php if (isset($_POST['branch'])) if ($_POST['branch'] == $br['id']) {
+			DIRECTORATE
+			<select class="select form-control-sm form-control" name="directorate">
+				<option value="-1" disabled selected>--SELECT DIRECTORATE--</option>
+				<?php foreach ($directorate as $dept) { ?>
+					<option <?php if (isset($_POST['directorate'])) if ($_POST['directorate'] == $dept['id']) {
 						echo 'selected';
-					} ?> value="<?php echo $br['id'] ?>"> <?php echo $br['name'] ?> </option>
+					} ?> value="<?php echo $dept['id'] ?>"> <?php echo $dept['name'] ?> </option>
 				<?php } ?>
 			</select>
 		</label>

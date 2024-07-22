@@ -76,6 +76,10 @@ class Dashboard extends CI_Controller
 			redirect('/employees/complete_registration');
 		}
 		$data = null;
+
+		$this->db->where('Id <> 1');
+		$total_employees = $this->db->get('employees')->num_rows();
+		$data['num_emp'] = $total_employees;
 		if ($_SESSION['Role'] == 3) {
 			$this->db->where('status', null);//->or_where('status', 'PENDING');
 			$leaves_counter = $this->db->get('special_request')->num_rows();

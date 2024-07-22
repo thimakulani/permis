@@ -1,7 +1,5 @@
 
-<section class="content">
 
-	<hr />
 	<div>
 		<a class="btn-sm btn-success" href="<?php echo base_url()?>employees/">Back to List</a>
 	</div>
@@ -321,7 +319,6 @@
 			</form>
 		</div>
 	</div>
-</section>
 <script>
 
 
